@@ -1,4 +1,4 @@
-## Salt and Sanctuary Edtior by Usui
+## Salt and Sanctuary Edtior (Remastered)
 
 1) Copy dialog.zdx, loot.zlx, monsters.zox, skilltree.zsx, strings.ztx from game to packed folder
 2) Run unpack.bat
