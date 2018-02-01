@@ -1,4 +1,4 @@
-## Salt and Sanctuary Edtior (Remastered)
+## Salt and Sanctuary Editor (Remastered)
 
 1) Copy dialog.zdx, loot.zlx, monsters.zox, skilltree.zsx, strings.ztx from game to packed folder
 2) Run unpack.bat
