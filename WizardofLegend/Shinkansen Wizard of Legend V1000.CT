@@ -1,0 +1,2384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="18">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>116369</ID>
+      <Description>"GameController_static Base Address Scan Initialization (Activate This First)"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="0"/>
+      <Color>800000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+registersymbol(GameController_static_basepointer)
+registersymbol(GameController_static_update_enable)
+registersymbol(GameController_static_set_enable)
+registersymbol(GameController_static_invulnerableset_enable)
+registersymbol(GameController_static_ignoresset_enable)
+registersymbol(GameController_static_healthset_enable)
+registersymbol(GameController_static_overdriveset_enable)
+registersymbol(GameController_static_arcanaset_enable)
+
+alloc(GameController_static_basepointer, 8)
+alloc(GameController_static_update_enable, 4)
+alloc(GameController_static_set_enable, 4)
+alloc(GameController_static_invulnerableset_enable, 4)
+alloc(GameController_static_ignoresset_enable, 4)
+alloc(GameController_static_healthset_enable, 4)
+alloc(GameController_static_overdriveset_enable, 4)
+alloc(GameController_static_arcanaset_enable, 4)
+
+
+[DISABLE]
+unregistersymbol(GameController_static_basepointer)
+unregistersymbol(GameController_static_update_enable)
+unregistersymbol(GameController_static_set_enable)
+unregistersymbol(GameController_static_invulnerableset_enable)
+unregistersymbol(GameController_static_ignoresset_enable)
+unregistersymbol(GameController_static_healthset_enable)
+unregistersymbol(GameController_static_overdriveset_enable)
+unregistersymbol(GameController_static_arcanaset_enable)
+
+dealloc(GameController_static_basepointer)
+dealloc(GameController_static_update_enable)
+dealloc(GameController_static_set_enable)
+dealloc(GameController_static_invulnerableset_enable)
+dealloc(GameController_static_ignoresset_enable)
+dealloc(GameController_static_healthset_enable)
+dealloc(GameController_static_overdriveset_enable)
+dealloc(GameController_static_arcanaset_enable)
+
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>116370</ID>
+          <Description>"GameController_static Base Address Scan (To Activate: Play Level, To Update: Play Level)"</Description>
+          <LastState Activated="0"/>
+          <Color>804000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+label(GameController_static_savedAOB)
+label(GameController_static_returnhere)
+label(GameController_static_originalcode)
+label(GameController_static_exit)
+
+label(GameController_static_update_exit)
+label(GameController_static_set_exit)
+label(GameController_static_invulnerableset_exit)
+label(GameController_static_ignoresset_exit)
+label(GameController_static_healthset_exit)
+label(GameController_static_overdriveset_exit)
+label(GameController_static_arcanaset_exit)
+label(GameController_static_arcanaset_entry)
+label(GameController_static_arcanaset_continue)
+
+registersymbol(GameController_static_savedAOB)
+
+//28EADE68 - 48 83 EC 08           - sub rsp,08
+//28EADE6C - 48 8B 04 25 583CE304  - mov rax,[04E33C58] : [424A78A0]
+// GameController_static:Update+14
+//28EADE74 - 48 63 40 18           - movsxd  rax,dword ptr [rax+18]
+//28EADE78 - 85 C0                 - test eax,eax
+//28EADE7A - 0F85 57000000         - jne 28EADED7
+//28EADE80 - B8 704AE204           - mov eax,04E24A70 : [00000000]
+//28EADE85 - 48 0FB6 00            - movzx rax,byte ptr [rax]
+//28EADE89 - 85 C0                 - test eax,eax
+//28EADE8B - 0F85 46000000         - jne 28EADED7
+//28EADE91 - 48 8B 0C 25 203DE304  - mov rcx,[04E33D20] : [17531060]
+aobscan(GameController_static_searchedAOB, 48 63 40 18 85 C0 * * * * * * * * * * * 48 0F B6 00 85 C0 * * * * * * * * * * * * * * 33 D2)
+
+alloc(GameController_static_newmem, 2048, GameController_static_searchedAOB)
+alloc(GameController_static_temp1, 8, GameController_static_searchedAOB)
+alloc(GameController_static_temp2, 8, GameController_static_searchedAOB)
+alloc(GameController_static_temp3, 8, GameController_static_searchedAOB)
+alloc(GameController_static_temp4, 8, GameController_static_searchedAOB)
+alloc(GameController_static_temp5, 8, GameController_static_searchedAOB)
+
+
+GameController_static_newmem:
+mov [GameController_static_temp1], rax
+mov [GameController_static_temp2], rbx
+mov [GameController_static_temp3], rcx
+mov [GameController_static_temp4], rdx
+
+mov rbx, 0
+mov ebx, [GameController_static_savedAOB-4]
+sub rbx, 18
+
+cmp dword ptr [GameController_static_update_enable], #0
+je GameController_static_update_exit
+mov [GameController_static_basepointer], rbx
+GameController_static_update_exit:
+
+cmp dword ptr [GameController_static_set_enable], #0
+je GameController_static_set_exit
+GameController_static_set_exit:
+
+cmp dword ptr [GameController_static_invulnerableset_enable], #0
+je GameController_static_invulnerableset_exit
+mov rcx, [rbx+18]
+test rcx, rcx
+je GameController_static_invulnerableset_exit
+mov rcx, [rcx+20]
+test rcx, rcx
+je GameController_static_invulnerableset_exit
+mov rcx, [rcx+40]
+test rcx, rcx
+je GameController_static_invulnerableset_exit
+mov byte ptr [rcx+18c], #1
+GameController_static_invulnerableset_exit:
+
+cmp dword ptr [GameController_static_ignoresset_enable], #0
+je GameController_static_ignoresset_exit
+mov rcx, [rbx+18]
+test rcx, rcx
+je GameController_static_ignoresset_exit
+mov rcx, [rcx+20]
+test rcx, rcx
+je GameController_static_ignoresset_exit
+mov rcx, [rcx+40]
+test rcx, rcx
+je GameController_static_ignoresset_exit
+mov byte ptr [rcx+18e], #1
+mov byte ptr [rcx+18f], #1
+mov byte ptr [rcx+190], #1
+mov byte ptr [rcx+191], #1
+mov byte ptr [rcx+192], #1
+mov byte ptr [rcx+193], #1
+mov byte ptr [rcx+194], #1
+mov byte ptr [rcx+195], #1
+mov byte ptr [rcx+196], #1
+mov byte ptr [rcx+199], #1
+GameController_static_ignoresset_exit:
+
+cmp dword ptr [GameController_static_healthset_enable], #0
+je GameController_static_healthset_exit
+mov rcx, [rbx+18]
+test rcx, rcx
+je GameController_static_healthset_exit
+mov rcx, [rcx+20]
+test rcx, rcx
+je GameController_static_healthset_exit
+mov rcx, [rcx+40]
+test rcx, rcx
+je GameController_static_healthset_exit
+mov rcx, [rcx+c0]
+test rcx, rcx
+je GameController_static_healthset_exit
+fld [rcx+30]
+fstp [rcx+28]
+GameController_static_healthset_exit:
+
+cmp dword ptr [GameController_static_overdriveset_enable], #0
+je GameController_static_overdriveset_exit
+mov rcx, [rbx+18]
+test rcx, rcx
+je GameController_static_overdriveset_exit
+mov rcx, [rcx+20]
+test rcx, rcx
+je GameController_static_overdriveset_exit
+mov [rcx+32c], (float)9999
+GameController_static_overdriveset_exit:
+
+mov [GameController_static_temp5], rbx
+
+cmp dword ptr [GameController_static_arcanaset_enable], #0
+je GameController_static_arcanaset_exit
+mov rdx, 0
+mov rbx, [rbx+18]
+test rbx, rbx
+je GameController_static_arcanaset_exit
+mov rbx, [rbx+20]
+test rbx, rbx
+je GameController_static_arcanaset_exit
+mov rbx, [rbx+1a8]
+test rbx, rbx
+je GameController_static_arcanaset_exit
+mov rcx, [rbx+18]
+test rcx, rcx
+je GameController_static_arcanaset_exit
+GameController_static_arcanaset_entry:
+mov rax, [rbx+rdx*8+20]
+test rax, rax
+je GameController_static_arcanaset_continue
+mov rax, [rax+40]
+test rax, rax
+je GameController_static_arcanaset_continue
+mov byte ptr [rax+34], #0
+mov [rax+38], #9
+GameController_static_arcanaset_continue:
+inc rdx
+cmp rcx, rdx
+je GameController_static_arcanaset_exit
+jmp GameController_static_arcanaset_entry
+GameController_static_arcanaset_exit:
+
+mov rbx, [GameController_static_temp5]
+
+mov rax, [GameController_static_temp1]
+mov rbx, [GameController_static_temp2]
+mov rcx, [GameController_static_temp3]
+mov rdx, [GameController_static_temp4]
+
+
+GameController_static_originalcode:
+db 48 63 40 18 85 C0
+//movsxd  rax,dword ptr [rax+18]
+//test eax,eax
+
+
+GameController_static_exit:
+jmp GameController_static_returnhere
+
+
+GameController_static_searchedAOB:
+GameController_static_savedAOB:
+jmp GameController_static_newmem
+nop
+GameController_static_returnhere:
+
+
+[DISABLE]
+GameController_static_savedAOB:
+db 48 63 40 18 85 C0
+//movsxd  rax,dword ptr [rax+18]
+//test eax,eax
+
+unregistersymbol(GameController_static_savedAOB)
+
+dealloc(GameController_static_newmem)
+dealloc(GameController_static_temp1)
+dealloc(GameController_static_temp2)
+dealloc(GameController_static_temp3)
+dealloc(GameController_static_temp4)
+dealloc(GameController_static_temp5)
+
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116371</ID>
+          <Description>"Invulnerable Set to Invulnerable?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>GameController_static_invulnerableset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116372</ID>
+          <Description>"Ignores Set to Massive?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>GameController_static_ignoresset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116373</ID>
+          <Description>"Health Set to Max?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>GameController_static_healthset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116374</ID>
+          <Description>"Overdrive Set to Massive?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>GameController_static_overdriveset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116375</ID>
+          <Description>"Arcana Charge and Cooldown Set to Massive?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>GameController_static_arcanaset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116381</ID>
+          <Description>"GameController_static Update Base Address?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>GameController_static_update_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116382</ID>
+          <Description>"GameController_static Stats"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" Activated="0" RealAddress="00000000"/>
+          <Color>80000008</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>116383</ID>
+              <Description>"Base Address"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116384</ID>
+              <Description>"maxPlayerCount"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116385</ID>
+              <Description>"activePlayers"</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>116386</ID>
+                  <Description>"Base Address"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>GameController_static_basepointer</Address>
+                  <Offsets>
+                    <Offset>0</Offset>
+                    <Offset>18</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116387</ID>
+                  <Description>"Base Address"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>GameController_static_basepointer</Address>
+                  <Offsets>
+                    <Offset>0</Offset>
+                    <Offset>20</Offset>
+                    <Offset>18</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116388</ID>
+                  <Description>"Slot 1"</Description>
+                  <Options moHideChildren="1"/>
+                  <LastState Value="" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>116389</ID>
+                      <Description>"Entity Stats"</Description>
+                      <Options moHideChildren="1"/>
+                      <LastState Value="" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>116390</ID>
+                          <Description>"Base Address"</Description>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>0</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116391</ID>
+                          <Description>"currentStateName"</Description>
+                          <LastState Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>String</VariableType>
+                          <Length>32</Length>
+                          <Unicode>1</Unicode>
+                          <ZeroTerminate>1</ZeroTerminate>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>14</Offset>
+                            <Offset>18</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116392</ID>
+                          <Description>"health"</Description>
+                          <Options moHideChildren="1"/>
+                          <LastState Value="" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <GroupHeader>1</GroupHeader>
+                          <CheatEntries>
+                            <CheatEntry>
+                              <ID>116393</ID>
+                              <Description>"Base Address"</Description>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>0</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116394</ID>
+                              <Description>"healthStat"</Description>
+                              <Options moHideChildren="1"/>
+                              <LastState Value="" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <GroupHeader>1</GroupHeader>
+                              <CheatEntries>
+                                <CheatEntry>
+                                  <ID>116395</ID>
+                                  <Description>"Base Address"</Description>
+                                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                                  <Color>80000008</Color>
+                                  <VariableType>4 Bytes</VariableType>
+                                  <Address>GameController_static_basepointer</Address>
+                                  <Offsets>
+                                    <Offset>0</Offset>
+                                    <Offset>C0</Offset>
+                                    <Offset>40</Offset>
+                                    <Offset>20</Offset>
+                                    <Offset>18</Offset>
+                                  </Offsets>
+                                </CheatEntry>
+                                <CheatEntry>
+                                  <ID>116396</ID>
+                                  <Description>"_currentValue"</Description>
+                                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                                  <Color>80000008</Color>
+                                  <VariableType>Float</VariableType>
+                                  <Address>GameController_static_basepointer</Address>
+                                  <Offsets>
+                                    <Offset>28</Offset>
+                                    <Offset>C0</Offset>
+                                    <Offset>40</Offset>
+                                    <Offset>20</Offset>
+                                    <Offset>18</Offset>
+                                  </Offsets>
+                                </CheatEntry>
+                                <CheatEntry>
+                                  <ID>116397</ID>
+                                  <Description>"_baseValue"</Description>
+                                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                                  <Color>80000008</Color>
+                                  <VariableType>Float</VariableType>
+                                  <Address>GameController_static_basepointer</Address>
+                                  <Offsets>
+                                    <Offset>2C</Offset>
+                                    <Offset>C0</Offset>
+                                    <Offset>40</Offset>
+                                    <Offset>20</Offset>
+                                    <Offset>18</Offset>
+                                  </Offsets>
+                                </CheatEntry>
+                                <CheatEntry>
+                                  <ID>116398</ID>
+                                  <Description>"_modifiedValue"</Description>
+                                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                                  <Color>80000008</Color>
+                                  <VariableType>Float</VariableType>
+                                  <Address>GameController_static_basepointer</Address>
+                                  <Offsets>
+                                    <Offset>30</Offset>
+                                    <Offset>C0</Offset>
+                                    <Offset>40</Offset>
+                                    <Offset>20</Offset>
+                                    <Offset>18</Offset>
+                                  </Offsets>
+                                </CheatEntry>
+                              </CheatEntries>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116399</ID>
+                              <Description>"dmgTextStr"</Description>
+                              <LastState Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>String</VariableType>
+                              <Length>32</Length>
+                              <Unicode>1</Unicode>
+                              <ZeroTerminate>1</ZeroTerminate>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>158</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116400</ID>
+                              <Description>"impactAudioID"</Description>
+                              <LastState Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>String</VariableType>
+                              <Length>32</Length>
+                              <Unicode>1</Unicode>
+                              <ZeroTerminate>1</ZeroTerminate>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>14</Offset>
+                                <Offset>160</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116401</ID>
+                              <Description>"tempODIncAmount"</Description>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Float</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>170</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116402</ID>
+                              <Description>"healRestoreAmount"</Description>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>174</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116403</ID>
+                              <Description>"attackShielded"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>17C</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116404</ID>
+                              <Description>"attackGuarded"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>17D</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116405</ID>
+                              <Description>"passThroughAttack"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>17E</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116406</ID>
+                              <Description>"invulnerable"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>18C</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116407</ID>
+                              <Description>"showInvulnerableMsg"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>18D</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116408</ID>
+                              <Description>"applyIgnoreHurtMod"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>18E</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116409</ID>
+                              <Description>"applyIgnoreKnockbackMod"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>18F</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116410</ID>
+                              <Description>"ignoreGrab"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>190</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116411</ID>
+                              <Description>"ignoreHitStunDurationModifier"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>191</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116412</ID>
+                              <Description>"ignoreFrozenState"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>192</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116413</ID>
+                              <Description>"ignoreSlow"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>193</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116414</ID>
+                              <Description>"ignoreBurn"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>194</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116415</ID>
+                              <Description>"ignoreShock"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>195</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116416</ID>
+                              <Description>"ignorePoison"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>196</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116417</ID>
+                              <Description>"ignoreOverdriveProgress"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>197</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116418</ID>
+                              <Description>"ignorePlayerEndStats"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>198</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116419</ID>
+                              <Description>"evadeCrit"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>199</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116420</ID>
+                              <Description>"flashRedOnHit"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>19A</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116421</ID>
+                              <Description>"showHitSpark"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>19B</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116422</ID>
+                              <Description>"faceHurtDirection"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>19C</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116423</ID>
+                              <Description>"showDamageNumbers"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>19D</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116424</ID>
+                              <Description>"calcShowDamageNumbers"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>19E</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116425</ID>
+                              <Description>"useHurtBoxTransform"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>19F</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116426</ID>
+                              <Description>"guardFacingDirection"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>1A0</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116427</ID>
+                              <Description>"textSizeScale"</Description>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Float</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>1D4</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116428</ID>
+                              <Description>"invulnerabilityStopwatchID"</Description>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>1D8</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116429</ID>
+                              <Description>"invulnerableCoroutineActive"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>1DC</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116430</ID>
+                              <Description>"currentDmgVal"</Description>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Float</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>1E0</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116431</ID>
+                              <Description>"minDmgRequired"</Description>
+                              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>Byte</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>1EC</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                            <CheatEntry>
+                              <ID>116432</ID>
+                              <Description>"eleDmgModVal"</Description>
+                              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                              <Color>80000008</Color>
+                              <VariableType>4 Bytes</VariableType>
+                              <Address>GameController_static_basepointer</Address>
+                              <Offsets>
+                                <Offset>1F0</Offset>
+                                <Offset>40</Offset>
+                                <Offset>20</Offset>
+                                <Offset>18</Offset>
+                              </Offsets>
+                            </CheatEntry>
+                          </CheatEntries>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116433</ID>
+                          <Description>"skillCategory"</Description>
+                          <LastState Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>String</VariableType>
+                          <Length>32</Length>
+                          <Unicode>1</Unicode>
+                          <ZeroTerminate>1</ZeroTerminate>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>14</Offset>
+                            <Offset>58</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116434</ID>
+                          <Description>"paused"</Description>
+                          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>EC</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116435</ID>
+                          <Description>"isFacingRight"</Description>
+                          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>ED</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116436</ID>
+                          <Description>"elementFromTileSet"</Description>
+                          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>FC</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116437</ID>
+                          <Description>"disablePreventFallCollider"</Description>
+                          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>FD</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116438</ID>
+                          <Description>"multiAnimHurt"</Description>
+                          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>FE</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116439</ID>
+                          <Description>"hitStunDurationModifier"</Description>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>100</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116440</ID>
+                          <Description>"ignorePrevHitStunDuration"</Description>
+                          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>104</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116441</ID>
+                          <Description>"lastTileRow"</Description>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>108</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116442</ID>
+                          <Description>"lastTileCol"</Description>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>10C</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116443</ID>
+                          <Description>"worldInfoInitialized"</Description>
+                          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>110</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116444</ID>
+                          <Description>"quality"</Description>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>114</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116445</ID>
+                          <Description>"lineOfSightLayerMask"</Description>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>118</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116446</ID>
+                          <Description>"pathIndex"</Description>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>11C</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116447</ID>
+                      <Description>"Player Stats"</Description>
+                      <Options moHideChildren="1"/>
+                      <LastState Value="" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>116448</ID>
+                          <Description>"Base Address"</Description>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>0</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116449</ID>
+                          <Description>"outfitID"</Description>
+                          <LastState Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>String</VariableType>
+                          <Length>32</Length>
+                          <Unicode>1</Unicode>
+                          <ZeroTerminate>1</ZeroTerminate>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>14</Offset>
+                            <Offset>2F0</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116450</ID>
+                          <Description>"designatedItemID"</Description>
+                          <LastState Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>String</VariableType>
+                          <Length>32</Length>
+                          <Unicode>1</Unicode>
+                          <ZeroTerminate>1</ZeroTerminate>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>14</Offset>
+                            <Offset>2F8</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116451</ID>
+                          <Description>"playerID"</Description>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>320</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116452</ID>
+                          <Description>"playForehandAnim"</Description>
+                          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>324</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116453</ID>
+                          <Description>"forehandAnimPlayed"</Description>
+                          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>325</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116454</ID>
+                          <Description>"overdriveInvincibleTime"</Description>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>328</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116455</ID>
+                          <Description>"overdriveValue"</Description>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>32C</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116456</ID>
+                          <Description>"overdriveMinValue"</Description>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>330</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116457</ID>
+                          <Description>"overdriveTimedOut"</Description>
+                          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>334</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116458</ID>
+                          <Description>"overdriveReady"</Description>
+                          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>335</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116459</ID>
+                          <Description>"overdriveDoubleUsed"</Description>
+                          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>336</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116460</ID>
+                          <Description>"overdriveHealValue"</Description>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>338</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116461</ID>
+                          <Description>"parryAllowed"</Description>
+                          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>33C</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116462</ID>
+                          <Description>"parryAllowedTime"</Description>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>340</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116463</ID>
+                          <Description>"initLightIntensity"</Description>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>354</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116464</ID>
+                          <Description>"currentLightIntensity"</Description>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>358</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116465</ID>
+                          <Description>"outfitColorIndex"</Description>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>35C</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>116466</ID>
+                          <Description>"spawnGhostOnDeath"</Description>
+                          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                          <Color>80000008</Color>
+                          <VariableType>Byte</VariableType>
+                          <Address>GameController_static_basepointer</Address>
+                          <Offsets>
+                            <Offset>370</Offset>
+                            <Offset>20</Offset>
+                            <Offset>18</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116467</ID>
+              <Description>"prevLevelName"</Description>
+              <LastState Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>String</VariableType>
+              <Length>32</Length>
+              <Unicode>1</Unicode>
+              <ZeroTerminate>1</ZeroTerminate>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>14</Offset>
+                <Offset>50</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116468</ID>
+              <Description>"queuedLevelName"</Description>
+              <LastState Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>String</VariableType>
+              <Length>32</Length>
+              <Unicode>1</Unicode>
+              <ZeroTerminate>1</ZeroTerminate>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>14</Offset>
+                <Offset>58</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116469</ID>
+              <Description>"lastTierName"</Description>
+              <LastState Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>String</VariableType>
+              <Length>32</Length>
+              <Unicode>1</Unicode>
+              <ZeroTerminate>1</ZeroTerminate>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>14</Offset>
+                <Offset>60</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116470</ID>
+              <Description>"currentLevelName"</Description>
+              <LastState Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>String</VariableType>
+              <Length>32</Length>
+              <Unicode>1</Unicode>
+              <ZeroTerminate>1</ZeroTerminate>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>14</Offset>
+                <Offset>68</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116471</ID>
+              <Description>"skipLevelLoadFrames"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>70</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116472</ID>
+              <Description>"curSkipLevelLoadFrame"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>74</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116473</ID>
+              <Description>"levelGold"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>78</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116474</ID>
+              <Description>"totalGold"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>7C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116475</ID>
+              <Description>"levelPlat"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>80</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116476</ID>
+              <Description>"totalPlat"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>84</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116477</ID>
+              <Description>"levelTime"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>88</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116478</ID>
+              <Description>"lastTotalTime"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>8C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116479</ID>
+              <Description>"totalTime"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>90</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116480</ID>
+              <Description>"timeSinceLastTimeSave"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>94</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116481</ID>
+              <Description>"pauseTimer"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>98</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116482</ID>
+              <Description>"baseDifficulty"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>9C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116483</ID>
+              <Description>"stageCount"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>A0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116484</ID>
+              <Description>"tierCount"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>A4</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116485</ID>
+              <Description>"maxTierCount"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>A8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116486</ID>
+              <Description>"hideUI"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>148</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116487</ID>
+              <Description>"pausePressed"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>149</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116488</ID>
+              <Description>"pauseQueued"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>14A</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116489</ID>
+              <Description>"loadingPauseQueued"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>14B</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116490</ID>
+              <Description>"resetCameraOnLoadLevel"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>14C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116491</ID>
+              <Description>"resetGameDataQueued"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>14D</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116492</ID>
+              <Description>"pvp"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>14E</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116493</ID>
+              <Description>"coopOn"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>14F</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116494</ID>
+              <Description>"p1Joined"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>150</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116495</ID>
+              <Description>"p2Joined"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>151</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116496</ID>
+              <Description>"coreDependenciesLoaded"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>170</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116497</ID>
+              <Description>"secondaryDependenciesLoaded"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>171</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116498</ID>
+              <Description>"effectsPoolsLoaded"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>172</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116499</ID>
+              <Description>"resetHubVars"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>188</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116500</ID>
+              <Description>"callbackType"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>GameController_static_basepointer</Address>
+              <Offsets>
+                <Offset>18C</Offset>
+              </Offsets>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>115795</ID>
+      <Description>"Player_static Base Address Scan Initialization (Activate This First)"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="0"/>
+      <Color>800000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+registersymbol(Player_static_basepointer)
+registersymbol(Player_static_update_enable)
+registersymbol(Player_static_set_enable)
+registersymbol(Player_static_gemsset_enable)
+registersymbol(Player_static_coinsset_enable)
+
+alloc(Player_static_basepointer, 8)
+alloc(Player_static_update_enable, 4)
+alloc(Player_static_set_enable, 4)
+alloc(Player_static_gemsset_enable, 4)
+alloc(Player_static_coinsset_enable, 4)
+
+
+[DISABLE]
+unregistersymbol(Player_static_basepointer)
+unregistersymbol(Player_static_update_enable)
+unregistersymbol(Player_static_set_enable)
+unregistersymbol(Player_static_gemsset_enable)
+unregistersymbol(Player_static_coinsset_enable)
+
+dealloc(Player_static_basepointer)
+dealloc(Player_static_update_enable)
+dealloc(Player_static_set_enable)
+dealloc(Player_static_gemsset_enable)
+dealloc(Player_static_coinsset_enable)
+
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>115796</ID>
+          <Description>"Player_static Base Address Scan (To Activate: Play Level, To Update: Play Level)"</Description>
+          <LastState Activated="0"/>
+          <Color>804000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+label(Player_static_savedAOB)
+label(Player_static_returnhere)
+label(Player_static_originalcode)
+label(Player_static_exit)
+
+label(Player_static_update_exit)
+label(Player_static_set_exit)
+label(Player_static_gemsset_exit)
+label(Player_static_coinsset_exit)
+
+registersymbol(Player_static_savedAOB)
+
+//240117B6 - 48 83 C4 20           - add rsp,20
+//240117BA - B8 E02D3402           - mov eax,02342DE0 : [00000001]
+// GameUI:Update+cf
+//240117BF - 48 0FB6 00            - movzx rax,byte ptr [rax]
+//240117C3 - 85 C0                 - test eax,eax
+//240117C5 - 0F84 0C010000         - je 240118D7
+//240117CB - 48 8B 04 25 982E3402  - mov rax,[02342E98] : [3E42BDE0]
+//240117D3 - 48 85 C0              - test rax,rax
+//240117D6 - 0F84 FB000000         - je 240118D7
+//240117DC - 48 8B 04 25 902E3402  - mov rax,[02342E90] : [3E42BE40]
+aobscan(Player_static_searchedAOB, 48 0F B6 00 85 C0 0F 84 0C 01 00 00 * * * * * * * * 48 85 C0)
+
+alloc(Player_static_newmem, 2048, Player_static_searchedAOB)
+alloc(Player_static_temp1, 8, Player_static_searchedAOB)
+alloc(Player_static_temp2, 8, Player_static_searchedAOB)
+alloc(Player_static_temp3, 8, Player_static_searchedAOB)
+alloc(Player_static_temp4, 8, Player_static_searchedAOB)
+alloc(Player_static_temp5, 8, Player_static_searchedAOB)
+
+
+Player_static_newmem:
+mov [Player_static_temp1], rax
+mov [Player_static_temp2], rbx
+mov [Player_static_temp3], rcx
+mov [Player_static_temp4], rdx
+
+mov rbx, 0
+mov ebx, [Player_static_savedAOB+10]
+sub rbx, 38
+
+cmp dword ptr [Player_static_update_enable], #0
+je Player_static_update_exit
+mov [Player_static_basepointer], rbx
+Player_static_update_exit:
+
+cmp dword ptr [Player_static_set_enable], #0
+je Player_static_set_exit
+Player_static_set_exit:
+
+cmp dword ptr [Player_static_gemsset_enable], #0
+je Player_static_gemsset_exit
+mov rcx, [rbx+38]
+test rcx, rcx
+je Player_static_gemsset_exit
+mov edx, [rcx+2c]
+mov [rcx+28], edx
+Player_static_gemsset_exit:
+
+cmp dword ptr [Player_static_coinsset_enable], #0
+je Player_static_coinsset_exit
+mov rcx, [rbx+30]
+test rcx, rcx
+je Player_static_coinsset_exit
+mov edx, [rcx+2c]
+mov [rcx+28], edx
+Player_static_coinsset_exit:
+
+mov rax, [Player_static_temp1]
+mov rbx, [Player_static_temp2]
+mov rcx, [Player_static_temp3]
+mov rdx, [Player_static_temp4]
+
+
+Player_static_originalcode:
+db 48 0F B6 00 85 C0
+//movzx rax,byte ptr [rax]
+//test eax,eax
+
+
+Player_static_exit:
+jmp Player_static_returnhere
+
+
+Player_static_searchedAOB:
+Player_static_savedAOB:
+jmp Player_static_newmem
+nop
+Player_static_returnhere:
+
+
+[DISABLE]
+Player_static_savedAOB:
+db 48 0F B6 00 85 C0
+//movzx rax,byte ptr [rax]
+//test eax,eax
+
+unregistersymbol(Player_static_savedAOB)
+
+dealloc(Player_static_newmem)
+dealloc(Player_static_temp1)
+dealloc(Player_static_temp2)
+dealloc(Player_static_temp3)
+dealloc(Player_static_temp4)
+dealloc(Player_static_temp5)
+
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>115797</ID>
+          <Description>"Chaos Gems Set to Max?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Player_static_gemsset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>115798</ID>
+          <Description>"Gold Coins Set to Max?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Player_static_coinsset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>115807</ID>
+          <Description>"Player_static Update Base Address?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Player_static_update_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>115808</ID>
+          <Description>"Player_static Stats"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" Activated="0" RealAddress="00000000"/>
+          <Color>80000008</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>115809</ID>
+              <Description>"Base Address"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Player_static_basepointer</Address>
+              <Offsets>
+                <Offset>0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>115810</ID>
+              <Description>"goldDebtWallet"</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>115811</ID>
+                  <Description>"Base Address"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Player_static_basepointer</Address>
+                  <Offsets>
+                    <Offset>0</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>115812</ID>
+                  <Description>"balance"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Player_static_basepointer</Address>
+                  <Offsets>
+                    <Offset>28</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>115813</ID>
+                  <Description>"maxBalance"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Player_static_basepointer</Address>
+                  <Offsets>
+                    <Offset>2C</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>115814</ID>
+              <Description>"goldWallet"</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>115815</ID>
+                  <Description>"Base Address"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Player_static_basepointer</Address>
+                  <Offsets>
+                    <Offset>0</Offset>
+                    <Offset>30</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>115816</ID>
+                  <Description>"balance"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Player_static_basepointer</Address>
+                  <Offsets>
+                    <Offset>28</Offset>
+                    <Offset>30</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>115817</ID>
+                  <Description>"maxBalance"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Player_static_basepointer</Address>
+                  <Offsets>
+                    <Offset>2C</Offset>
+                    <Offset>30</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>115818</ID>
+              <Description>"platWallet"</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>115819</ID>
+                  <Description>"Base Address"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Player_static_basepointer</Address>
+                  <Offsets>
+                    <Offset>0</Offset>
+                    <Offset>38</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>115820</ID>
+                  <Description>"balance"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Player_static_basepointer</Address>
+                  <Offsets>
+                    <Offset>28</Offset>
+                    <Offset>38</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>115821</ID>
+                  <Description>"maxBalance"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Player_static_basepointer</Address>
+                  <Offsets>
+                    <Offset>2C</Offset>
+                    <Offset>38</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>115822</ID>
+              <Description>"diagonalInputDiffRange"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>Player_static_basepointer</Address>
+              <Offsets>
+                <Offset>40</Offset>
+              </Offsets>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>
