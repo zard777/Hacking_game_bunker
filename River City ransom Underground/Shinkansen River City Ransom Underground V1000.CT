@@ -1,0 +1,1591 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="18">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>111723</ID>
+      <Description>"Kunio Base Address Scan Initialization (Activate This First)"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="0"/>
+      <Color>800000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+registersymbol(Kunio_basepointer)
+registersymbol(Kunio_update_enable)
+registersymbol(Kunio_set_enable)
+registersymbol(Kunio_staminaset_enable)
+registersymbol(Kunio_energyset_enable)
+registersymbol(Kunio_specialpowerset_enable)
+
+alloc(Kunio_basepointer, 4)
+alloc(Kunio_update_enable, 4)
+alloc(Kunio_set_enable, 4)
+alloc(Kunio_staminaset_enable, 4)
+alloc(Kunio_energyset_enable, 4)
+alloc(Kunio_specialpowerset_enable, 4)
+
+
+[DISABLE]
+unregistersymbol(Kunio_basepointer)
+unregistersymbol(Kunio_update_enable)
+unregistersymbol(Kunio_set_enable)
+unregistersymbol(Kunio_staminaset_enable)
+unregistersymbol(Kunio_energyset_enable)
+unregistersymbol(Kunio_specialpowerset_enable)
+
+dealloc(Kunio_basepointer)
+dealloc(Kunio_update_enable)
+dealloc(Kunio_set_enable)
+dealloc(Kunio_staminaset_enable)
+dealloc(Kunio_energyset_enable)
+dealloc(Kunio_specialpowerset_enable)
+
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>111724</ID>
+          <Description>"Kunio Base Address Scan (To Activate: Play Level, To Update: Play Level)"</Description>
+          <LastState Activated="0"/>
+          <Color>804000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+label(Kunio_savedAOB)
+label(Kunio_returnhere)
+label(Kunio_originalcode)
+label(Kunio_exit)
+
+label(Kunio_update_exit)
+label(Kunio_set_exit)
+label(Kunio_staminaset_exit)
+label(Kunio_energyset_exit)
+label(Kunio_specialpowerset_exit)
+
+registersymbol(Kunio_savedAOB)
+
+//RCRU.Engine.Actors.Character::get_AllDead+1C - 5E                    - pop esi
+//RCRU.Engine.Actors.Character::get_AllDead+1D - C3                    - ret
+//RCRU.Engine.Actors.Character::get_AllDead+1E - 0FB6 86 C3000000      - movzx eax,byte ptr [esi+000000C3]
+//RCRU.Engine.Actors.Character::get_AllDead+25 - 5E                    - pop esi
+//RCRU.Engine.Actors.Character::get_AllDead+26 - C3                    - ret
+aobscan(Kunio_searchedAOB, 0F B6 86 C3 00 00 00 5E C3)
+
+alloc(Kunio_newmem, 2048, Kunio_searchedAOB)
+alloc(Kunio_temp1, 4, Kunio_searchedAOB)
+alloc(Kunio_temp2, 4, Kunio_searchedAOB)
+alloc(Kunio_temp3, 4, Kunio_searchedAOB)
+alloc(Kunio_temp4, 4, Kunio_searchedAOB)
+alloc(Kunio_temp5, 4, Kunio_searchedAOB)
+
+
+Kunio_newmem:
+mov [Kunio_temp1], eax
+mov [Kunio_temp2], ebx
+mov [Kunio_temp3], ecx
+mov [Kunio_temp4], edx
+
+cmp dword ptr [Kunio_update_enable], #0
+je Kunio_update_exit
+mov [Kunio_basepointer], esi
+Kunio_update_exit:
+
+mov ebx, [esi+28]
+test ebx, ebx
+je Kunio_specialpowerset_exit
+
+cmp dword ptr [Kunio_set_enable], #0
+je Kunio_set_exit
+Kunio_set_exit:
+
+cmp dword ptr [Kunio_staminaset_enable], #0
+je Kunio_staminaset_exit
+mov cx, word ptr [ebx+3e]
+mov word ptr [esi+b4], cx
+Kunio_staminaset_exit:
+
+cmp dword ptr [Kunio_energyset_enable], #0
+je Kunio_energyset_exit
+mov cx, word ptr [ebx+3c]
+mov word ptr [esi+66], cx
+Kunio_energyset_exit:
+
+cmp dword ptr [Kunio_specialpowerset_enable], #0
+je Kunio_specialpowerset_exit
+mov cl, byte ptr [ebx+48]
+mov byte ptr [ebx+47], cl
+Kunio_specialpowerset_exit:
+
+mov eax, [Kunio_temp1]
+mov ebx, [Kunio_temp2]
+mov ecx, [Kunio_temp3]
+mov edx, [Kunio_temp4]
+
+
+Kunio_originalcode:
+db 0F B6 86 C3 00 00 00
+//movzx eax,byte ptr [esi+000000C3]
+
+
+Kunio_exit:
+jmp Kunio_returnhere
+
+
+Kunio_searchedAOB:
+Kunio_savedAOB:
+jmp Kunio_newmem
+nop
+nop
+Kunio_returnhere:
+
+
+[DISABLE]
+Kunio_savedAOB:
+db 0F B6 86 C3 00 00 00
+//movzx eax,byte ptr [esi+000000C3]
+
+unregistersymbol(Kunio_savedAOB)
+
+dealloc(Kunio_newmem)
+dealloc(Kunio_temp1)
+dealloc(Kunio_temp2)
+dealloc(Kunio_temp3)
+dealloc(Kunio_temp4)
+dealloc(Kunio_temp5)
+
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>111725</ID>
+          <Description>"Stamina Set to Max?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Kunio_staminaset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>111726</ID>
+          <Description>"Energy Set to Max?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Kunio_energyset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>111727</ID>
+          <Description>"Special Power Set to Max?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Kunio_specialpowerset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>111735</ID>
+          <Description>"Kunio Update Base Address?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>Kunio_update_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>111901</ID>
+          <Description>"Kunio Stats"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" Activated="0" RealAddress="00000000"/>
+          <Color>80000008</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>111902</ID>
+              <Description>"Base Address"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111906</ID>
+              <Description>"facingLeft"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111907</ID>
+              <Description>"position"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>10</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111908</ID>
+              <Description>"position_2"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>14</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111909</ID>
+              <Description>"position_3"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>18</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111914</ID>
+              <Description>"controller"</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>111915</ID>
+                  <Description>"Base Address"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>0</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111917</ID>
+                  <Description>"_LastSafeRespawnPosition_k__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>4</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111918</ID>
+                  <Description>"_LastSafeRespawnPosition_k__BackingField_2"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>8</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111919</ID>
+                  <Description>"_LastSafeRespawnPosition_k__BackingField_3"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>C</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111924</ID>
+                  <Description>"backpack"</Description>
+                  <Options moHideChildren="1"/>
+                  <LastState Value="" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>111925</ID>
+                      <Description>"Base Address"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>Kunio_basepointer</Address>
+                      <Offsets>
+                        <Offset>0</Offset>
+                        <Offset>1C</Offset>
+                        <Offset>28</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>111926</ID>
+                      <Description>"money"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>Kunio_basepointer</Address>
+                      <Offsets>
+                        <Offset>4</Offset>
+                        <Offset>1C</Offset>
+                        <Offset>28</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111927</ID>
+                  <Description>"energyDrinkStartedAt"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>20</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111928</ID>
+                  <Description>"xp"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>24</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111929</ID>
+                  <Description>"comboHitWindowCounter"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>28</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111930</ID>
+                  <Description>"nextTime"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>2C</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111931</ID>
+                  <Description>"moveReplacementFlags"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>30</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111932</ID>
+                  <Description>"moveReplacementPriorMoveIndex"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>34</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111933</ID>
+                  <Description>"_UnlockFlags_k__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>38</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111934</ID>
+                  <Description>"maxEnergy"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>2 Bytes</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>3C</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111935</ID>
+                  <Description>"maxStamina"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>2 Bytes</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>3E</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111936</ID>
+                  <Description>"attack"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>40</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111937</ID>
+                  <Description>"weapon"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>41</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111938</ID>
+                  <Description>"throwing"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>42</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111939</ID>
+                  <Description>"agility"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>43</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111940</ID>
+                  <Description>"defense"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>44</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111941</ID>
+                  <Description>"strength"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>45</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111942</ID>
+                  <Description>"willPower"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>46</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111943</ID>
+                  <Description>"specialPower"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>47</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111944</ID>
+                  <Description>"maxSpecialPower"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>48</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111945</ID>
+                  <Description>"hasEarnedXp"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>49</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111946</ID>
+                  <Description>"teleportLock"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>4A</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111947</ID>
+                  <Description>"playerIndex"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>4B</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111948</ID>
+                  <Description>"runToIdleSlideStop"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>4C</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111949</ID>
+                  <Description>"itemIndex"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>4D</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111950</ID>
+                  <Description>"comboHitCounter"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>4E</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111951</ID>
+                  <Description>"moveReplacementSpecialPoints"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>4F</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111952</ID>
+                  <Description>"moveReplacementMerlinSP"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>50</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111953</ID>
+                  <Description>"standingStillTimer"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>51</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111954</ID>
+                  <Description>"standingStill"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>52</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111955</ID>
+                  <Description>"lowRumble"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>53</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>111956</ID>
+                  <Description>"highRumble"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>Kunio_basepointer</Address>
+                  <Offsets>
+                    <Offset>54</Offset>
+                    <Offset>28</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111957</ID>
+              <Description>"lastInput"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>2C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111958</ID>
+              <Description>"fallingFromY"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>30</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111959</ID>
+              <Description>"runDirection"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>34</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111960</ID>
+              <Description>"walkFrameCounter"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>38</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111961</ID>
+              <Description>"team"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>3C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111962</ID>
+              <Description>"cpuPlayerIndex"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>3D</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111963</ID>
+              <Description>"teleportTimer"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>3E</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111964</ID>
+              <Description>"neverLeftTeleport"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>3F</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111965</ID>
+              <Description>"didWalk"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>40</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111966</ID>
+              <Description>"didRun"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>41</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111967</ID>
+              <Description>"runPendingTimer"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>42</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111968</ID>
+              <Description>"runXReversed"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>43</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111969</ID>
+              <Description>"jumpToRun"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>44</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111970</ID>
+              <Description>"climbCancelled"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>45</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111971</ID>
+              <Description>"suspendTimer"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>46</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111972</ID>
+              <Description>"suspendByStory"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>47</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111973</ID>
+              <Description>"walkBackwards"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>48</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111974</ID>
+              <Description>"didUserJump"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>49</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111975</ID>
+              <Description>"didDoubleJump"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>4A</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111976</ID>
+              <Description>"jumpTakeInputTimer"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>4B</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111977</ID>
+              <Description>"pendingJumpButton"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>4C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111978</ID>
+              <Description>"cancelRunFromJump"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>4D</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111979</ID>
+              <Description>"_OnGround_k__BackingField"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>4E</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111980</ID>
+              <Description>"velocityY"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>50</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111981</ID>
+              <Description>"movement"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>54</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111982</ID>
+              <Description>"movement_2"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>58</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111983</ID>
+              <Description>"invincibilityStarted"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>5C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111984</ID>
+              <Description>"blinkTimer"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>2 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>60</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111985</ID>
+              <Description>"whiteFlashFrames"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>62</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111986</ID>
+              <Description>"redFlashFrames"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>63</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111987</ID>
+              <Description>"blinkForever"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>64</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111988</ID>
+              <Description>"deathRattle"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>65</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111989</ID>
+              <Description>"energy"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>2 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>66</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111997</ID>
+              <Description>"rotation256"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>84</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111998</ID>
+              <Description>"electrocuteStarted"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>88</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>111999</ID>
+              <Description>"nitrogenStartedAt"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>8C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112000</ID>
+              <Description>"fullNelsonStarted"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>90</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112001</ID>
+              <Description>"forcedRunStartedAt"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>94</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112002</ID>
+              <Description>"bumpXPending"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>98</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112003</ID>
+              <Description>"grabbedStartedAt"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>9C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112004</ID>
+              <Description>"stunnedStarted"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>A0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112005</ID>
+              <Description>"downedStartedAt"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>A4</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112006</ID>
+              <Description>"tiredOrWindedStartedAt"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>A8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112007</ID>
+              <Description>"lastPunchButtonTime"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>AC</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112008</ID>
+              <Description>"lastKickButtonTime"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>B0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112009</ID>
+              <Description>"stamina"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>2 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>B4</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112010</ID>
+              <Description>"framesOutOfControl"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>2 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>B6</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112011</ID>
+              <Description>"pendingHitDamage"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>2 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>B8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112012</ID>
+              <Description>"moveHistoryBuffer"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>2 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>BA</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112013</ID>
+              <Description>"tookPhysicsDamage"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>BC</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112014</ID>
+              <Description>"groundPoundPunchCued"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>BD</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112015</ID>
+              <Description>"isABoss"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>BE</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112016</ID>
+              <Description>"asABossIHaveNotDamagedAnyPlayers"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>BF</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112017</ID>
+              <Description>"bounceFaceUp"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>C0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112018</ID>
+              <Description>"moveTaps"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>C1</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112019</ID>
+              <Description>"escapeTaps"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>C2</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112020</ID>
+              <Description>"allDead"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>C3</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112021</ID>
+              <Description>"pendingHitOnHead"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>C4</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112022</ID>
+              <Description>"pendingHitBehind"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>C5</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112023</ID>
+              <Description>"impactTimer"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>C6</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112024</ID>
+              <Description>"ragdoll"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>C7</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112025</ID>
+              <Description>"haveDoneDamage"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>C8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112026</ID>
+              <Description>"attackWasStartedFromPummelEscape"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>C9</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112027</ID>
+              <Description>"specialTimer"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>CA</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112028</ID>
+              <Description>"moveHistory1"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>CB</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112029</ID>
+              <Description>"moveHistory2"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>CC</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112030</ID>
+              <Description>"moveHistory3"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>CD</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112031</ID>
+              <Description>"boringMoveCounter"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>CE</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112032</ID>
+              <Description>"lastMoveHit"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>CF</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112033</ID>
+              <Description>"lastMoveHitButWasBoring"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>D0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112034</ID>
+              <Description>"boringMoveTimer"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>D1</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112035</ID>
+              <Description>"priorMoveIndex"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>D2</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112036</ID>
+              <Description>"velocityX"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>D4</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112037</ID>
+              <Description>"velocityZ"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>D8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112038</ID>
+              <Description>"slideX"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>DC</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112039</ID>
+              <Description>"inputHistory"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>E0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112040</ID>
+              <Description>"inputHistory_2"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>E4</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112041</ID>
+              <Description>"inputHistory_3"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>E8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>112043</ID>
+              <Description>"acroCircusFrameCount"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>Kunio_basepointer</Address>
+              <Offsets>
+                <Offset>F0</Offset>
+              </Offsets>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
