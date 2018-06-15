@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Player Base"</Description>
+      <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+      <LastState/>
+      <Color>0000FF</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+// Player Base
+
+{$lua}
+LaunchMonoDataCollector()
+
+{$asm}
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+label(PlBase)
+
+registersymbol(PlBase)
+
+newmem:
+
+code:
+  mov [PlBase],rax
+  movss xmm0,[rax+000008DC]
+  jmp return
+
+PlBase:
+  dd 0
+
+HealthBar:UpdateStuff+23:
+  jmp newmem
+  nop
+  nop
+  nop
+return:
+/////////////////////
+////////EXP ////////
+///////////////////
+
+alloc(newmem2,$1000)
+
+
+label(code2)
+label(return2)
+label(ExpBase)
+registersymbol(ExpBase)
+
+newmem2:
+
+code2:
+  mov dword ptr [ExpBase],rax
+  movsxd  rdx,dword ptr [rax]
+  mov rax,[rsi+28]
+  jmp return2
+
+ExpBase:
+dd 0
+
+SkillBar:SkillBarChange+d8:
+  jmp newmem2
+  nop
+  nop
+return2:
+
+
+[DISABLE]
+
+HealthBar:UpdateStuff+23:
+  db F3 0F 10 80 DC 08 00 00
+
+SkillBar:SkillBarChange+d8:
+  db 48 63 10 48 8B 46 28
+
+unregistersymbol(PlBase)
+unregistersymbol(ExpBase)
+dealloc(newmem)
+dealloc(newmem2)
+
+
+{
+// ORIGINAL CODE - INJECTION POINT: 26680C85553
+
+26680C8552F: 00 55 48                       -  add [rbp+48],dl
+26680C85532: 8B EC                          -  mov ebp,esp
+26680C85534: 56                             -  push rsi
+26680C85535: 48 83 EC 18                    -  sub rsp,18
+26680C85539: 48 8B F1                       -  mov rsi,rcx
+26680C8553C: 48 8B 46 18                    -  mov rax,[rsi+18]
+26680C85540: 0F B6 80 18 08 00 00           -  movzx eax,byte ptr [rax+00000818]
+26680C85547: 85 C0                          -  test eax,eax
+26680C85549: 0F 84 5E 02 00 00              -  je HealthBar:UpdateStuff+27d
+26680C8554F: 48 8B 46 28                    -  mov rax,[rsi+28]
+// ---------- INJECTING HERE ----------
+26680C85553: F3 0F 10 80 94 08 00 00        -  movss xmm0,[rax+00000894]
+// ---------- DONE INJECTING  ----------
+26680C8555B: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+26680C8555F: 48 8B 46 28                    -  mov rax,[rsi+28]
+26680C85563: F3 0F 10 88 E8 08 00 00        -  movss xmm1,[rax+000008E8]
+26680C8556B: F3 0F 5A C9                    -  cvtss2sd xmm1,xmm1
+26680C8556F: F2 0F 5E C1                    -  divsd xmm0,xmm1
+26680C85573: 66 0F 57 C9                    -  xorpd xmm1,xmm1
+26680C85577: F3 0F 10 15 C1 02 00 00        -  movss xmm2,[HealthBar:UpdateStuff+310]
+26680C8557F: F3 0F 5A D2                    -  cvtss2sd xmm2,xmm2
+26680C85583: F2 0F 5A D2                    -  cvtsd2ss xmm2,xmm2
+26680C85587: F2 0F 5A C9                    -  cvtsd2ss xmm1,xmm1
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>2</ID>
+          <Description>"Invisible"</Description>
+          <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <VariableType>Byte</VariableType>
+          <Address>[PlBase]+9C8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>18</ID>
+          <Description>"Infinite Items"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+{$lua}
+LaunchMonoDataCollector()
+
+{$asm}
+alloc(newmem,$100)
+
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov dword ptr [rcx+000000F0],64
+  movsxd  rcx,dword ptr [rcx+000000F0]
+  jmp return
+
+InvSlot:UpdateInvSlot+8f3:
+  jmp newmem
+  nop
+  nop
+return:
+
+[DISABLE]
+
+InvSlot:UpdateInvSlot+8f3:
+  db 48 63 89 F0 00 00 00
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 2889B9C1390
+
+2889B9C135D: 0F 84 05 02 00 00              -  je InvDatabase:SubtractFromItemCount+228
+2889B9C1363: 49 8B 46 18                    -  mov rax,[r14+18]
+2889B9C1367: 48 8B 80 38 05 00 00           -  mov rax,[rax+00000538]
+2889B9C136E: 48 8B 80 F8 00 00 00           -  mov rax,[rax+000000F8]
+2889B9C1375: 48 8B C8                       -  mov rcx,rax
+2889B9C1378: 48 83 EC 20                    -  sub rsp,20
+2889B9C137C: 83 38 00                       -  cmp dword ptr [rax],00
+2889B9C137F: 49 BB E0 12 0E 93 88 02 00 00  -  mov r11,InvInterface:DirtySlots
+2889B9C1389: 41 FF D3                       -  call r11
+2889B9C138C: 48 83 C4 20                    -  add rsp,20
+// ---------- INJECTING HERE ----------
+2889B9C1390: 49 63 87 F0 00 00 00           -  movsxd  rax,dword ptr [r15+000000F0]
+// ---------- DONE INJECTING  ----------
+2889B9C1397: 2B 45 E8                       -  sub eax,[rbp-18]
+2889B9C139A: 41 89 87 F0 00 00 00           -  mov [r15+000000F0],eax
+2889B9C13A1: 41 0F B6 87 F4 00 00 00        -  movzx eax,byte ptr [r15+000000F4]
+2889B9C13A9: 85 C0                          -  test eax,eax
+2889B9C13AB: 0F 84 5A 00 00 00              -  je InvDatabase:SubtractFromItemCount+cb
+2889B9C13B1: 49 8B 4F 28                    -  mov rcx,[r15+28]
+2889B9C13B5: 48 BA 60 B6 80 89 88 02 00 00  -  mov rdx,000002888980B660
+2889B9C13BF: 48 83 EC 20                    -  sub rsp,20
+2889B9C13C3: 49 BB C0 30 89 B4 88 02 00 00  -  mov r11,System:String:op_Equality
+2889B9C13CD: 41 FF D3                       -  call r11
+}
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>3</ID>
+          <Description>"Health"</Description>
+          <VariableType>Float</VariableType>
+          <Address>[PlBase]+8DC</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"Max Health"</Description>
+          <VariableType>Float</VariableType>
+          <Address>[PlBase]+930</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>6</ID>
+          <Description>"Strength"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[PlBase]+944</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>7</ID>
+          <Description>"Max Strength"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[PlBase]+948</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>5</ID>
+          <Description>"Max Speed"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[PlBase]+938</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>27</ID>
+          <Description>"Money"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[PlBase]+3C8</Address>
+          <Offsets>
+            <Offset>F0</Offset>
+            <Offset>C0</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>30</ID>
+          <Description>"Level"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[ExpBase]+A0</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>29</ID>
+          <Description>"Exp"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[ExpBase]</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>23</ID>
+          <Description>"Equipped Weapon"</Description>
+          <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+          <LastState Value="" RealAddress="00000000"/>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>24</ID>
+              <Description>"Item Count"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>[PlBase]+3C8</Address>
+              <Offsets>
+                <Offset>F0</Offset>
+                <Offset>90</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>26</ID>
+              <Description>"Max Ammo"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>[PlBase]+3C8</Address>
+              <Offsets>
+                <Offset>114</Offset>
+                <Offset>90</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>25</ID>
+              <Description>"Melee Damage"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>[PlBase]+3C8</Address>
+              <Offsets>
+                <Offset>138</Offset>
+                <Offset>90</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>28</ID>
+              <Description>"Gun Knock Back"</Description>
+              <VariableType>4 Bytes</VariableType>
+              <Address>[PlBase]+3C8</Address>
+              <Offsets>
+                <Offset>1AC</Offset>
+                <Offset>90</Offset>
+              </Offsets>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
