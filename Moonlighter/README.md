@@ -1,2 +1,2 @@
-### Tested with Moonkighter v1.5.1.0 
+### Tested with Moonlighter v1.5.1.0 
 
