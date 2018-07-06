@@ -1,0 +1,3040 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>35</ID>
+      <Description>"enable (Finisher) (x64)"</Description>
+      <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+      <LastState Activated="1"/>
+      <Color>FF0000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+usemono()
+
+label(pSkillTreeManager)
+registersymbol(pSkillTreeManager)
+
+alloc(newmem,2048,SkillTreeManager:Update) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov [pSkillTreeManager],rcx
+
+originalcode:
+push rbp
+mov rbp,rsp
+push rsi
+
+exit:
+jmp returnhere
+
+///
+pSkillTreeManager:
+///
+
+SkillTreeManager:Update:
+jmp newmem
+returnhere:
+
+///**************************************///
+label(pPlayer)
+registersymbol(pPlayer)
+
+alloc(newmem2,2048,HealingManager:FixedUpdate+21)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov [pPlayer],rax
+
+originalcode2:
+mov rcx,rax
+xor edx,edx
+
+exit2:
+jmp returnhere2
+
+///
+pPlayer:
+///
+
+HealingManager:FixedUpdate+21:
+jmp newmem2
+returnhere2:
+
+///**************************************///
+label(pPlayerPlayerMoveBehaviour)
+registersymbol(pPlayerPlayerMoveBehaviour)
+
+alloc(newmem6,2048,PlayerMoveBehaviour:Update)
+label(returnhere6)
+label(originalcode6)
+label(exit6)
+
+newmem6: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov [pPlayerPlayerMoveBehaviour],rcx
+
+originalcode6:
+push rbp
+mov rbp,rsp
+push rsi
+
+exit6:
+jmp returnhere6
+
+///
+pPlayerPlayerMoveBehaviour:
+///
+
+PlayerMoveBehaviour:Update:
+jmp newmem6
+returnhere6:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+SkillTreeManager:Update:
+db 55 48 8B EC 56
+//Alt: push rbp
+//Alt: mov rbp,rsp
+//Alt: push rsi
+
+unregistersymbol(pSkillTreeManager)
+
+///**************************************///
+dealloc(newmem2)
+HealingManager:FixedUpdate+21:
+db 48 8B C8 33 D2
+//Alt: mov rcx,rax
+//Alt: xor edx,edx
+
+unregistersymbol(pPlayer)
+
+///**************************************///
+dealloc(newmem6)
+PlayerMoveBehaviour:Update:
+db 55 48 8B EC 56
+//Alt: push rbp
+//Alt: mov rbp,rsp
+//Alt: push rsi
+
+unregistersymbol(pPlayerPlayerMoveBehaviour)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>40</ID>
+          <Description>"invulnerable"</Description>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048,Pawn:ApplyDamage+99a) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rcx,pPlayer
+cmp [rcx],rsi
+jne @f
+sete al
+
+originalcode:
+test eax,eax
+setg al
+
+exit:
+jmp returnhere
+
+///
+
+Pawn:ApplyDamage+99a:
+jmp newmem
+nop
+returnhere:
+
+///*********************************///
+
+alloc(newmem2,2048,Pawn:set_health+26)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+movsxd  rax,dword ptr [rsi+e4]
+push rcx
+mov rcx,pPlayer
+cmp [rcx],rsi
+pop rcx
+jne @f
+mov rax,1
+
+originalcode2:
+//movsxd  rax,dword ptr [rsi+000000E4]
+
+exit2:
+jmp returnhere2
+
+///
+
+Pawn:set_health+26:
+jmp newmem2
+nop
+nop
+returnhere2:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+Pawn:ApplyDamage+99a:
+db 85 C0 40 0F 9F C0
+//Alt: test eax,eax
+//Alt: setg al
+
+///*********************************///
+
+dealloc(newmem2)
+Pawn:set_health+26:
+db 48 63 86 E4 00 00 00
+//Alt: movsxd  rax,dword ptr [rsi+000000E4]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>43</ID>
+          <Description>"undead"</Description>
+          <LastState Activated="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048,Pawn:set_health+5) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rsi,pPlayer
+cmp [rsi],rcx
+jne @f
+mov esi,(float)1
+movd xmm0,esi
+comiss xmm1,xmm0
+jae @f
+movss xmm1,xmm0
+
+originalcode:
+sub rsp,18
+mov rsi,rcx
+
+exit:
+jmp returnhere
+
+///
+
+Pawn:set_health+5:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+Pawn:set_health+5:
+db 48 83 EC 18 48 8B F1
+//Alt: sub rsp,18
+//Alt: mov rsi,rcx
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>45</ID>
+          <Description>"damage multiplier"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Activated="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+define(damagemultiplierdefault,(float)2)
+
+label(dDamageMultiplier)
+registersymbol(dDamageMultiplier)
+
+alloc(newmem,2048,PlayerAirAttackBehaviour:InitiateInternal+16a) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+push rcx
+mov rcx,pPlayer
+cmp [rcx],rax
+pop rcx
+jne @f
+mulss xmm5,[dDamageMultiplier]
+
+originalcode:
+movss [rax+000000E0],xmm5
+
+exit:
+jmp returnhere
+
+///
+dDamageMultiplier:
+dd damagemultiplierdefault
+///
+
+PlayerAirAttackBehaviour:InitiateInternal+16a:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+///
+
+alloc(newmem2,2048,AttackBehaviour:InitiateInternal+a5)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rsi,pPlayer
+cmp [rsi],rax
+jne @f
+mulss xmm5,[dDamageMultiplier]
+
+originalcode2:
+movss [rax+000000E0],xmm5
+
+exit2:
+jmp returnhere2
+
+///
+
+AttackBehaviour:InitiateInternal+a5:
+jmp newmem2
+nop
+nop
+nop
+returnhere2:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+PlayerAirAttackBehaviour:InitiateInternal+16a:
+db F3 0F 11 A8 E0 00 00 00
+//Alt: movss [rax+000000E0],xmm5
+
+unregistersymbol(dDamageMultiplier)
+
+///
+
+dealloc(newmem2)
+AttackBehaviour:InitiateInternal+a5:
+db F3 0F 11 A8 E0 00 00 00
+//Alt: movss [rax+000000E0],xmm5
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>46</ID>
+              <Description>"x?"</Description>
+              <LastState Value="2" RealAddress="21330034"/>
+              <Color>008000</Color>
+              <VariableType>Float</VariableType>
+              <Address>dDamageMultiplier</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>47</ID>
+          <Description>"ignore energy"</Description>
+          <LastState Activated="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+EnergyManager:HasEnoughEnergy+35:
+db 90 90 90 90
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+EnergyManager:HasEnoughEnergy+35:
+db 40 0F 97 C0
+//Alt: seta al
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>62</ID>
+          <Description>"ignore ammo"</Description>
+          <LastState Activated="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+GunManager:CanShootGun+16:
+db EB
+
+///***********************************///
+alloc(newmem,2048,PlayerController:UseAmmo+21)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+jns @f
+xor edx,edx
+
+originalcode:
+mov rcx,rax
+sub rsp,20
+
+exit:
+jmp returnhere
+
+///
+
+PlayerController:UseAmmo+21:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+GunManager:CanShootGun+16:
+db 7F
+//Alt: jg
+
+///***********************************///
+dealloc(newmem)
+PlayerController:UseAmmo+21:
+db 48 8B C8 48 83 EC 20
+//Alt: mov rcx,rax
+//Alt: sub rsp,20
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>73</ID>
+          <Description>"enable finisher"</Description>
+          <LastState Activated="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+FinisherManager:CanTriggerFinisher+61:
+db 90 90
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+FinisherManager:CanTriggerFinisher+61:
+db 75 0A
+//Alt: jne FinisherManager:CanTriggerFinisher+6d
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>48</ID>
+          <Description>"ignore health elixir"</Description>
+          <LastState Activated="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(ignorehealthelixir_originalcode,8)
+registersymbol(ignorehealthelixir_originalcode)
+
+ignorehealthelixir_originalcode:
+readmem(HealingManager:ConsumeHealItem+48,6)
+//jng HealingManager:ConsumeHealItem+552
+
+HealingManager:ConsumeHealItem+13:
+db 90 90 90 90 90 90
+
+///**********************************///
+
+alloc(newmem,2048,HealingManager:set_nbHealItem+35)
+label(returnhere)
+label(originalcode_ignorehealthelixir)
+registersymbol(originalcode_ignorehealthelixir)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+test eax,eax
+jg @f
+xor eax,eax
+
+originalcode_ignorehealthelixir:
+readmem(HealingManager:set_nbHealItem+35,6)
+//mov [rdi+58],eax
+//cmp r15d,eax
+
+exit:
+jmp returnhere
+
+///
+
+HealingManager:set_nbHealItem+35:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+HealingManager:ConsumeHealItem+48:
+readmem(ignorehealthelixir_originalcode,6)
+//db 0F 8E 04 05 00 00
+//Alt: jng HealingManager:ConsumeHealItem+552
+
+dealloc(ignorehealthelixir_originalcode)
+unregistersymbol(ignorehealthelixir_originalcode)
+
+///**********************************///
+
+dealloc(newmem)
+HealingManager:set_nbHealItem+35:
+readmem(originalcode_ignorehealthelixir,6)
+//db 89 47 58 44 3B F8
+//Alt: mov [rdi+58],eax
+//Alt: cmp r15d,eax
+
+unregistersymbol(originalcode_ignorehealthelixir)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>36</ID>
+          <Description>"ignore shards + ignore max upgrade"</Description>
+          <LastState Activated="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+usemono()
+
+alloc(newmem,2048,SkillTreeManager:TryPurchaseUpgrade+23) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+test eax,eax
+jnz @f
+mov eax,1
+
+originalcode:
+add rsp,20
+test eax,eax
+
+exit:
+jmp returnhere
+
+///
+
+SkillTreeManager:TryPurchaseUpgrade+23:
+jmp newmem
+nop
+returnhere:
+
+///********************************************///
+alloc(newmem6,2048,CurrencyManager:set_normalShards)
+label(returnhere6)
+label(originalcode6)
+label(exit6)
+
+newmem6: //this is allocated memory, you have read,write,execute access
+//place your code here
+test edx,edx
+jg @f
+xor rdx,rdx
+
+originalcode6:
+push rbp
+mov rbp,rsp
+push rsi
+
+exit6:
+jmp returnhere6
+
+///
+
+CurrencyManager:set_normalShards:
+jmp newmem6
+returnhere6:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+SkillTreeManager:TryPurchaseUpgrade+23:
+db 48 83 C4 20 85 C0
+//Alt: add rsp,20
+//Alt: test eax,eax
+
+///********************************************///
+dealloc(newmem6)
+CurrencyManager:set_normalShards:
+db 55 48 8B EC 56
+//Alt: push rbp
+//Alt: mov rbp,rsp
+//Alt: push rsi
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>60</ID>
+          <Description>"faster move"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Activated="1"/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+label(dMoveMultiplier)
+registersymbol(dMoveMultiplier)
+
+alloc(newmem,2048,MoveBehaviour:ExecuteInternal+77) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+movss xmm0,[rsi+f0]
+mov rax,pPlayerPlayerMoveBehaviour
+cmp [rax],rsi
+jne @f
+mov rax,dMoveMultiplier
+mulss xmm0,[rax]
+
+originalcode:
+//movss xmm0,[rsi+000000F0]
+
+exit:
+jmp returnhere
+
+///
+dMoveMultiplier:
+dd (float)1.2
+///
+
+MoveBehaviour:ExecuteInternal+77:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+MoveBehaviour:ExecuteInternal+77:
+db F3 0F 10 86 F0 00 00 00
+//Alt: movss xmm0,[rsi+000000F0]
+
+unregistersymbol(dMoveMultiplier)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>74</ID>
+              <Description>"speed"</Description>
+              <LastState Value="1.200000048" RealAddress="21300037"/>
+              <Color>008000</Color>
+              <VariableType>Float</VariableType>
+              <Address>dMoveMultiplier</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>63</ID>
+      <Description>"enable (20170817) (x64)"</Description>
+      <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+      <LastState/>
+      <Color>FF0000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+usemono()
+
+label(pSkillTreeManager)
+registersymbol(pSkillTreeManager)
+
+alloc(newmem,2048,SkillTreeManager:Update) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov [pSkillTreeManager],rcx
+
+originalcode:
+push rbp
+mov rbp,rsp
+push rsi
+
+exit:
+jmp returnhere
+
+///
+pSkillTreeManager:
+///
+
+SkillTreeManager:Update:
+jmp newmem
+returnhere:
+
+///**************************************///
+label(pPlayer)
+registersymbol(pPlayer)
+
+alloc(newmem2,2048,HealingManager:FixedUpdate+21)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov [pPlayer],rax
+
+originalcode2:
+mov rcx,rax
+xor edx,edx
+
+exit2:
+jmp returnhere2
+
+///
+pPlayer:
+///
+
+HealingManager:FixedUpdate+21:
+jmp newmem2
+returnhere2:
+
+///**************************************///
+label(pPlayerPlayerMoveBehaviour)
+registersymbol(pPlayerPlayerMoveBehaviour)
+
+alloc(newmem6,2048,PlayerMoveBehaviour:Update)
+label(returnhere6)
+label(originalcode6)
+label(exit6)
+
+newmem6: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov [pPlayerPlayerMoveBehaviour],rcx
+
+originalcode6:
+push rbp
+mov rbp,rsp
+push rsi
+
+exit6:
+jmp returnhere6
+
+///
+pPlayerPlayerMoveBehaviour:
+///
+
+PlayerMoveBehaviour:Update:
+jmp newmem6
+returnhere6:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+SkillTreeManager:Update:
+db 55 48 8B EC 56
+//Alt: push rbp
+//Alt: mov rbp,rsp
+//Alt: push rsi
+
+unregistersymbol(pSkillTreeManager)
+
+///**************************************///
+dealloc(newmem2)
+HealingManager:FixedUpdate+21:
+db 48 8B C8 33 D2
+//Alt: mov rcx,rax
+//Alt: xor edx,edx
+
+unregistersymbol(pPlayer)
+
+///**************************************///
+dealloc(newmem6)
+PlayerMoveBehaviour:Update:
+db 55 48 8B EC 56
+//Alt: push rbp
+//Alt: mov rbp,rsp
+//Alt: push rsi
+
+unregistersymbol(pPlayerPlayerMoveBehaviour)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>64</ID>
+          <Description>"invulnerable"</Description>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048,Pawn:ApplyDamage+99a) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rcx,pPlayer
+cmp [rcx],rsi
+jne @f
+sete al
+
+originalcode:
+test eax,eax
+setg al
+
+exit:
+jmp returnhere
+
+///
+
+Pawn:ApplyDamage+99a:
+jmp newmem
+nop
+returnhere:
+
+///*********************************///
+
+alloc(newmem2,2048,Pawn:set_health+26)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+movsxd  rax,dword ptr [rsi+000000CC]
+push rcx
+mov rcx,pPlayer
+cmp [rcx],rsi
+pop rcx
+jne @f
+mov rax,1
+
+originalcode2:
+//movsxd  rax,dword ptr [rsi+000000CC]
+
+exit2:
+jmp returnhere2
+
+///
+
+Pawn:set_health+26:
+jmp newmem2
+nop
+nop
+returnhere2:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+Pawn:ApplyDamage+99a:
+db 85 C0 40 0F 9F C0
+//Alt: test eax,eax
+//Alt: setg al
+
+///*********************************///
+
+dealloc(newmem2)
+Pawn:set_health+26:
+db 48 63 86 CC 00 00 00
+//Alt: movsxd  rax,dword ptr [rsi+000000CC]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>65</ID>
+          <Description>"undead"</Description>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048,Pawn:set_health+5) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rsi,pPlayer
+cmp [rsi],rcx
+jne @f
+mov esi,(float)1
+movd xmm0,esi
+comiss xmm1,xmm0
+jae @f
+movss xmm1,xmm0
+
+originalcode:
+sub rsp,18
+mov rsi,rcx
+
+exit:
+jmp returnhere
+
+///
+
+Pawn:set_health+5:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+Pawn:set_health+5:
+db 48 83 EC 18 48 8B F1
+//Alt: sub rsp,18
+//Alt: mov rsi,rcx
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>66</ID>
+          <Description>"damage multiplier"</Description>
+          <Options moHideChildren="1"/>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+define(damagemultiplierdefault,(float)2)
+
+label(dDamageMultiplier)
+registersymbol(dDamageMultiplier)
+
+alloc(newmem,2048,PlayerAirAttackBehaviour:InitiateInternal+16a) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+push rcx
+mov rcx,pPlayer
+cmp [rcx],rax
+pop rcx
+jne @f
+mulss xmm5,[dDamageMultiplier]
+
+originalcode:
+movss [rax+000000C8],xmm5
+
+exit:
+jmp returnhere
+
+///
+dDamageMultiplier:
+dd damagemultiplierdefault
+///
+
+PlayerAirAttackBehaviour:InitiateInternal+16a:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+///
+
+alloc(newmem2,2048,AttackBehaviour:InitiateInternal+a5)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rsi,pPlayer
+cmp [rsi],rax
+jne @f
+mulss xmm5,[dDamageMultiplier]
+
+originalcode2:
+movss [rax+000000C8],xmm5
+
+exit2:
+jmp returnhere2
+
+///
+
+AttackBehaviour:InitiateInternal+a5:
+jmp newmem2
+nop
+nop
+nop
+returnhere2:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+PlayerAirAttackBehaviour:InitiateInternal+16a:
+db F3 0F 11 A8 C8 00 00 00
+//Alt: movss [rax+000000C8],xmm5
+
+unregistersymbol(dDamageMultiplier)
+
+///
+
+dealloc(newmem2)
+AttackBehaviour:InitiateInternal+a5:
+db F3 0F 11 A8 C8 00 00 00
+//Alt: movss [rax+000000C8],xmm5
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>67</ID>
+              <Description>"x?"</Description>
+              <LastState Value="2" RealAddress="21330034"/>
+              <Color>008000</Color>
+              <VariableType>Float</VariableType>
+              <Address>dDamageMultiplier</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>68</ID>
+          <Description>"ignore energy"</Description>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+EnergyManager:HasEnoughEnergy+35:
+db 90 90 90 90
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+EnergyManager:HasEnoughEnergy+35:
+db 40 0F 97 C0
+//Alt: seta al
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>69</ID>
+          <Description>"ignore ammo"</Description>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+GunManager:CanShootGun+16:
+db EB
+
+///***********************************///
+alloc(newmem,2048,PlayerController:UseAmmo+21)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+jns @f
+xor edx,edx
+
+originalcode:
+mov rcx,rax
+sub rsp,20
+
+exit:
+jmp returnhere
+
+///
+
+PlayerController:UseAmmo+21:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+GunManager:CanShootGun+16:
+db 7F
+//Alt: jg
+
+///***********************************///
+dealloc(newmem)
+PlayerController:UseAmmo+21:
+db 48 8B C8 48 83 EC 20
+//Alt: mov rcx,rax
+//Alt: sub rsp,20
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>70</ID>
+          <Description>"ignore health elixir"</Description>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(ignorehealthelixir_originalcode,2048)
+registersymbol(ignorehealthelixir_originalcode)
+
+ignorehealthelixir_originalcode:
+readmem(HealingManager:ConsumeHealItem+13,6)
+//jng HealingManager:ConsumeHealItem+316
+
+HealingManager:ConsumeHealItem+13:
+db 90 90 90 90 90 90
+
+///**********************************///
+
+alloc(newmem,2048,HealingManager:set_nbHealItem+35)
+label(returnhere)
+label(originalcode_ignorehealthelixir)
+registersymbol(originalcode_ignorehealthelixir)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+test eax,eax
+jg @f
+xor eax,eax
+
+originalcode_ignorehealthelixir:
+readmem(HealingManager:set_nbHealItem+35,6)
+//mov [rdi+58],eax
+//cmp r15d,eax
+
+exit:
+jmp returnhere
+
+///
+
+HealingManager:set_nbHealItem+35:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+HealingManager:ConsumeHealItem+13:
+readmem(ignorehealthelixir_originalcode,6)
+//db 0F 8E FD 02 00 00
+//Alt: jng HealingManager:ConsumeHealItem+316
+
+dealloc(ignorehealthelixir_originalcode)
+unregistersymbol(ignorehealthelixir_originalcode)
+
+///**********************************///
+
+dealloc(newmem)
+HealingManager:set_nbHealItem+35:
+readmem(originalcode_ignorehealthelixir,6)
+//db 89 47 58 44 3B F8
+//Alt: mov [rdi+58],eax
+//Alt: cmp r15d,eax
+
+unregistersymbol(originalcode_ignorehealthelixir)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>71</ID>
+          <Description>"ignore shards + ignore max upgrade"</Description>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+usemono()
+
+alloc(newmem,2048,SkillTreeManager:TryPurchaseUpgrade+23) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+test eax,eax
+jnz @f
+mov eax,1
+
+originalcode:
+add rsp,20
+test eax,eax
+
+exit:
+jmp returnhere
+
+///
+
+SkillTreeManager:TryPurchaseUpgrade+23:
+jmp newmem
+nop
+returnhere:
+
+///********************************************///
+
+alloc(newmem6,2048,CurrencyManager:set_normalShards+6)
+label(returnhere6)
+label(originalcode6)
+label(exit6)
+
+newmem6: //this is allocated memory, you have read,write,execute access
+//place your code here
+test edx,edx
+jg @f
+xor rdx,rdx
+
+originalcode6:
+sub rsp,10
+mov rdi,rcx
+
+exit6:
+jmp returnhere6
+
+///
+
+CurrencyManager:set_normalShards+6:
+jmp newmem6
+nop
+nop
+returnhere6:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+SkillTreeManager:TryPurchaseUpgrade+23:
+db 48 83 C4 20 85 C0
+//Alt: add rsp,20
+//Alt: test eax,eax
+
+///********************************************///
+
+dealloc(newmem6)
+CurrencyManager:set_normalShards+6:
+db 48 83 EC 10 48 8B F9
+//Alt: sub rsp,10
+//Alt: mov rdi,rcx
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>72</ID>
+          <Description>"faster move"</Description>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+label(dMoveMultiplier)
+registersymbol(dMoveMultiplier)
+
+alloc(newmem,2048,MoveBehaviour:ExecuteInternal+77) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+movss xmm0,[rsi+e8]
+mov rax,pPlayerPlayerMoveBehaviour
+cmp [rax],rsi
+jne @f
+mov rax,dMoveMultiplier
+mulss xmm0,[rax]
+
+originalcode:
+//movss xmm0,[rsi+000000E8]
+
+exit:
+jmp returnhere
+
+///
+dMoveMultiplier:
+dd (float)1.2
+///
+
+MoveBehaviour:ExecuteInternal+77:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+MoveBehaviour:ExecuteInternal+77:
+db F3 0F 10 86 E8 00 00 00
+//Alt: movss xmm0,[rsi+000000E8]
+
+unregistersymbol(dMoveMultiplier)
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>49</ID>
+      <Description>"enable (20170804) (x64)"</Description>
+      <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+      <LastState/>
+      <Color>FF0000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+usemono()
+
+label(pSkillTreeManager)
+registersymbol(pSkillTreeManager)
+
+alloc(newmem,2048,SkillTreeManager:Update) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov [pSkillTreeManager],rcx
+
+originalcode:
+push rbp
+mov rbp,rsp
+push rsi
+
+exit:
+jmp returnhere
+
+///
+pSkillTreeManager:
+///
+
+SkillTreeManager:Update:
+jmp newmem
+returnhere:
+
+///**************************************///
+
+label(pPlayer)
+registersymbol(pPlayer)
+
+alloc(newmem2,2048,HealingManager:FixedUpdate+21)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov [pPlayer],rax
+
+originalcode2:
+mov rcx,rax
+xor edx,edx
+
+exit2:
+jmp returnhere2
+
+///
+pPlayer:
+///
+
+HealingManager:FixedUpdate+21:
+jmp newmem2
+returnhere2:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+SkillTreeManager:Update:
+db 55 48 8B EC 56
+//Alt: push rbp
+//Alt: mov rbp,rsp
+//Alt: push rsi
+
+unregistersymbol(pSkillTreeManager)
+
+///**************************************///
+
+dealloc(newmem2)
+HealingManager:FixedUpdate+21:
+db 48 8B C8 33 D2
+//Alt: mov rcx,rax
+//Alt: xor edx,edx
+
+unregistersymbol(pPlayer)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>50</ID>
+          <Description>"invulnerable"</Description>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048,Pawn:ApplyDamage+99a) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rcx,pPlayer
+cmp [rcx],rsi
+jne @f
+sete al
+
+originalcode:
+test eax,eax
+setg al
+
+exit:
+jmp returnhere
+
+///
+
+Pawn:ApplyDamage+99a:
+jmp newmem
+nop
+returnhere:
+
+///*********************************///
+
+alloc(newmem2,2048,Pawn:set_health+26)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+movsxd  rax,dword ptr [rsi+000000CC]
+push rcx
+mov rcx,pPlayer
+cmp [rcx],rsi
+pop rcx
+jne @f
+mov rax,1
+
+originalcode2:
+//movsxd  rax,dword ptr [rsi+000000CC]
+
+exit2:
+jmp returnhere2
+
+///
+
+Pawn:set_health+26:
+jmp newmem2
+nop
+nop
+returnhere2:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+Pawn:ApplyDamage+99a:
+db 85 C0 40 0F 9F C0
+//Alt: test eax,eax
+//Alt: setg al
+
+///*********************************///
+
+dealloc(newmem2)
+Pawn:set_health+26:
+db 48 63 86 CC 00 00 00
+//Alt: movsxd  rax,dword ptr [rsi+000000CC]
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>51</ID>
+          <Description>"undead"</Description>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048,Pawn:set_health+5) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rsi,pPlayer
+cmp [rsi],rcx
+jne @f
+mov esi,(float)1
+movd xmm0,esi
+comiss xmm1,xmm0
+jae @f
+movss xmm1,xmm0
+
+originalcode:
+sub rsp,18
+mov rsi,rcx
+
+exit:
+jmp returnhere
+
+///
+
+Pawn:set_health+5:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+Pawn:set_health+5:
+db 48 83 EC 18 48 8B F1
+//Alt: sub rsp,18
+//Alt: mov rsi,rcx
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>52</ID>
+          <Description>"damage multiplier"</Description>
+          <Options moHideChildren="1"/>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+define(damagemultiplierdefault,(float)2)
+
+label(dDamageMultiplier)
+registersymbol(dDamageMultiplier)
+
+alloc(newmem,2048,PlayerAirAttackBehaviour:InitiateInternal+16a) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+push rcx
+mov rcx,pPlayer
+cmp [rcx],rax
+pop rcx
+jne @f
+mulss xmm5,[dDamageMultiplier]
+
+originalcode:
+movss [rax+000000C8],xmm5
+
+exit:
+jmp returnhere
+
+///
+dDamageMultiplier:
+dd damagemultiplierdefault
+///
+
+PlayerAirAttackBehaviour:InitiateInternal+16a:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+///
+
+alloc(newmem2,2048,AttackBehaviour:InitiateInternal+a5)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rsi,pPlayer
+cmp [rsi],rax
+jne @f
+mulss xmm5,[dDamageMultiplier]
+
+originalcode2:
+movss [rax+000000C8],xmm5
+
+exit2:
+jmp returnhere2
+
+///
+
+AttackBehaviour:InitiateInternal+a5:
+jmp newmem2
+nop
+nop
+nop
+returnhere2:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+PlayerAirAttackBehaviour:InitiateInternal+16a:
+db F3 0F 11 A8 C8 00 00 00
+//Alt: movss [rax+000000C8],xmm5
+
+unregistersymbol(dDamageMultiplier)
+
+///
+
+dealloc(newmem2)
+AttackBehaviour:InitiateInternal+a5:
+db F3 0F 11 A8 C8 00 00 00
+//Alt: movss [rax+000000C8],xmm5
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>53</ID>
+              <Description>"x?"</Description>
+              <LastState Value="2" RealAddress="21330034"/>
+              <Color>008000</Color>
+              <VariableType>Float</VariableType>
+              <Address>dDamageMultiplier</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>54</ID>
+          <Description>"ignore energy"</Description>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+EnergyManager:HasEnoughEnergy+35:
+db 90 90 90 90
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+EnergyManager:HasEnoughEnergy+35:
+db 40 0F 97 C0
+//Alt: seta al
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>55</ID>
+          <Description>"ignore health elixir"</Description>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(ignorehealthelixir_originalcode,2048)
+registersymbol(ignorehealthelixir_originalcode)
+
+ignorehealthelixir_originalcode:
+readmem(HealingManager:ConsumeHealItem+13,6)
+//jng HealingManager:ConsumeHealItem+27f
+
+HealingManager:ConsumeHealItem+13:
+db 90 90 90 90 90 90
+
+///**********************************///
+
+alloc(newmem,2048,HealingManager:set_nbHealItem+35)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+test eax,eax
+jg @f
+xor eax,eax
+
+originalcode:
+mov [rdi+48],eax
+cmp r15d,eax
+
+exit:
+jmp returnhere
+
+///
+
+HealingManager:set_nbHealItem+35:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+HealingManager:ConsumeHealItem+13:
+readmem(ignorehealthelixir_originalcode,6)
+//db 0F 8E 66 02 00 00
+//Alt: jng HealingManager:ConsumeHealItem+27f
+
+dealloc(ignorehealthelixir_originalcode)
+unregistersymbol(ignorehealthelixir_originalcode)
+
+///**********************************///
+
+dealloc(newmem)
+HealingManager:set_nbHealItem+35:
+db 89 47 48 44 3B F8
+//Alt: mov [rdi+48],eax
+//Alt: cmp r15d,eax
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>56</ID>
+          <Description>"ignore shards + ignore max upgrade"</Description>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+usemono()
+
+alloc(newmem,2048,SkillTreeManager:TryPurchaseUpgrade+23) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+test eax,eax
+jnz @f
+mov eax,1
+
+originalcode:
+add rsp,20
+test eax,eax
+
+exit:
+jmp returnhere
+
+///
+
+SkillTreeManager:TryPurchaseUpgrade+23:
+jmp newmem
+nop
+returnhere:
+
+///********************************************///
+
+alloc(newmem6,2048,CurrencyManager:set_normalShards+6)
+label(returnhere6)
+label(originalcode6)
+label(exit6)
+
+newmem6: //this is allocated memory, you have read,write,execute access
+//place your code here
+test edx,edx
+jg @f
+xor rdx,rdx
+
+originalcode6:
+sub rsp,10
+mov rdi,rcx
+
+exit6:
+jmp returnhere6
+
+///
+
+CurrencyManager:set_normalShards+6:
+jmp newmem6
+nop
+nop
+returnhere6:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+SkillTreeManager:TryPurchaseUpgrade+23:
+db 48 83 C4 20 85 C0
+//Alt: add rsp,20
+//Alt: test eax,eax
+
+///********************************************///
+
+dealloc(newmem6)
+CurrencyManager:set_normalShards+6:
+db 48 83 EC 10 48 8B F9
+//Alt: sub rsp,10
+//Alt: mov rdi,rcx
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"enable (old) (x86)"</Description>
+      <Options moHideChildren="1"/>
+      <LastState/>
+      <Color>FF0000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+usemono()
+
+label(pSkillTreeManager)
+registersymbol(pSkillTreeManager)
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+push [rsp+4]
+pop [pSkillTreeManager]
+
+originalcode:
+push ebp
+mov ebp,esp
+push edi
+sub esp,04
+
+exit:
+jmp returnhere
+
+///
+pSkillTreeManager:
+///
+
+SkillTreeManager:Update:
+jmp newmem
+nop
+nop
+returnhere:
+
+///**************************************///
+
+label(pPlayer)
+registersymbol(pPlayer)
+
+alloc(newmem2,2048)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov [pPlayer],rax
+
+originalcode2:
+cmp [ecx],ecx
+fld dword ptr [eax+70]
+
+exit2:
+jmp returnhere2
+
+///
+pPlayer:
+///
+
+HealingManager:FixedUpdate+28:
+jmp newmem2
+returnhere2:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+SkillTreeManager:Update:
+db 55 8B EC 57 83 EC 04
+//Alt: push ebp
+//Alt: mov ebp,esp
+//Alt: push edi
+//Alt: sub esp,04
+
+unregistersymbol(pSkillTreeManager)
+
+///**************************************///
+
+dealloc(newmem2)
+HealingManager:FixedUpdate+28:
+db 39 09 D9 40 70
+//Alt: cmp [ecx],ecx
+//Alt: fld dword ptr [eax+70]
+
+unregistersymbol(pPlayer)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>10</ID>
+          <Description>"invulnerable"</Description>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov eax,[edi+78] //
+cmp [pPlayer],edi
+jne @f
+mov eax,1
+
+originalcode:
+//mov eax,[edi+78]
+test eax,eax
+
+exit:
+jmp returnhere
+
+///
+
+Pawn:set_health+15:
+jmp newmem
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+Pawn:set_health+15:
+db 8B 47 78 85 C0
+//Alt: mov eax,[edi+78]
+//Alt: test eax,eax
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>11</ID>
+          <Description>"undead"</Description>
+          <Options moHideChildren="1"/>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+usemono()
+
+label(pPawnJustHit)
+registersymbol(pPawnJustHit)
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov [pPawnJustHit],edi
+cmp [pPlayer],edi
+jne @f
+
+fld1
+fcomip st(0),st(1)
+jbe @f
+fstp st(0)
+fld1
+
+originalcode:
+add esp,10
+fstp dword ptr [edi+70]
+
+exit:
+jmp returnhere
+
+///
+pPawnJustHit:
+///
+
+Pawn:set_health+75:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+Pawn:set_health+75:
+db 83 C4 10 D9 5F 70
+//Alt: add esp,10
+//Alt: fstp dword ptr [edi+70]
+
+unregistersymbol(pPawnJustHit)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>21</ID>
+          <Description>"damage multiplier"</Description>
+          <Options moHideChildren="1"/>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+define(damagemultiplierdefault,(float)2)
+
+label(dDamageMultiplier)
+registersymbol(dDamageMultiplier)
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+cmp [pPlayer],eax
+jne @f
+fmul dword ptr [dDamageMultiplier]
+fst dword ptr [ebp-8]
+
+originalcode:
+fstp dword ptr [eax+74]
+lea esp,[ebp-04]
+
+exit:
+jmp returnhere
+
+///
+dDamageMultiplier:
+dd damagemultiplierdefault
+///
+
+AttackBehaviour:InitiateInternal+60:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+AttackBehaviour:InitiateInternal+60:
+db D9 58 74 8D 65 FC
+//Alt: fstp dword ptr [eax+74]
+//Alt: lea esp,[ebp-04]
+
+unregistersymbol(dDamageMultiplier)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>22</ID>
+              <Description>"x?"</Description>
+              <LastState Value="2" RealAddress="21330034"/>
+              <Color>008000</Color>
+              <VariableType>Float</VariableType>
+              <Address>dDamageMultiplier</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>24</ID>
+          <Description>"ignore energy"</Description>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+EnergyManager:HasEnoughEnergy+21:
+db 90 90 90
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+EnergyManager:HasEnoughEnergy+21:
+db 0F 97 C0
+//Alt: seta al
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>8</ID>
+          <Description>"ignore health elixir"</Description>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(ignorehealthelixir_originalcode,2048)
+registersymbol(ignorehealthelixir_originalcode)
+
+ignorehealthelixir_originalcode:
+readmem(HealingManager:ConsumeHealItem+10,6)
+//jng HealingManager:ConsumeHealItem+12c
+
+HealingManager:ConsumeHealItem+10:
+db 90 90 90 90 90 90
+
+///**********************************///
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+test eax,eax
+jg @f
+xor eax,eax
+mov [ebp+c],eax
+
+originalcode:
+mov [esi+20],eax
+cmp ebx,eax
+
+exit:
+jmp returnhere
+
+///
+
+HealingManager:set_nbHealItem+1f:
+jmp newmem
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+HealingManager:ConsumeHealItem+10:
+readmem(ignorehealthelixir_originalcode,6)
+//db 0F 8E 16 01 00 00
+//Alt: jng HealingManager:ConsumeHealItem+12c
+
+dealloc(ignorehealthelixir_originalcode)
+unregistersymbol(ignorehealthelixir_originalcode)
+
+///**********************************///
+
+dealloc(newmem)
+HealingManager:set_nbHealItem+1f:
+db 89 46 20 3B D8
+//Alt: mov [esi+20],eax
+//Alt: cmp ebx,eax
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"ignore shards + ignore max upgrade"</Description>
+          <LastState/>
+          <Color>FF0000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+usemono()
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+test eax,eax
+jnz @f
+mov eax,1
+
+originalcode:
+add esp,10
+test eax,eax
+
+exit:
+jmp returnhere
+
+///
+
+SkillTreeManager:TryPurchaseUpgrade+19:
+jmp newmem
+returnhere:
+
+///********************************************///
+
+alloc(newmem2,2048)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+test ecx,ecx
+jg @f
+xor ecx,ecx
+mov [esp+8],ecx
+
+originalcode2:
+push ebp
+mov ebp,esp
+push edi
+sub esp,04
+
+exit2:
+jmp returnhere2
+
+///
+
+CurrencyManager:set_normalShards:
+jmp newmem2
+nop
+nop
+returnhere2:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+SkillTreeManager:TryPurchaseUpgrade+19:
+db 83 C4 10 85 C0
+//Alt: add esp,10
+//Alt: test eax,eax
+
+///********************************************///
+
+dealloc(newmem2)
+CurrencyManager:set_normalShards:
+db 55 8B EC 57 83 EC 04
+//Alt: push ebp
+//Alt: mov ebp,esp
+//Alt: push edi
+//Alt: sub esp,04
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>12</ID>
+      <Description>""</Description>
+      <Options moHideChildren="1"/>
+      <LastState Value="" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1</ID>
+          <Description>"[SkillTreeManager]"</Description>
+          <LastState Value="" RealAddress="20379600"/>
+          <VariableType>Array of byte</VariableType>
+          <ByteLength>0</ByteLength>
+          <Address>pSkillTreeManager</Address>
+          <Offsets>
+            <Offset>0</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>2</ID>
+          <Description>"Auto Assemble script"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+test eax,eax
+jnz @f
+mov eax,1
+
+originalcode:
+add esp,10
+test eax,eax
+
+exit:
+jmp returnhere
+
+///
+
+SkillTreeManager:TryPurchaseUpgrade+19:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+SkillTreeManager:TryPurchaseUpgrade+19:
+db 83 C4 10 85 C0
+//Alt: add esp,10
+//Alt: test eax,eax
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>3</ID>
+          <Description>"Auto Assemble script"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem2,2048)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+test ecx,ecx
+jg @f
+xor ecx,ecx
+mov [esp+8],ecx
+
+originalcode2:
+push ebp
+mov ebp,esp
+push edi
+sub esp,04
+
+exit2:
+jmp returnhere2
+
+///
+
+CurrencyManager:set_normalShards:
+jmp newmem2
+nop
+nop
+returnhere2:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem2)
+CurrencyManager:set_normalShards:
+db 55 8B EC 57 83 EC 04
+//Alt: push ebp
+//Alt: mov ebp,esp
+//Alt: push edi
+//Alt: sub esp,04
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>5</ID>
+          <Description>"No description"</Description>
+          <LastState Value="655367665" RealAddress="1EA4E7F0"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>1EA4E7F0</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>6</ID>
+          <Description>"Auto Assemble script"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(ignorehealthelixer_originalcode,2048)
+registersymbol(ignorehealthelixer_originalcode)
+
+ignorehealthelixer_originalcode:
+readmem(HealingManager:ConsumeHealItem+10,6)
+//jng HealingManager:ConsumeHealItem+12c
+
+HealingManager:ConsumeHealItem+10:
+db 90 90 90 90 90 90
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+HealingManager:ConsumeHealItem+10:
+readmem(ignorehealthelixer_originalcode,6)
+//db 0F 8E 16 01 00 00
+//Alt: jng HealingManager:ConsumeHealItem+12c
+
+dealloc(ignorehealthelixer_originalcode)
+unregistersymbol(ignorehealthelixer_originalcode)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>7</ID>
+          <Description>"Auto Assemble script"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+test eax,eax
+jg @f
+xor eax,eax
+mov [ebp+c],eax
+
+originalcode:
+mov [esi+20],eax
+cmp ebx,eax
+
+exit:
+jmp returnhere
+
+///
+
+HealingManager:set_nbHealItem+1f:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+HealingManager:set_nbHealItem+1f:
+db 89 46 20 3B D8
+//Alt: mov [esi+20],eax
+//Alt: cmp ebx,eax
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>9</ID>
+          <Description>"No description"</Description>
+          <LastState Value="3.573311084E-43" RealAddress="1E628BB8"/>
+          <VariableType>Float</VariableType>
+          <Address>1E628BB8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>23</ID>
+          <Description>"No description"</Description>
+          <LastState Value="3.414413799E-18" RealAddress="1E9ED26C"/>
+          <VariableType>Float</VariableType>
+          <Address>1E9ED26C</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>25</ID>
+          <Description>"Auto Assemble script"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+PlayerDoubleJumpBehaviour:CanExecute+24:
+db 90 90
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+PlayerDoubleJumpBehaviour:CanExecute+24:
+db 74 43
+//Alt: je PlayerDoubleJumpBehaviour:CanExecute+69
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>26</ID>
+          <Description>"No Description"</Description>
+          <LastState Value="0" RealAddress="1E4CF318"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>1E4CF318</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>27</ID>
+          <Description>"No description"</Description>
+          <LastState Value="0" RealAddress="1E4CF2B0"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>1E4CF2B0</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>28</ID>
+          <Description>"No description"</Description>
+          <LastState Value="0" RealAddress="1E4CF2A8"/>
+          <VariableType>Byte</VariableType>
+          <Address>1E4CF2A8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>29</ID>
+          <Description>"1"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+label(PlayerJumpBehaviour)
+registersymbol(PlayerJumpBehaviour)
+
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov [PlayerJumpBehaviour],edi
+//mov eax,1
+
+originalcode:
+movzx eax,byte ptr [edi+000000C0]
+
+exit:
+jmp returnhere
+
+///
+PlayerJumpBehaviour:
+///
+
+PlayerDoubleJumpBehaviour:CanExecute+3a:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+PlayerDoubleJumpBehaviour:CanExecute+3a:
+db 0F B6 87 C0 00 00 00
+//Alt: movzx eax,byte ptr [edi+000000C0]
+
+unregistersymbol(PlayerJumpBehaviour)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>30</ID>
+          <Description>"No description"</Description>
+          <LastState Value="224" RealAddress="1E5EFBA0"/>
+          <VariableType>Byte</VariableType>
+          <Address>1E5EFBA0</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>31</ID>
+          <Description>"2 xxxxx"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+BehaviourManager:FixedUpdate+1c0:
+db 46
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+BehaviourManager:FixedUpdate+1bf:
+db 43
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>32</ID>
+          <Description>"2"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+PlayerJumpBehaviour:InitiateInternal+b6:
+db B0
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+PlayerJumpBehaviour:InitiateInternal+b6:
+db 98
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>33</ID>
+          <Description>"3a"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+label(dSpacePressed)
+
+alloc(newmem2,2048)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+cmp [PlayerJumpBehaviour],esi
+jne originalcode2
+pushad
+push 20 //SPACEBAR
+call GetAsyncKeyState
+shr ax,#15
+cmp ax,1
+popad
+jne @f
+cmp byte ptr [dSpacePressed],1
+je originalcode2
+mov byte ptr [dSpacePressed],1
+xor ecx,ecx
+mov [esi+58],cl
+jmp originalcode2
+
+@@:
+mov byte ptr [dSpacePressed],0
+
+originalcode2:
+movzx ecx,byte ptr [esi+58]
+xor eax,eax
+
+exit2:
+jmp returnhere2
+
+///
+dSpacePressed:
+///
+
+BehaviourManager:FixedUpdate+8e:
+jmp newmem2
+nop
+returnhere2:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem2)
+BehaviourManager:FixedUpdate+8e:
+db 0F B6 4E 58 33 C0
+//Alt: movzx ecx,byte ptr [esi+58]
+//Alt: xor eax,eax
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>34</ID>
+          <Description>"3b"</Description>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+alloc(newmem2,2048)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+pushad
+push 20 //SPACEBAR
+call GetAsyncKeyState
+shr ax,#15
+cmp ax,1
+popad
+jne @f
+xor ecx,ecx
+mov [esi+58],cl
+
+originalcode2:
+movzx ecx,byte ptr [esi+58]
+xor eax,eax
+
+exit2:
+jmp returnhere2
+
+///
+
+BehaviourManager:FixedUpdate+8e:
+jmp newmem2
+nop
+returnhere2:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem2)
+BehaviourManager:FixedUpdate+8e:
+db 0F B6 4E 58 33 C0
+//Alt: movzx ecx,byte ptr [esi+58]
+//Alt: xor eax,eax
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>38</ID>
+          <Description>"Auto Assemble script"</Description>
+          <LastState/>
+          <Color>000000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem6,2048,CurrencyManager:set_normalShards+6) 
+label(returnhere6)
+label(originalcode6)
+label(exit6)
+
+newmem6: //this is allocated memory, you have read,write,execute access
+//place your code here
+test edx,edx
+jg @f
+xor rdx,rdx
+
+originalcode6:
+sub rsp,10
+mov rdi,rcx
+
+exit6:
+jmp returnhere6
+
+///
+
+CurrencyManager:set_normalShards+6:
+jmp newmem6
+nop
+nop
+returnhere6:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem6)
+CurrencyManager:set_normalShards+6:
+db 48 83 EC 10 48 8B F9
+//Alt: sub rsp,10
+//Alt: mov rdi,rcx
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>37</ID>
+          <Description>"No description"</Description>
+          <ShowAsSigned>1</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>0469364C</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>39</ID>
+          <Description>"No description"</Description>
+          <VariableType>Byte</VariableType>
+          <Address>08CC51CC</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>41</ID>
+          <Description>"No description"</Description>
+          <LastState Value="0" RealAddress="2A98D618"/>
+          <VariableType>Float</VariableType>
+          <Address>2A98D618</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>42</ID>
+          <Description>"No description"</Description>
+          <VariableType>Float</VariableType>
+          <Address>08CC51C4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>44</ID>
+          <Description>"No description"</Description>
+          <VariableType>Float</VariableType>
+          <Address>08CC51C8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>57</ID>
+          <Description>"No Description"</Description>
+          <LastState Value="0" RealAddress="2AE909A4"/>
+          <VariableType>Byte</VariableType>
+          <Address>2AE909A4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>58</ID>
+          <Description>"[PlayerPlayerMoveBehaviour]"</Description>
+          <LastState Value="" RealAddress="2FA363A8"/>
+          <VariableType>Array of byte</VariableType>
+          <ByteLength>0</ByteLength>
+          <Address>pPlayerPlayerMoveBehaviour</Address>
+          <Offsets>
+            <Offset>0</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>59</ID>
+          <Description>"_speed"</Description>
+          <LastState Value="0" RealAddress="2AE9A5C8"/>
+          <VariableType>Float</VariableType>
+          <Address>2AE9A5C8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>61</ID>
+          <Description>"_ammo"</Description>
+          <LastState Value="747470712" RealAddress="2C8D7D18"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>2C8D7D18</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <Structures StructVersion="2">
+    <Structure Name="SkillTreeManager" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="0" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="12" Vartype="Pointer" Bytesize="8" Description="_tree" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="16" Vartype="Pointer" Bytesize="8" Description="_activateSequence" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="20" Vartype="Pointer" Bytesize="8" Description="_deactivateSequence" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="24" Vartype="Pointer" Bytesize="8" Description="_perkCanvas" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="28" Vartype="Pointer" Bytesize="8" Description="_nodeCanvas" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="32" Vartype="Pointer" Bytesize="8" Description="_descriptionCanvas" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="36" Vartype="Pointer" Bytesize="8" Description="_flavorCanvas" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="40" Vartype="Pointer" Bytesize="8" Description="_titleText" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="44" Vartype="Pointer" Bytesize="8" Description="_descriptionText" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="48" Vartype="Pointer" Bytesize="8" Description="_rankProgressText" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="52" Vartype="Pointer" Bytesize="8" Description="_currentValueText" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="56" Vartype="Pointer" Bytesize="8" Description="_upgradeGainText" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="60" Vartype="Pointer" Bytesize="8" Description="_costText" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="64" Vartype="Pointer" Bytesize="8" Description="_flavorText" DisplayMethod="Unsigned Integer">
+          <Structure Name="TextMeshProUGUI" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="0" AutoCreateStructsize="4096">
+            <Elements>
+              <Element Offset="1656" Vartype="Pointer" Bytesize="8" Description="m_subTextObjects" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="1660" Vartype="Pointer" Bytesize="8" Description="m_RectTransformCorners" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="1664" Vartype="Pointer" Bytesize="8" Description="m_canvasRenderer" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="1668" Vartype="Pointer" Bytesize="8" Description="m_canvas" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="1672" Vartype="Pointer" Bytesize="8" Description="m_baseMaterial" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="1676" Vartype="Byte" Bytesize="1" Description="m_hasFontAssetChanged" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="1680" Vartype="Float" Bytesize="4" Description="m_previousLossyScaleY" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="1684" Vartype="Byte" Bytesize="1" Description="m_isFirstAllocation" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="1688" Vartype="4 Bytes" Bytesize="4" Description="m_max_characters" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="1692" Vartype="Byte" Bytesize="1" Description="m_isMaskingEnabled" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="1693" Vartype="Byte" Bytesize="1" Description="m_isScrollRegionSet" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="1696" Vartype="4 Bytes" Bytesize="4" Description="m_stencilID" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="1700" Vartype="4 Bytes" Bytesize="4" Description="m_maskOffset" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="1716" Vartype="4 Bytes" Bytesize="4" Description="m_EnvMapMatrix" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="1780" Vartype="Byte" Bytesize="1" Description="m_isRegisteredForEvents" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="1784" Vartype="4 Bytes" Bytesize="4" Description="m_recursiveCountA" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="1788" Vartype="4 Bytes" Bytesize="4" Description="loopCountA" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="1792" Vartype="Byte" Bytesize="1" Description="m_isRebuildingLayout" DisplayMethod="Unsigned Integer"/>
+            </Elements>
+          </Structure>
+        </Element>
+        <Element Offset="68" Vartype="Pointer" Bytesize="8" Description="_perkFlavorText" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="72" Vartype="Pointer" Bytesize="8" Description="_audioManager" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="76" Vartype="Pointer" Bytesize="8" Description="SkillPurchased" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="80" Vartype="Pointer" Bytesize="8" Description="_currentActivePerkNode" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="84" Vartype="Pointer" Bytesize="8" Description="_eventSystem" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="88" Vartype="4 Bytes" Bytesize="4" Description="_buyableColor" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="104" Vartype="4 Bytes" Bytesize="4" Description="_unbuyableColor" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="120" Vartype="4 Bytes" Bytesize="4" Description="_lockedColor" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="136" Vartype="Float" Bytesize="4" Description="_lockedLerpValue" DisplayMethod="Unsigned Integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="0" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="8" Vartype="4 Bytes" Bytesize="4" Description="Length" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="12" Vartype="Unicode String" Bytesize="128" Description="Value" DisplayMethod="Unsigned Integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="Pawn" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="0" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="20" Vartype="Pointer" Bytesize="8" ChildStruct="String" Description="_uiName" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="24" Vartype="Pointer" Bytesize="8" ChildStruct="String" Description="_uiType" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="28" Vartype="Pointer" Bytesize="8" Description="_healthBalanceData" DisplayMethod="Unsigned Integer">
+          <Structure Name="BalanceDataBundle" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="0" AutoCreateStructsize="4096">
+            <Elements>
+              <Element Offset="8" Vartype="Pointer" Bytesize="8" Description="balanceData" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="12" Vartype="Pointer" Bytesize="8" ChildStruct="String" Description="id" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="16" Vartype="Byte" Bytesize="1" Description="defaultValueSet" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="20" Vartype="Float" Bytesize="4" Description="damageMultiplier" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="24" Vartype="Float" Bytesize="4" Description="_defaultValue" DisplayMethod="Unsigned Integer"/>
+            </Elements>
+          </Structure>
+        </Element>
+        <Element Offset="32" Vartype="Pointer" Bytesize="8" Description="_damageImmunities" DisplayMethod="Unsigned Integer">
+          <Structure Name="List`1" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="0" AutoCreateStructsize="4096">
+            <Elements>
+              <Element Offset="8" Vartype="Pointer" Bytesize="8" Description="_items" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="12" Vartype="4 Bytes" Bytesize="4" Description="_size" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="16" Vartype="4 Bytes" Bytesize="4" Description="_version" DisplayMethod="Unsigned Integer"/>
+            </Elements>
+          </Structure>
+        </Element>
+        <Element Offset="36" Vartype="Pointer" Bytesize="8" Description="_shield" DisplayMethod="Unsigned Integer">
+          <Structure Name="ExplodingRegeneratingShield" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="0" AutoCreateStructsize="4096">
+            <Elements>
+              <Element Offset="88" Vartype="Pointer" Bytesize="8" Description="_explodingEffect" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="92" Vartype="Pointer" Bytesize="8" Description="_damageObject" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="96" Vartype="Float" Bytesize="4" Description="_maxShieldToDamageRatio" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="100" Vartype="4 Bytes" Bytesize="4" Description="_nbHitRequired" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="104" Vartype="Byte" Bytesize="1" Description="_canExplode" DisplayMethod="Unsigned Integer"/>
+              <Element Offset="108" Vartype="4 Bytes" Bytesize="4" Description="_nbHitAbsorbed" DisplayMethod="Unsigned Integer"/>
+            </Elements>
+          </Structure>
+        </Element>
+        <Element Offset="40" Vartype="Pointer" Bytesize="8" Description="_damageNumberPositionOverride" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="44" Vartype="Pointer" Bytesize="8" Description="_damageModifiers" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="48" Vartype="Pointer" Bytesize="8" Description="_damageResistances" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="52" Vartype="Pointer" Bytesize="8" Description="_extraDamageTypes" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="56" Vartype="Pointer" Bytesize="8" Description="_pawnOwner" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="60" Vartype="Pointer" Bytesize="8" Description="Damaged" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="64" Vartype="Pointer" Bytesize="8" Description="RealDealtDamage" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="68" Vartype="Pointer" Bytesize="8" Description="DealtDamage" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="72" Vartype="Pointer" Bytesize="8" Description="ReturnDamageModifier" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="76" Vartype="Pointer" Bytesize="8" Description="ReturnDamageResistanceModifier" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="80" Vartype="Pointer" Bytesize="8" Description="Reinitialize" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="84" Vartype="4 Bytes" Bytesize="4" Description="_pawnType" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="88" Vartype="Byte" Bytesize="1" Description="_canShowOnUI" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="92" Vartype="Float" Bytesize="4" Description="_damageVariance" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="96" Vartype="Float" Bytesize="4" Description="_maxHealth" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="100" Vartype="Byte" Bytesize="1" Description="_triggersCanBeDamaged" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="104" Vartype="Float" Bytesize="4" Description="_damageBufferTime" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="108" Vartype="Byte" Bytesize="1" Description="_wasInstaKilled" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="112" Vartype="Float" Bytesize="4" Description="_health" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="116" Vartype="Float" Bytesize="4" Description="_damage" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="120" Vartype="4 Bytes" Bytesize="4" Description="_isInvulnerable" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="124" Vartype="Float" Bytesize="4" Description="_modifiedDamage" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="128" Vartype="Byte" Bytesize="1" Description="_canLogMonsterData" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="132" Vartype="Float" Bytesize="4" Description="_effectiveHealth" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="136" Vartype="Float" Bytesize="4" Description="_lastBufferTime" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="140" Vartype="Float" Bytesize="4" Description="_bufferDamage" DisplayMethod="Unsigned Integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="PlayerDoubleJumpBehaviour" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="252" Vartype="Byte" Bytesize="1" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="260" Vartype="Byte" Bytesize="1" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="268" Vartype="4 Bytes" Bytesize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="272" Vartype="Float" Bytesize="4" Description="_airTimeRequired" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="276" Vartype="Float" Bytesize="4" Description="_maxInitialSideSpeedRatio" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="280" Vartype="Float" Bytesize="4" Description="_airTimeTimer" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="284" Vartype="Byte" Bytesize="1" Description="_canDoubleJump" DisplayMethod="Unsigned Integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="String" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="16" Vartype="4 Bytes" Bytesize="4" Description="Length" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="20" Vartype="Unicode String" Bytesize="128" Description="Value" DisplayMethod="Unsigned Integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="PlayerMoveBehaviour" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="232" Vartype="Float" Bytesize="4" Description="_speed" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="236" Vartype="Float" Bytesize="4" Description="_acceleration" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="240" Vartype="Float" Bytesize="4" Description="_usedVelocity" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="244" Vartype="Float" Bytesize="4" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="248" Vartype="Float" Bytesize="4" Description="_speedModifier" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="256" Vartype="Pointer" Bytesize="8" ChildStruct="String" Description="_inAnimation" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="264" Vartype="Pointer" Bytesize="8" ChildStruct="String" Description="_loopAnimation" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="272" Vartype="Pointer" Bytesize="8" ChildStruct="String" Description="_changeDirectionAnimation" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="280" Vartype="Pointer" Bytesize="8" Description="_inAnimationOverrides" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="288" Vartype="Float" Bytesize="4" Description="_lastExecutionTime" DisplayMethod="Unsigned Integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="GunManager" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="40" Vartype="4 Bytes" Bytesize="4" Description="_baseAmmo" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="44" Vartype="4 Bytes" Bytesize="4" Description="_extraAmmo" DisplayMethod="Unsigned Integer"/>
+        <Element Offset="48" Vartype="4 Bytes" Bytesize="4" Description="_ammo" DisplayMethod="Unsigned Integer"/>
+      </Elements>
+    </Structure>
+  </Structures>
+  <Comments>http://fearlessrevolution.com/viewtopic.php?f=4&amp;t=4385
+</Comments>
+</CheatTable>
