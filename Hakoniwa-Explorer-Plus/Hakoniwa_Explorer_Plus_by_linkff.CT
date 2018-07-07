@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="26">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>19</ID>
+      <Description>"Item Modder A (Searches for Medicine 3 in Slot)"</Description>
+      <Options moHideChildren="1"/>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+label(ItemModA)
+registersymbol(ItemModA)
+aobscan(AOB,32 30 37 26 33 26 30 26 2D 31 0D 0A)
+
+AOB:
+ItemModA:
+ 
+ 
+[DISABLE]
+unregistersymbol(ItemModA)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>22</ID>
+          <Description>"Item mod"</Description>
+          <DropDownList DescriptionOnly="1" DisplayValueAsItem="1">32 36 34 26 39 26 30 26 2D 31 0D 0A:Naughty Book 9
+32 36 35 26 39 26 30 26 2D 31 0D 0A:Ice Gimoire 9
+32 36 36 26 39 26 30 26 2D 31 0D 0A:Thunder Grimoire 9
+32 36 37 26 39 26 30 26 2D 31 0D 0A:Flame Grimoire 9
+32 34 37 26 39 26 30 26 2D 31 0D 0A:Legend Grilled Veggies 9
+32 35 33 26 39 26 30 26 2D 31 0D 0A:Frozen Berry 9
+34 33 32 26 39 26 30 26 2D 31 0D 0A:Shop Scroll 9
+34 33 33 26 39 26 30 26 2D 31 0D 0A:Prosperity Scroll 9
+34 35 33 26 39 26 30 26 2D 31 0D 0A:Return Feather 9
+34 34 34 26 39 26 30 26 2D 31 0D 0A:Pissoff Scroll 9
+34 34 37 26 39 26 30 26 2D 31 0D 0A:Some Kinda Scroll 9
+34 34 33 26 39 26 30 26 2D 31 0D 0A:Exorcism Scroll 9
+34 34 31 26 39 26 30 26 2D 31 0D 0A:Enemy Weakening Scroll 9
+34 34 32 26 39 26 30 26 2D 31 0D 0A:Enemy Enchancing Scroll 9
+34 34 30 26 39 26 30 26 2D 31 0D 0A:Record Scroll 9
+34 35 32 26 39 26 30 26 2D 31 0D 0A:Warehouse Pot 9
+34 33 34 26 39 26 30 26 2D 31 0D 0A:Slump Scroll 9
+34 33 35 26 39 26 30 26 2D 31 0D 0A:Stochastic Scroll 9
+34 33 36 26 39 26 30 26 2D 31 0D 0A:Demotion Scroll 9
+34 33 37 26 39 26 30 26 2D 31 0D 0A:Lucky Scroll 9
+34 33 38 26 39 26 30 26 2D 31 0D 0A:Goddammit Scroll 9
+34 33 39 26 39 26 30 26 2D 31 0D 0A:Stair Scroll 9
+32 36 36 26 39 26 30 26 2D 31 0D 0A:Thunder Grimoire 9
+32 36 37 26 39 26 30 26 2D 31 0D 0A:Flame Grimoire 9
+32 36 37 26 39 39 39 39 26 0D 0A:Flame Grimoir 9999
+34 32 32 26 31 26 30 26 2D 31 0D 0A:Light Ball
+32 33 36 26 33 26 30 26 2D 31 0D 0A:Carrot 3
+32 39 39 26 39 26 30 26 2D 31 0D 0A:Regeneration Grass
+34 31 30 26 31 26 30 26 2D 31 0D 0A:Regeneration Badge
+34 31 33 26 31 26 30 26 2D 31 0D 0A:Observation Badge
+34 30 35 26 31 26 30 26 2D 31 0D 0A:Badass Badge
+34 30 36 26 31 26 30 26 2D 31 0D 0A:Dumbass Badge
+34 31 32 26 31 26 30 26 2D 31 0D 0A:Goddamit Badge
+34 31 31 26 31 26 30 26 2D 31 0D 0A:Stochastic Badge
+34 30 38 26 31 26 30 26 2D 31 0D 0A:Cleanfreak Badge
+34 30 37 26 31 26 30 26 2D 31 0D 0A:Fireproof Badge
+34 31 34 26 31 26 30 26 2D 31 0D 0A:Air Badge
+34 30 39 26 31 26 30 26 2D 31 0D 0A:Blacksmith Badge
+34 32 33 26 39 26 30 26 2D 31 0D 0A:Pretty Stone
+34 31 36 26 31 26 30 26 2D 31 0D 0A:Weird Red Scroll
+34 31 37 26 31 26 30 26 2D 31 0D 0A:Weird Green Scroll
+34 31 38 26 31 26 30 26 2D 31 0D 0A:Weird Blue Scroll
+34 31 39 26 31 26 30 26 2D 31 0D 0A:Tanning Machine
+32 36 26 39 39 39 39 26 2D 31 0D 0A:Storm Staff 9999
+32 37 26 39 39 39 39 26 2D 31 0D 0A:Flame Staff 9999
+32 38 26 39 39 39 39 26 2D 31 0D 0A:Freeze Staff 9999
+32 39 26 39 39 39 39 26 2D 31 0D 0A:Thunder Staff 9999
+33 37 26 39 39 39 39 26 2D 31 0D 0A:Normal Sword 9999
+33 38 26 39 39 39 39 26 2D 31 0D 0A:Steel Sword 9999
+33 39 26 39 39 39 39 26 2D 31 0D 0A:Flame Sword 9999
+34 30 26 39 39 39 26 30 2D 31 0D 0A:Freeze Sword 999
+34 31 26 39 39 39 26 30 2D 31 0D 0A:Bullseve Sword 999
+34 32 26 39 39 39 26 30 2D 31 0D 0A:Vampire Sword 999
+34 33 26 39 39 39 26 30 2D 31 0D 0A:Glass Sword 999
+34 34 26 39 39 39 26 30 2D 31 0D 0A:Hero Sword 999 [no exp]
+34 35 26 39 39 39 26 30 2D 31 0D 0A:Devil Sword 999 [no exp]
+30 34 26 39 39 39 39 26 2D 31 0D 0A:Normal Claws 9999
+30 35 26 39 39 39 39 26 2D 31 0D 0A:Steel Claws 9999
+30 36 26 39 39 39 39 26 2D 31 0D 0A:Poison Claws 9999
+30 37 26 39 39 39 39 26 2D 31 0D 0A:Paralyze Claws 9999
+30 38 26 39 39 39 39 26 2D 31 0D 0A:Beast King Claws 9999
+31 35 26 39 39 39 39 26 2D 31 0D 0A:Normal Club 9999
+31 36 26 39 39 39 39 26 2D 31 0D 0A:Spiked Club 9999
+31 37 26 39 39 39 39 26 2D 31 0D 0A:Hardcore Club 9999
+31 38 26 39 39 39 39 26 2D 31 0D 0A:Metal Bat 9999
+31 39 26 39 39 39 39 26 2D 31 0D 0A:Gold Bat 9999 [No Exp]
+36 31 26 39 39 26 30 26 2D 31 0D 0A:Normal Bow 99
+36 31 26 39 39 39 26 30 2D 31 0D 0A:Normal Bow 999
+36 32 26 39 39 39 39 26 2D 31 0D 0A:Three-way Bow 9999
+36 33 26 39 39 39 39 26 2D 31 0D 0A:Rapidfire Bow 9999
+36 34 26 39 39 39 39 26 2D 31 0D 0A:Ainu Arrow 9999
+36 35 26 39 39 39 39 26 2D 31 0D 0A:Killemall Arrow 9999
+37 32 26 39 39 39 39 26 2D 31 0D 0A:Grass Sicle 9999
+37 33 26 39 39 39 39 26 2D 31 0D 0A:Dodgy Sicle 9999
+37 34 26 39 39 39 39 26 2D 31 0D 0A:Decapitating Sickle 9999
+37 35 26 39 39 39 39 26 2D 31 0D 0A:Reaper Sickle 9999 [No exp]
+35 31 26 39 39 39 39 26 2D 31 0D 0A:Battle Ax 9999
+35 32 26 39 39 39 39 26 2D 31 0D 0A:Steel Ax 9999
+35 33 26 39 39 39 39 26 2D 31 0D 0A:Big-ass Ax 9999 [No EXP]
+35 34 26 39 39 39 39 26 2D 31 0D 0A:Devil Ax 9999 [No Exp]
+34 3A 26 39 39 39 26 30 2D 31 0D 0A:Normal Claws 999
+32 30 37 26 33 26 30 26 2D 31 0D 0A:Medicine 3
+32 30 38 26 35 26 30 26 2D 31 0D 0A:Awesome Medicine 5
+32 30 39 26 36 26 30 26 2D 31 0D 0A:Ultimate Medicine 6
+33 33 30 26 39 26 30 26 2D 31 0D 0A:Wpn.Enhancement 9
+33 33 31 26 39 26 30 26 2D 31 0D 0A:Wpn.Enhancement G 9
+33 31 34 26 39 39 39 26 2D 31 0D 0A:Ultimate Wpn.Enchancement 999
+33 33 38 26 39 26 30 26 2D 31 0D 0A:Pow Grd.Enhancement 9
+33 33 39 26 39 26 30 26 2D 31 0D 0A:Ultimate Grd.Enhancement 999
+33 34 34 26 39 39 39 26 2D 31 0D 0A:Invincible Grd.Enhancement 999
+33 32 35 26 39 39 39 26 2D 31 0D 0A:Lighspeed Wpn.Enhancement 999
+33 30 34 26 33 26 30 26 2D 31 0D 0A:Wpn.Repair Kit 3
+33 30 35 26 33 26 30 26 2D 31 0D 0A:Wpn.Repair Kit G 3
+33 30 38 26 33 26 30 26 2D 31 0D 0A:Grd.Repair Kit 3
+33 30 39 26 33 26 30 26 2D 31 0D 0A:Grd.Repair Kit G 3
+32 39 38 26 39 26 30 26 2D 31 0D 0A:Funny Grass 9
+32 39 34 26 39 26 30 26 2D 31 0D 0A:Sacred Seed 9
+32 39 36 26 39 26 30 26 2D 31 0D 0A:Offensive Seed 9
+32 39 35 26 39 26 30 26 2D 31 0D 0A:Invigorating Seed 9
+32 39 37 26 39 26 30 26 2D 31 0D 0A:Protective Seed 9
+32 39 33 26 39 26 30 26 2D 31 0D 0A:Devil Seed 9(stats Down)
+32 39 32 26 39 26 30 26 2D 31 0D 0A:Rainbow Seed 9 (stats up)
+32 37 30 26 39 26 30 26 2D 31 0D 0A:Tiny Grenade 9
+32 37 31 26 39 26 30 26 2D 31 0D 0A:Big-ass Grenade 9
+32 37 32 26 39 26 30 26 2D 31 0D 0A:Big-ass Grenade G 9
+32 38 34 26 39 26 30 26 2D 31 0D 0A:Sleep Trap 9
+32 38 33 26 39 26 30 26 2D 31 0D 0A:Landmine Trap 9
+32 38 34 26 39 26 30 26 2D 31 0D 0A:Paralysis Trap 9
+32 38 30 26 39 26 30 26 2D 31 0D 0A:Caltrop 9
+32 37 35 26 35 26 30 26 2D 31 0D 0A:Pervy Liquid 5
+32 37 35 26 35 26 30 26 2D 31 0D 0A:Brown Sludge 5
+32 33 35 26 33 26 30 26 2D 31 0D 0A:Onion 3
+39 36 26 39 39 26 30 26 2D 31 0D 0A:King Cape 99
+39 37 26 39 39 26 30 26 2D 31 0D 0A:Zephyr Cape 99
+39 38 26 39 39 26 30 26 2D 31 0D 0A:Fairy Cape 99
+31 33 31 26 39 39 39 26 2D 31 0D 0A:Heat-proof Shield 999
+31 33 32 26 39 39 39 26 2D 31 0D 0A:Cold-proof Shield 999
+31 33 33 26 39 39 39 26 2D 31 0D 0A:Holy Shield 999
+31 33 34 26 39 39 39 26 2D 31 0D 0A:Reaper's Eye 999
+31 34 33 26 39 39 39 26 2D 31 0D 0A:Steel Gloves 999
+31 35 33 26 39 39 39 26 2D 31 0D 0A:Nikey Shoes 999
+31 35 35 26 39 39 39 26 2D 31 0D 0A:Beerok Shoes 999
+31 36 35 26 39 39 39 26 2D 31 0D 0A:Steel Helmet 999
+31 37 33 26 39 39 39 26 2D 31 0D 0A:Experience Ring 999
+31 37 34 26 39 39 39 26 2D 31 0D 0A:Pirate Ring 999
+31 37 35 26 39 39 39 26 2D 31 0D 0A:Antisuck Ring 999
+31 37 36 26 39 39 39 26 2D 31 0D 0A:Evasion Ring 999
+31 37 37 26 39 39 39 26 2D 31 0D 0A:Sacred Ring 999
+31 38 33 26 39 39 39 26 2D 31 0D 0A:Beatiful Jewel 999
+31 38 34 26 39 39 39 26 2D 31 0D 0A:R.Dragon Jewel 999
+31 38 35 26 39 39 39 26 2D 31 0D 0A:G.Dragon Jewel 999
+31 38 36 26 39 39 39 26 2D 31 0D 0A:B.Dragon Jewel 999
+31 38 37 26 39 39 39 26 2D 31 0D 0A:Devil Jewel 999
+31 30 39 26 39 39 39 26 2D 31 0D 0A:Bunny Suit 999
+31 30 38 26 39 39 39 26 2D 31 0D 0A:Battle Tights 999
+33 36 36 26 39 39 39 26 2D 31 0D 0A:Good Claw Material
+33 36 38 26 39 39 39 26 2D 31 0D 0A:Good Club Material
+33 37 32 26 39 39 39 26 2D 31 0D 0A:Good Sword Material
+33 37 34 26 39 39 39 26 2D 31 0D 0A:Good Ax Material
+33 37 36 26 39 39 39 26 2D 31 0D 0A:Good Bow Material
+33 37 38 26 39 39 39 26 2D 31 0D 0A:Good Sickle Material
+33 38 35 26 39 39 39 26 2D 31 0D 0A:Good Cape Material
+33 38 37 26 39 39 39 26 2D 31 0D 0A:Good Fetish Material
+33 38 39 26 39 39 39 26 2D 31 0D 0A:Good Armor Material
+33 39 31 26 39 39 39 26 2D 31 0D 0A:Good Shield Material
+33 39 33 26 39 39 39 26 2D 31 0D 0A:Good Glove Material
+33 39 35 26 39 39 39 26 2D 31 0D 0A:Good Shoe Material
+33 39 37 26 39 39 39 26 2D 31 0D 0A:Good Helmet Material
+33 39 38 26 39 39 39 26 2D 31 0D 0A:Ring Material
+33 39 39 26 39 39 39 26 2D 31 0D 0A:Jewel Material
+34 38 35 26 39 39 39 26 2D 31 0D 0A:Night Wear
+35 36 31 26 39 39 39 26 2D 31 0D 0A:Boss Lamia Armour1 999
+</DropDownList>
+          <ShowAsHex>1</ShowAsHex>
+          <VariableType>Array of byte</VariableType>
+          <ByteLength>12</ByteLength>
+          <Address>ItemModA</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>23</ID>
+      <Description>"Item Modder B (Searches for Onion 3 in Slot)"</Description>
+      <Options moHideChildren="1"/>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+label(ItemModB)
+registersymbol(ItemModB)
+aobscan(AOB,32 33 35 26 33 26 30 26 2D 31 0D 0A)
+
+AOB:
+ItemModB:
+ 
+ 
+[DISABLE]
+unregistersymbol(ItemModB)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>24</ID>
+          <Description>"Item mod"</Description>
+          <DropDownList DescriptionOnly="1" DisplayValueAsItem="1">32 36 34 26 39 26 30 26 2D 31 0D 0A:Naughty Book 9
+32 36 35 26 39 26 30 26 2D 31 0D 0A:Ice Gimoire 9
+32 36 36 26 39 26 30 26 2D 31 0D 0A:Thunder Grimoire 9
+32 36 37 26 39 26 30 26 2D 31 0D 0A:Flame Grimoire 9
+32 34 37 26 39 26 30 26 2D 31 0D 0A:Legend Grilled Veggies 9
+32 35 33 26 39 26 30 26 2D 31 0D 0A:Frozen Berry 9
+34 33 32 26 39 26 30 26 2D 31 0D 0A:Shop Scroll 9
+34 33 33 26 39 26 30 26 2D 31 0D 0A:Prosperity Scroll 9
+34 35 33 26 39 26 30 26 2D 31 0D 0A:Return Feather 9
+34 34 34 26 39 26 30 26 2D 31 0D 0A:Pissoff Scroll 9
+34 34 37 26 39 26 30 26 2D 31 0D 0A:Some Kinda Scroll 9
+34 34 33 26 39 26 30 26 2D 31 0D 0A:Exorcism Scroll 9
+34 34 31 26 39 26 30 26 2D 31 0D 0A:Enemy Weakening Scroll 9
+34 34 32 26 39 26 30 26 2D 31 0D 0A:Enemy Enchancing Scroll 9
+34 34 30 26 39 26 30 26 2D 31 0D 0A:Record Scroll 9
+34 35 32 26 39 26 30 26 2D 31 0D 0A:Warehouse Pot 9
+34 33 34 26 39 26 30 26 2D 31 0D 0A:Slump Scroll 9
+34 33 35 26 39 26 30 26 2D 31 0D 0A:Stochastic Scroll 9
+34 33 36 26 39 26 30 26 2D 31 0D 0A:Demotion Scroll 9
+34 33 37 26 39 26 30 26 2D 31 0D 0A:Lucky Scroll 9
+34 33 38 26 39 26 30 26 2D 31 0D 0A:Goddammit Scroll 9
+34 33 39 26 39 26 30 26 2D 31 0D 0A:Stair Scroll 9
+32 36 36 26 39 26 30 26 2D 31 0D 0A:Thunder Grimoire 9
+32 36 37 26 39 26 30 26 2D 31 0D 0A:Flame Grimoire 9
+32 36 37 26 39 39 39 39 26 0D 0A:Flame Grimoir 9999
+34 32 32 26 31 26 30 26 2D 31 0D 0A:Light Ball
+32 33 36 26 33 26 30 26 2D 31 0D 0A:Carrot 3
+32 39 39 26 39 26 30 26 2D 31 0D 0A:Regeneration Grass
+34 31 30 26 31 26 30 26 2D 31 0D 0A:Regeneration Badge
+34 31 33 26 31 26 30 26 2D 31 0D 0A:Observation Badge
+34 30 35 26 31 26 30 26 2D 31 0D 0A:Badass Badge
+34 30 36 26 31 26 30 26 2D 31 0D 0A:Dumbass Badge
+34 31 32 26 31 26 30 26 2D 31 0D 0A:Goddamit Badge
+34 31 31 26 31 26 30 26 2D 31 0D 0A:Stochastic Badge
+34 30 38 26 31 26 30 26 2D 31 0D 0A:Cleanfreak Badge
+34 30 37 26 31 26 30 26 2D 31 0D 0A:Fireproof Badge
+34 31 34 26 31 26 30 26 2D 31 0D 0A:Air Badge
+34 30 39 26 31 26 30 26 2D 31 0D 0A:Blacksmith Badge
+34 32 33 26 39 26 30 26 2D 31 0D 0A:Pretty Stone
+34 31 36 26 31 26 30 26 2D 31 0D 0A:Weird Red Scroll
+34 31 37 26 31 26 30 26 2D 31 0D 0A:Weird Green Scroll
+34 31 38 26 31 26 30 26 2D 31 0D 0A:Weird Blue Scroll
+34 31 39 26 31 26 30 26 2D 31 0D 0A:Tanning Machine
+32 36 26 39 39 39 39 26 2D 31 0D 0A:Storm Staff 9999
+32 37 26 39 39 39 39 26 2D 31 0D 0A:Flame Staff 9999
+32 38 26 39 39 39 39 26 2D 31 0D 0A:Freeze Staff 9999
+32 39 26 39 39 39 39 26 2D 31 0D 0A:Thunder Staff 9999
+33 37 26 39 39 39 39 26 2D 31 0D 0A:Normal Sword 9999
+33 38 26 39 39 39 39 26 2D 31 0D 0A:Steel Sword 9999
+33 39 26 39 39 39 39 26 2D 31 0D 0A:Flame Sword 9999
+34 30 26 39 39 39 26 30 2D 31 0D 0A:Freeze Sword 999
+34 31 26 39 39 39 26 30 2D 31 0D 0A:Bullseve Sword 999
+34 32 26 39 39 39 26 30 2D 31 0D 0A:Vampire Sword 999
+34 33 26 39 39 39 26 30 2D 31 0D 0A:Glass Sword 999
+34 34 26 39 39 39 26 30 2D 31 0D 0A:Hero Sword 999 [no exp]
+34 35 26 39 39 39 26 30 2D 31 0D 0A:Devil Sword 999 [no exp]
+30 34 26 39 39 39 39 26 2D 31 0D 0A:Normal Claws 9999
+30 35 26 39 39 39 39 26 2D 31 0D 0A:Steel Claws 9999
+30 36 26 39 39 39 39 26 2D 31 0D 0A:Poison Claws 9999
+30 37 26 39 39 39 39 26 2D 31 0D 0A:Paralyze Claws 9999
+30 38 26 39 39 39 39 26 2D 31 0D 0A:Beast King Claws 9999
+31 35 26 39 39 39 39 26 2D 31 0D 0A:Normal Club 9999
+31 36 26 39 39 39 39 26 2D 31 0D 0A:Spiked Club 9999
+31 37 26 39 39 39 39 26 2D 31 0D 0A:Hardcore Club 9999
+31 38 26 39 39 39 39 26 2D 31 0D 0A:Metal Bat 9999
+31 39 26 39 39 39 39 26 2D 31 0D 0A:Gold Bat 9999 [No Exp]
+36 31 26 39 39 26 30 26 2D 31 0D 0A:Normal Bow 99
+36 31 26 39 39 39 26 30 2D 31 0D 0A:Normal Bow 999
+36 32 26 39 39 39 39 26 2D 31 0D 0A:Three-way Bow 9999
+36 33 26 39 39 39 39 26 2D 31 0D 0A:Rapidfire Bow 9999
+36 34 26 39 39 39 39 26 2D 31 0D 0A:Ainu Arrow 9999
+36 35 26 39 39 39 39 26 2D 31 0D 0A:Killemall Arrow 9999
+37 32 26 39 39 39 39 26 2D 31 0D 0A:Grass Sicle 9999
+37 33 26 39 39 39 39 26 2D 31 0D 0A:Dodgy Sicle 9999
+37 34 26 39 39 39 39 26 2D 31 0D 0A:Decapitating Sickle 9999
+37 35 26 39 39 39 39 26 2D 31 0D 0A:Reaper Sickle 9999 [No exp]
+35 31 26 39 39 39 39 26 2D 31 0D 0A:Battle Ax 9999
+35 32 26 39 39 39 39 26 2D 31 0D 0A:Steel Ax 9999
+35 33 26 39 39 39 39 26 2D 31 0D 0A:Big-ass Ax 9999 [No EXP]
+35 34 26 39 39 39 39 26 2D 31 0D 0A:Devil Ax 9999 [No Exp]
+34 3A 26 39 39 39 26 30 2D 31 0D 0A:Normal Claws 999
+32 30 37 26 33 26 30 26 2D 31 0D 0A:Medicine 3
+32 30 38 26 35 26 30 26 2D 31 0D 0A:Awesome Medicine 5
+32 30 39 26 36 26 30 26 2D 31 0D 0A:Ultimate Medicine 6
+33 33 30 26 39 26 30 26 2D 31 0D 0A:Wpn.Enhancement 9
+33 33 31 26 39 26 30 26 2D 31 0D 0A:Wpn.Enhancement G 9
+33 31 34 26 39 39 39 26 2D 31 0D 0A:Ultimate Wpn.Enchancement 999
+33 33 38 26 39 26 30 26 2D 31 0D 0A:Pow Grd.Enhancement 9
+33 33 39 26 39 26 30 26 2D 31 0D 0A:Ultimate Grd.Enhancement 999
+33 34 34 26 39 39 39 26 2D 31 0D 0A:Invincible Grd.Enhancement 999
+33 32 35 26 39 39 39 26 2D 31 0D 0A:Lighspeed Wpn.Enhancement 999
+33 30 34 26 33 26 30 26 2D 31 0D 0A:Wpn.Repair Kit 3
+33 30 35 26 33 26 30 26 2D 31 0D 0A:Wpn.Repair Kit G 3
+33 30 38 26 33 26 30 26 2D 31 0D 0A:Grd.Repair Kit 3
+33 30 39 26 33 26 30 26 2D 31 0D 0A:Grd.Repair Kit G 3
+32 39 38 26 39 26 30 26 2D 31 0D 0A:Funny Grass 9
+32 39 34 26 39 26 30 26 2D 31 0D 0A:Sacred Seed 9
+32 39 36 26 39 26 30 26 2D 31 0D 0A:Offensive Seed 9
+32 39 35 26 39 26 30 26 2D 31 0D 0A:Invigorating Seed 9
+32 39 37 26 39 26 30 26 2D 31 0D 0A:Protective Seed 9
+32 39 33 26 39 26 30 26 2D 31 0D 0A:Devil Seed 9(stats Down)
+32 39 32 26 39 26 30 26 2D 31 0D 0A:Rainbow Seed 9 (stats up)
+32 37 30 26 39 26 30 26 2D 31 0D 0A:Tiny Grenade 9
+32 37 31 26 39 26 30 26 2D 31 0D 0A:Big-ass Grenade 9
+32 37 32 26 39 26 30 26 2D 31 0D 0A:Big-ass Grenade G 9
+32 38 34 26 39 26 30 26 2D 31 0D 0A:Sleep Trap 9
+32 38 33 26 39 26 30 26 2D 31 0D 0A:Landmine Trap 9
+32 38 34 26 39 26 30 26 2D 31 0D 0A:Paralysis Trap 9
+32 38 30 26 39 26 30 26 2D 31 0D 0A:Caltrop 9
+32 37 35 26 35 26 30 26 2D 31 0D 0A:Pervy Liquid 5
+32 37 35 26 35 26 30 26 2D 31 0D 0A:Brown Sludge 5
+32 33 35 26 33 26 30 26 2D 31 0D 0A:Onion 3
+39 36 26 39 39 26 30 26 2D 31 0D 0A:King Cape 99
+39 37 26 39 39 26 30 26 2D 31 0D 0A:Zephyr Cape 99
+39 38 26 39 39 26 30 26 2D 31 0D 0A:Fairy Cape 99
+31 33 31 26 39 39 39 26 2D 31 0D 0A:Heat-proof Shield 999
+31 33 32 26 39 39 39 26 2D 31 0D 0A:Cold-proof Shield 999
+31 33 33 26 39 39 39 26 2D 31 0D 0A:Holy Shield 999
+31 33 34 26 39 39 39 26 2D 31 0D 0A:Reaper's Eye 999
+31 34 33 26 39 39 39 26 2D 31 0D 0A:Steel Gloves 999
+31 35 33 26 39 39 39 26 2D 31 0D 0A:Nikey Shoes 999
+31 35 35 26 39 39 39 26 2D 31 0D 0A:Beerok Shoes 999
+31 36 35 26 39 39 39 26 2D 31 0D 0A:Steel Helmet 999
+31 37 33 26 39 39 39 26 2D 31 0D 0A:Experience Ring 999
+31 37 34 26 39 39 39 26 2D 31 0D 0A:Pirate Ring 999
+31 37 35 26 39 39 39 26 2D 31 0D 0A:Antisuck Ring 999
+31 37 36 26 39 39 39 26 2D 31 0D 0A:Evasion Ring 999
+31 37 37 26 39 39 39 26 2D 31 0D 0A:Sacred Ring 999
+31 38 33 26 39 39 39 26 2D 31 0D 0A:Beatiful Jewel 999
+31 38 34 26 39 39 39 26 2D 31 0D 0A:R.Dragon Jewel 999
+31 38 35 26 39 39 39 26 2D 31 0D 0A:G.Dragon Jewel 999
+31 38 36 26 39 39 39 26 2D 31 0D 0A:B.Dragon Jewel 999
+31 38 37 26 39 39 39 26 2D 31 0D 0A:Devil Jewel 999
+31 30 39 26 39 39 39 26 2D 31 0D 0A:Bunny Suit 999
+31 30 38 26 39 39 39 26 2D 31 0D 0A:Battle Tights 999
+33 36 36 26 39 39 39 26 2D 31 0D 0A:Good Claw Material
+33 36 38 26 39 39 39 26 2D 31 0D 0A:Good Club Material
+33 37 32 26 39 39 39 26 2D 31 0D 0A:Good Sword Material
+33 37 34 26 39 39 39 26 2D 31 0D 0A:Good Ax Material
+33 37 36 26 39 39 39 26 2D 31 0D 0A:Good Bow Material
+33 37 38 26 39 39 39 26 2D 31 0D 0A:Good Sickle Material
+33 38 35 26 39 39 39 26 2D 31 0D 0A:Good Cape Material
+33 38 37 26 39 39 39 26 2D 31 0D 0A:Good Fetish Material
+33 38 39 26 39 39 39 26 2D 31 0D 0A:Good Armor Material
+33 39 31 26 39 39 39 26 2D 31 0D 0A:Good Shield Material
+33 39 33 26 39 39 39 26 2D 31 0D 0A:Good Glove Material
+33 39 35 26 39 39 39 26 2D 31 0D 0A:Good Shoe Material
+33 39 37 26 39 39 39 26 2D 31 0D 0A:Good Helmet Material
+33 39 38 26 39 39 39 26 2D 31 0D 0A:Ring Material
+33 39 39 26 39 39 39 26 2D 31 0D 0A:Jewel Material
+34 38 35 26 39 39 39 26 2D 31 0D 0A:Night Wear
+35 36 31 26 39 39 39 26 2D 31 0D 0A:Boss Lamia Armour1 999
+</DropDownList>
+          <LastState Value="2B 31 3E 30 30 35 2B 35 45 41 BE 27" RealAddress="16128130"/>
+          <ShowAsHex>1</ShowAsHex>
+          <VariableType>Array of byte</VariableType>
+          <ByteLength>12</ByteLength>
+          <Address>ItemModB</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>25</ID>
+      <Description>"Item Modder C (Searches for Wpn.Repair Kit 3 in Slot)"</Description>
+      <Options moHideChildren="1"/>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+label(ItemModC)
+registersymbol(ItemModC)
+aobscan(AOB,33 30 34 26 33 26 30 26 2D 31 0D 0A)
+
+AOB:
+ItemModC:
+ 
+ 
+[DISABLE]
+unregistersymbol(ItemModC)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>26</ID>
+          <Description>"Item mod"</Description>
+          <DropDownList DescriptionOnly="1" DisplayValueAsItem="1">32 36 34 26 39 26 30 26 2D 31 0D 0A:Naughty Book 9
+32 36 35 26 39 26 30 26 2D 31 0D 0A:Ice Gimoire 9
+32 36 36 26 39 26 30 26 2D 31 0D 0A:Thunder Grimoire 9
+32 36 37 26 39 26 30 26 2D 31 0D 0A:Flame Grimoire 9
+32 34 37 26 39 26 30 26 2D 31 0D 0A:Legend Grilled Veggies 9
+32 35 33 26 39 26 30 26 2D 31 0D 0A:Frozen Berry 9
+34 33 32 26 39 26 30 26 2D 31 0D 0A:Shop Scroll 9
+34 33 33 26 39 26 30 26 2D 31 0D 0A:Prosperity Scroll 9
+34 35 33 26 39 26 30 26 2D 31 0D 0A:Return Feather 9
+34 34 34 26 39 26 30 26 2D 31 0D 0A:Pissoff Scroll 9
+34 34 37 26 39 26 30 26 2D 31 0D 0A:Some Kinda Scroll 9
+34 34 33 26 39 26 30 26 2D 31 0D 0A:Exorcism Scroll 9
+34 34 31 26 39 26 30 26 2D 31 0D 0A:Enemy Weakening Scroll 9
+34 34 32 26 39 26 30 26 2D 31 0D 0A:Enemy Enchancing Scroll 9
+34 34 30 26 39 26 30 26 2D 31 0D 0A:Record Scroll 9
+34 35 32 26 39 26 30 26 2D 31 0D 0A:Warehouse Pot 9
+34 33 34 26 39 26 30 26 2D 31 0D 0A:Slump Scroll 9
+34 33 35 26 39 26 30 26 2D 31 0D 0A:Stochastic Scroll 9
+34 33 36 26 39 26 30 26 2D 31 0D 0A:Demotion Scroll 9
+34 33 37 26 39 26 30 26 2D 31 0D 0A:Lucky Scroll 9
+34 33 38 26 39 26 30 26 2D 31 0D 0A:Goddammit Scroll 9
+34 33 39 26 39 26 30 26 2D 31 0D 0A:Stair Scroll 9
+32 36 36 26 39 26 30 26 2D 31 0D 0A:Thunder Grimoire 9
+32 36 37 26 39 26 30 26 2D 31 0D 0A:Flame Grimoire 9
+32 36 37 26 39 39 39 39 26 0D 0A:Flame Grimoir 9999
+34 32 32 26 31 26 30 26 2D 31 0D 0A:Light Ball
+32 33 36 26 33 26 30 26 2D 31 0D 0A:Carrot 3
+32 39 39 26 39 26 30 26 2D 31 0D 0A:Regeneration Grass
+34 31 30 26 31 26 30 26 2D 31 0D 0A:Regeneration Badge
+34 31 33 26 31 26 30 26 2D 31 0D 0A:Observation Badge
+34 30 35 26 31 26 30 26 2D 31 0D 0A:Badass Badge
+34 30 36 26 31 26 30 26 2D 31 0D 0A:Dumbass Badge
+34 31 32 26 31 26 30 26 2D 31 0D 0A:Goddamit Badge
+34 31 31 26 31 26 30 26 2D 31 0D 0A:Stochastic Badge
+34 30 38 26 31 26 30 26 2D 31 0D 0A:Cleanfreak Badge
+34 30 37 26 31 26 30 26 2D 31 0D 0A:Fireproof Badge
+34 31 34 26 31 26 30 26 2D 31 0D 0A:Air Badge
+34 30 39 26 31 26 30 26 2D 31 0D 0A:Blacksmith Badge
+34 32 33 26 39 26 30 26 2D 31 0D 0A:Pretty Stone
+34 31 36 26 31 26 30 26 2D 31 0D 0A:Weird Red Scroll
+34 31 37 26 31 26 30 26 2D 31 0D 0A:Weird Green Scroll
+34 31 38 26 31 26 30 26 2D 31 0D 0A:Weird Blue Scroll
+34 31 39 26 31 26 30 26 2D 31 0D 0A:Tanning Machine
+32 36 26 39 39 39 39 26 2D 31 0D 0A:Storm Staff 9999
+32 37 26 39 39 39 39 26 2D 31 0D 0A:Flame Staff 9999
+32 38 26 39 39 39 39 26 2D 31 0D 0A:Freeze Staff 9999
+32 39 26 39 39 39 39 26 2D 31 0D 0A:Thunder Staff 9999
+33 37 26 39 39 39 39 26 2D 31 0D 0A:Normal Sword 9999
+33 38 26 39 39 39 39 26 2D 31 0D 0A:Steel Sword 9999
+33 39 26 39 39 39 39 26 2D 31 0D 0A:Flame Sword 9999
+34 30 26 39 39 39 26 30 2D 31 0D 0A:Freeze Sword 999
+34 31 26 39 39 39 26 30 2D 31 0D 0A:Bullseve Sword 999
+34 32 26 39 39 39 26 30 2D 31 0D 0A:Vampire Sword 999
+34 33 26 39 39 39 26 30 2D 31 0D 0A:Glass Sword 999
+34 34 26 39 39 39 26 30 2D 31 0D 0A:Hero Sword 999 [no exp]
+34 35 26 39 39 39 26 30 2D 31 0D 0A:Devil Sword 999 [no exp]
+30 34 26 39 39 39 39 26 2D 31 0D 0A:Normal Claws 9999
+30 35 26 39 39 39 39 26 2D 31 0D 0A:Steel Claws 9999
+30 36 26 39 39 39 39 26 2D 31 0D 0A:Poison Claws 9999
+30 37 26 39 39 39 39 26 2D 31 0D 0A:Paralyze Claws 9999
+30 38 26 39 39 39 39 26 2D 31 0D 0A:Beast King Claws 9999
+31 35 26 39 39 39 39 26 2D 31 0D 0A:Normal Club 9999
+31 36 26 39 39 39 39 26 2D 31 0D 0A:Spiked Club 9999
+31 37 26 39 39 39 39 26 2D 31 0D 0A:Hardcore Club 9999
+31 38 26 39 39 39 39 26 2D 31 0D 0A:Metal Bat 9999
+31 39 26 39 39 39 39 26 2D 31 0D 0A:Gold Bat 9999 [No Exp]
+36 31 26 39 39 26 30 26 2D 31 0D 0A:Normal Bow 99
+36 31 26 39 39 39 26 30 2D 31 0D 0A:Normal Bow 999
+36 32 26 39 39 39 39 26 2D 31 0D 0A:Three-way Bow 9999
+36 33 26 39 39 39 39 26 2D 31 0D 0A:Rapidfire Bow 9999
+36 34 26 39 39 39 39 26 2D 31 0D 0A:Ainu Arrow 9999
+36 35 26 39 39 39 39 26 2D 31 0D 0A:Killemall Arrow 9999
+37 32 26 39 39 39 39 26 2D 31 0D 0A:Grass Sicle 9999
+37 33 26 39 39 39 39 26 2D 31 0D 0A:Dodgy Sicle 9999
+37 34 26 39 39 39 39 26 2D 31 0D 0A:Decapitating Sickle 9999
+37 35 26 39 39 39 39 26 2D 31 0D 0A:Reaper Sickle 9999 [No exp]
+35 31 26 39 39 39 39 26 2D 31 0D 0A:Battle Ax 9999
+35 32 26 39 39 39 39 26 2D 31 0D 0A:Steel Ax 9999
+35 33 26 39 39 39 39 26 2D 31 0D 0A:Big-ass Ax 9999 [No EXP]
+35 34 26 39 39 39 39 26 2D 31 0D 0A:Devil Ax 9999 [No Exp]
+34 3A 26 39 39 39 26 30 2D 31 0D 0A:Normal Claws 999
+32 30 37 26 33 26 30 26 2D 31 0D 0A:Medicine 3
+32 30 38 26 35 26 30 26 2D 31 0D 0A:Awesome Medicine 5
+32 30 39 26 36 26 30 26 2D 31 0D 0A:Ultimate Medicine 6
+33 33 30 26 39 26 30 26 2D 31 0D 0A:Wpn.Enhancement 9
+33 33 31 26 39 26 30 26 2D 31 0D 0A:Wpn.Enhancement G 9
+33 31 34 26 39 39 39 26 2D 31 0D 0A:Ultimate Wpn.Enchancement 999
+33 33 38 26 39 26 30 26 2D 31 0D 0A:Pow Grd.Enhancement 9
+33 33 39 26 39 26 30 26 2D 31 0D 0A:Ultimate Grd.Enhancement 999
+33 34 34 26 39 39 39 26 2D 31 0D 0A:Invincible Grd.Enhancement 999
+33 32 35 26 39 39 39 26 2D 31 0D 0A:Lighspeed Wpn.Enhancement 999
+33 30 34 26 33 26 30 26 2D 31 0D 0A:Wpn.Repair Kit 3
+33 30 35 26 33 26 30 26 2D 31 0D 0A:Wpn.Repair Kit G 3
+33 30 38 26 33 26 30 26 2D 31 0D 0A:Grd.Repair Kit 3
+33 30 39 26 33 26 30 26 2D 31 0D 0A:Grd.Repair Kit G 3
+32 39 38 26 39 26 30 26 2D 31 0D 0A:Funny Grass 9
+32 39 34 26 39 26 30 26 2D 31 0D 0A:Sacred Seed 9
+32 39 36 26 39 26 30 26 2D 31 0D 0A:Offensive Seed 9
+32 39 35 26 39 26 30 26 2D 31 0D 0A:Invigorating Seed 9
+32 39 37 26 39 26 30 26 2D 31 0D 0A:Protective Seed 9
+32 39 33 26 39 26 30 26 2D 31 0D 0A:Devil Seed 9(stats Down)
+32 39 32 26 39 26 30 26 2D 31 0D 0A:Rainbow Seed 9 (stats up)
+32 37 30 26 39 26 30 26 2D 31 0D 0A:Tiny Grenade 9
+32 37 31 26 39 26 30 26 2D 31 0D 0A:Big-ass Grenade 9
+32 37 32 26 39 26 30 26 2D 31 0D 0A:Big-ass Grenade G 9
+32 38 34 26 39 26 30 26 2D 31 0D 0A:Sleep Trap 9
+32 38 33 26 39 26 30 26 2D 31 0D 0A:Landmine Trap 9
+32 38 34 26 39 26 30 26 2D 31 0D 0A:Paralysis Trap 9
+32 38 30 26 39 26 30 26 2D 31 0D 0A:Caltrop 9
+32 37 35 26 35 26 30 26 2D 31 0D 0A:Pervy Liquid 5
+32 37 35 26 35 26 30 26 2D 31 0D 0A:Brown Sludge 5
+32 33 35 26 33 26 30 26 2D 31 0D 0A:Onion 3
+39 36 26 39 39 26 30 26 2D 31 0D 0A:King Cape 99
+39 37 26 39 39 26 30 26 2D 31 0D 0A:Zephyr Cape 99
+39 38 26 39 39 26 30 26 2D 31 0D 0A:Fairy Cape 99
+31 33 31 26 39 39 39 26 2D 31 0D 0A:Heat-proof Shield 999
+31 33 32 26 39 39 39 26 2D 31 0D 0A:Cold-proof Shield 999
+31 33 33 26 39 39 39 26 2D 31 0D 0A:Holy Shield 999
+31 33 34 26 39 39 39 26 2D 31 0D 0A:Reaper's Eye 999
+31 34 33 26 39 39 39 26 2D 31 0D 0A:Steel Gloves 999
+31 35 33 26 39 39 39 26 2D 31 0D 0A:Nikey Shoes 999
+31 35 35 26 39 39 39 26 2D 31 0D 0A:Beerok Shoes 999
+31 36 35 26 39 39 39 26 2D 31 0D 0A:Steel Helmet 999
+31 37 33 26 39 39 39 26 2D 31 0D 0A:Experience Ring 999
+31 37 34 26 39 39 39 26 2D 31 0D 0A:Pirate Ring 999
+31 37 35 26 39 39 39 26 2D 31 0D 0A:Antisuck Ring 999
+31 37 36 26 39 39 39 26 2D 31 0D 0A:Evasion Ring 999
+31 37 37 26 39 39 39 26 2D 31 0D 0A:Sacred Ring 999
+31 38 33 26 39 39 39 26 2D 31 0D 0A:Beatiful Jewel 999
+31 38 34 26 39 39 39 26 2D 31 0D 0A:R.Dragon Jewel 999
+31 38 35 26 39 39 39 26 2D 31 0D 0A:G.Dragon Jewel 999
+31 38 36 26 39 39 39 26 2D 31 0D 0A:B.Dragon Jewel 999
+31 38 37 26 39 39 39 26 2D 31 0D 0A:Devil Jewel 999
+31 30 39 26 39 39 39 26 2D 31 0D 0A:Bunny Suit 999
+31 30 38 26 39 39 39 26 2D 31 0D 0A:Battle Tights 999
+33 36 36 26 39 39 39 26 2D 31 0D 0A:Good Claw Material
+33 36 38 26 39 39 39 26 2D 31 0D 0A:Good Club Material
+33 37 32 26 39 39 39 26 2D 31 0D 0A:Good Sword Material
+33 37 34 26 39 39 39 26 2D 31 0D 0A:Good Ax Material
+33 37 36 26 39 39 39 26 2D 31 0D 0A:Good Bow Material
+33 37 38 26 39 39 39 26 2D 31 0D 0A:Good Sickle Material
+33 38 35 26 39 39 39 26 2D 31 0D 0A:Good Cape Material
+33 38 37 26 39 39 39 26 2D 31 0D 0A:Good Fetish Material
+33 38 39 26 39 39 39 26 2D 31 0D 0A:Good Armor Material
+33 39 31 26 39 39 39 26 2D 31 0D 0A:Good Shield Material
+33 39 33 26 39 39 39 26 2D 31 0D 0A:Good Glove Material
+33 39 35 26 39 39 39 26 2D 31 0D 0A:Good Shoe Material
+33 39 37 26 39 39 39 26 2D 31 0D 0A:Good Helmet Material
+33 39 38 26 39 39 39 26 2D 31 0D 0A:Ring Material
+33 39 39 26 39 39 39 26 2D 31 0D 0A:Jewel Material
+34 38 35 26 39 39 39 26 2D 31 0D 0A:Night Wear
+35 36 31 26 39 39 39 26 2D 31 0D 0A:Boss Lamia Armour1 999
+</DropDownList>
+          <ShowAsHex>1</ShowAsHex>
+          <VariableType>Array of byte</VariableType>
+          <ByteLength>12</ByteLength>
+          <Address>ItemModC</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>20</ID>
+      <Description>"Item Count/held"</Description>
+      <Options moHideChildren="1"/>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+label(ItemCount)
+registersymbol(ItemCount)
+aobscan(AOB,40 00 00 00 00 99 ?? 02 90 98 ?? 02 00 00 00 00)
+
+AOB:
+ItemCount:
+ 
+ 
+[DISABLE]
+unregistersymbol(ItemCount)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>27</ID>
+          <Description>"No description"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>ItemCount+10</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>30</ID>
+      <Description>"Duplication Drop Byte (discard item, grab and set byte to 1 again) it must be only item on screen including chests etc"</Description>
+      <Options moHideChildren="1"/>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+label(ItemDupe)
+registersymbol(ItemDupe)
+aobscan(AOB,7F 38 C9 20 00 5B 00 88 02 00 00 00 B0 44 27 02 80 00 00 00 08 49 E9 15 F0 48 E9 15 00 00 00 00)
+
+AOB:
+ItemDupe:
+ 
+ 
+[DISABLE]
+unregistersymbol(ItemDupe)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>31</ID>
+          <Description>"Dupe Discarded item Byte (dont change screen or gotta discard again)"</Description>
+          <LastState Value="1" RealAddress="15E94908"/>
+          <VariableType>Byte</VariableType>
+          <Address>ItemDupe+20</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <Comments>item Dupe byte  Aob
+7F 38 C9 20 00 5B 00 88 02 00 00 00 B0 44 27 02 80 00 00 00 08 49 E9 15 F0 48 E9 15 00 00 00 00
+</Comments>
+</CheatTable>
