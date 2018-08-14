@@ -10,7 +10,7 @@ _For some cases/scenarios that you made the changes for values but it didn't wor
 
 3) While in-game, do some actions (ex: Eat **_Rainbow Seeds_** to gain MaxHP + STR + DEF + ...) 
 
-4) And back to debugger of CE, we found 2 lines of opcodes, I only focus on this: 
+4) And back to debugger of CE, we found 2 lines of opcodes, I was only focusing on this: 
 
 **`00435F5A -- add EAX, ECX`** 
 ```
