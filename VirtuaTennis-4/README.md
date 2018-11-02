@@ -10,4 +10,4 @@ According to [/pcgamingwiki](https://pcgamingwiki.com/wiki/Virtua_Tennis_4#cite_
 
 ___________________________
 
-> 🏆🏆🏆 Tribute to 🤘 [awesome gamer communities](https://gtaforums.com/topic/388658-relgtaiv-xliveless) 🤘
+> 🏆🏆🏆 Kudos to 🤘 [awesome gamer communities](https://gtaforums.com/topic/388658-relgtaiv-xliveless) 🤘
