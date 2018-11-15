@@ -1,5 +1,14 @@
 Collection of **`console mode`** commands --> [ref](https://tools.dathost.net/csgo-commands)
 
+```groovy
+Mode 	                  game_type 	game_mode
+Classic Casual               0              0
+Classic Competitive	     0	            1
+Arms Race 	             1	            0
+Demolition                   1	            1
+Deathmatch	             1	            2
+```
+
 - bot_quota [number]
 ```groovy
 Default: 10
