@@ -9,6 +9,11 @@ Demolition                   1	            1
 Deathmatch	             1	            2
 ```
 
+- mp_limitteams 0 
+```groovy
+disables limitations on the number of players in both teams.
+```
+
 - bot_quota [number]
 ```groovy
 Default: 10
