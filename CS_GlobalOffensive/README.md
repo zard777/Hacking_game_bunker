@@ -3,10 +3,23 @@ Collection of **`console mode`** commands --> [ref](https://tools.dathost.net/cs
 ```groovy
 Mode 	                  game_type 	game_mode
 Classic Casual               0              0
-Classic Competitive	     0	            1
-Arms Race 	             1	            0
+Classic Competitive	         0	            1
+Arms Race 	                 1	            0
 Demolition                   1	            1
-Deathmatch	             1	            2
+Deathmatch	                 1	            2
+```
+
+- mp_weapons_allow_zeus 
+```groovy
+Default: 1
+Determines whether the Zeus is purchasable or not.
+Client only command
+```
+- mp_ct_default_melee 
+```groovy
+Default: weapon_knife
+The default melee weapon that the CTs will spawn with.  Even if this is blank, a knife will be given.  To give a taser, it should look like this: 'weapon_knife weapon_taser'.  Remember to set mp_weapons_allow_zeus to 1 if you want to give a taser!
+Client only command
 ```
 
 - mp_limitteams 0 
