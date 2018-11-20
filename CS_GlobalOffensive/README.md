@@ -1,4 +1,4 @@
-Collection of **`console mode`** commands --> [ref](https://tools.dathost.net/csgo-commands)
+Collection of **`console mode`** commands --> [ref](https://tools.dathost.net/csgo-commands) + [Weapon list](https://steamcommunity.com/sharedfiles/filedetails/?id=570025313)
 
 ```groovy
 Mode 	                  game_type 	game_mode
@@ -15,11 +15,40 @@ Default: 1
 Determines whether the Zeus is purchasable or not.
 Client only command
 ```
+
 - mp_ct_default_melee 
 ```groovy
 Default: weapon_knife
 The default melee weapon that the CTs will spawn with.  Even if this is blank, a knife will be given.  To give a taser, it should look like this: 'weapon_knife weapon_taser'.  Remember to set mp_weapons_allow_zeus to 1 if you want to give a taser!
 Client only command
+```
+
+- mp_t_default_grenades 
+```groovy
+Default: 
+The default grenades that the Ts will spawn with.  To give multiple grenades, separate each weapon class with a space like this: 'weapon_molotov weapon_hegrenade'
+Client only command
+```
+
+- mp_hostages_takedamage 
+```groovy
+Default: 0
+Whether or not hostages can be hurt.
+Client only command
+```
+
+- mp_hostages_max 
+```groovy
+Default: 2
+Maximum number of hostages to spawn.
+Server only
+```
+
+- mp_ignore_round_win_conditions 
+```groovy
+Default: 0
+Ignore conditions which would end the current round
+Server only
 ```
 
 - mp_limitteams 0 
