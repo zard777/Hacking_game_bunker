@@ -1,3 +1,8 @@
+### Update [Sky Palace] patch 
++ Tested on version v1.11 ✔
+
+--- 
+
 ### Test on  Wizard of Legend v1.02c via CE 6.6
 
 **Usage info:**
