@@ -1,0 +1,4445 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="18">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>116279</ID>
+      <Description>"InGameMediator Base Address Scan Initialization (Activate This First)"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="0"/>
+      <Color>800000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+registersymbol(InGameMediator_basepointer)
+registersymbol(InGameMediator_update_enable)
+registersymbol(InGameMediator_godset_enable)
+registersymbol(InGameMediator_hpset_enable)
+registersymbol(InGameMediator_statpointsset_enable)
+registersymbol(InGameMediator_statsset_enable)
+registersymbol(InGameMediator_mobilityset_enable)
+registersymbol(InGameMediator_magnetset_enable)
+registersymbol(InGameMediator_clipset_enable)
+registersymbol(InGameMediator_consumablesset_enable)
+registersymbol(InGameMediator_creditsset_enable)
+registersymbol(InGameMediator_jumpset_enable)
+
+alloc(InGameMediator_basepointer, 8)
+alloc(InGameMediator_update_enable, 4)
+alloc(InGameMediator_godset_enable, 4)
+alloc(InGameMediator_hpset_enable, 4)
+alloc(InGameMediator_statpointsset_enable, 4)
+alloc(InGameMediator_statsset_enable, 4)
+alloc(InGameMediator_mobilityset_enable, 4)
+alloc(InGameMediator_magnetset_enable, 4)
+alloc(InGameMediator_clipset_enable, 4)
+alloc(InGameMediator_consumablesset_enable, 4)
+alloc(InGameMediator_creditsset_enable, 4)
+alloc(InGameMediator_jumpset_enable, 4)
+
+
+[DISABLE]
+unregistersymbol(InGameMediator_basepointer)
+unregistersymbol(InGameMediator_update_enable)
+unregistersymbol(InGameMediator_godset_enable)
+unregistersymbol(InGameMediator_hpset_enable)
+unregistersymbol(InGameMediator_statpointsset_enable)
+unregistersymbol(InGameMediator_statsset_enable)
+unregistersymbol(InGameMediator_mobilityset_enable)
+unregistersymbol(InGameMediator_magnetset_enable)
+unregistersymbol(InGameMediator_clipset_enable)
+unregistersymbol(InGameMediator_consumablesset_enable)
+unregistersymbol(InGameMediator_creditsset_enable)
+unregistersymbol(InGameMediator_jumpset_enable)
+
+dealloc(InGameMediator_basepointer)
+dealloc(InGameMediator_update_enable)
+dealloc(InGameMediator_godset_enable)
+dealloc(InGameMediator_hpset_enable)
+dealloc(InGameMediator_statpointsset_enable)
+dealloc(InGameMediator_statsset_enable)
+dealloc(InGameMediator_mobilityset_enable)
+dealloc(InGameMediator_magnetset_enable)
+dealloc(InGameMediator_clipset_enable)
+dealloc(InGameMediator_consumablesset_enable)
+dealloc(InGameMediator_creditsset_enable)
+dealloc(InGameMediator_jumpset_enable)
+
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>116280</ID>
+          <Description>"InGameMediator Base Address Scan (To Activate: Play Level, To Update: Play Level)"</Description>
+          <LastState Activated="0"/>
+          <Color>804000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+label(InGameMediator_savedAOB)
+label(InGameMediator_returnhere)
+label(InGameMediator_originalcode)
+label(InGameMediator_exit)
+
+label(InGameMediator_update_exit)
+label(InGameMediator_godset_exit)
+label(InGameMediator_hpset_exit)
+label(InGameMediator_statpointsset_exit)
+label(InGameMediator_statsset_exit)
+label(InGameMediator_mobilityset_exit)
+label(InGameMediator_magnetset_exit)
+label(InGameMediator_clipset_exit)
+label(InGameMediator_consumablesset_exit)
+label(InGameMediator_consumablesset_entry)
+label(InGameMediator_consumablesset_execute)
+label(InGameMediator_consumablesset_continue)
+label(InGameMediator_creditsset_exit)
+label(InGameMediator_creditsset_entry)
+label(InGameMediator_creditsset_execute)
+label(InGameMediator_creditsset_continue)
+label(InGameMediator_jumpset_exit)
+
+registersymbol(InGameMediator_originalcode)
+registersymbol(InGameMediator_savedAOB)
+
+//15BC8A15 - 48 83 EC 08           - sub rsp,08
+//15BC8A19 - 48 8B F1              - mov rsi,rcx
+// Zombotron.UI:InGameMediator:Execute+c
+//15BC8A1C - 0FB6 86 B1000000      - movzx eax,byte ptr [rsi+000000B1]
+//15BC8A23 - 85 C0                 - test eax,eax
+//15BC8A25 - 0F84 D6010000         - je 15BC8C01
+//15BC8A2B - F3 0F10 86 B4000000   - movss xmm0,[rsi+000000B4]
+//15BC8A33 - F3 0F5A C0            - cvtss2sd xmm0,xmm0
+//15BC8A37 - F2 0F11 45 F0         - movsd [rbp-10],xmm0
+aobscan(InGameMediator_searchedAOB, 0F B6 86 B1 00 00 00 85 C0 * * * * * * F3 0F 10 86 B4 00 00 00)
+
+alloc(InGameMediator_newmem, 2048, InGameMediator_searchedAOB)
+alloc(InGameMediator_temp1, 8, InGameMediator_searchedAOB)
+alloc(InGameMediator_temp2, 8, InGameMediator_searchedAOB)
+alloc(InGameMediator_temp3, 8, InGameMediator_searchedAOB)
+alloc(InGameMediator_temp4, 8, InGameMediator_searchedAOB)
+alloc(InGameMediator_temp5, 8, InGameMediator_searchedAOB)
+
+
+InGameMediator_newmem:
+mov [InGameMediator_temp1], rax
+mov [InGameMediator_temp2], rbx
+mov [InGameMediator_temp3], rcx
+mov [InGameMediator_temp4], rdx
+
+cmp dword ptr [InGameMediator_update_enable], #0
+je InGameMediator_update_exit
+mov [InGameMediator_basepointer], rsi
+InGameMediator_update_exit:
+
+cmp dword ptr [InGameMediator_godset_enable], #0
+je InGameMediator_godset_exit
+mov rbx, [rsi+30]
+test rbx, rbx
+je InGameMediator_godset_exit
+mov rbx, [rbx+48]
+test rbx, rbx
+je InGameMediator_godset_exit
+mov byte ptr [rbx+15c], #1
+mov byte ptr [rbx+1e5], #1
+InGameMediator_godset_exit:
+
+cmp dword ptr [InGameMediator_hpset_enable], #0
+je InGameMediator_hpset_exit
+mov rbx, [rsi+30]
+test rbx, rbx
+je InGameMediator_hpset_exit
+mov rbx, [rbx+48]
+test rbx, rbx
+je InGameMediator_hpset_exit
+fld [rbx+25c]
+fstp [rbx+258]
+InGameMediator_hpset_exit:
+
+cmp dword ptr [InGameMediator_statpointsset_enable], #0
+je InGameMediator_statpointsset_exit
+mov rbx, [rsi+30]
+test rbx, rbx
+je InGameMediator_statpointsset_exit
+mov rbx, [rbx+48]
+test rbx, rbx
+je InGameMediator_statpointsset_exit
+mov [rbx+26c], #9999
+InGameMediator_statpointsset_exit:
+
+cmp dword ptr [InGameMediator_statsset_enable], #0
+je InGameMediator_statsset_exit
+mov rbx, [rsi+30]
+test rbx, rbx
+je InGameMediator_statsset_exit
+mov rbx, [rbx+48]
+test rbx, rbx
+je InGameMediator_statsset_exit
+mov [rbx+288], (float)9999
+mov [rbx+28c], (float)9999
+mov [rbx+290], (float)9999
+mov [rbx+294], (float)9999
+mov [rbx+298], (float)9999
+mov [rbx+29c], (float)9999
+mov [rbx+2a0], (float)9999
+mov [rbx+2a4], (float)9999
+mov [rbx+2a8], (float)9999
+mov [rbx+2ac], (float)-1
+mov [rbx+2b0], (float)9999
+mov [rbx+2b4], (float)-1
+mov [rbx+2b8], (float)9999
+mov [rbx+2bc], (float)-1
+mov [rbx+2c0], (float)9999
+mov [rbx+2c4], (float)1
+InGameMediator_statsset_exit:
+
+cmp dword ptr [InGameMediator_mobilityset_enable], #0
+je InGameMediator_mobilityset_exit
+mov rbx, [rsi+30]
+test rbx, rbx
+je InGameMediator_mobilityset_exit
+mov rbx, [rbx+20]
+test rbx, rbx
+je InGameMediator_mobilityset_exit
+mov [rbx+38], (float)750
+mov [rbx+3c], (float)1500
+mov [rbx+48], (float)1
+mov [rbx+50], (float)740
+InGameMediator_mobilityset_exit:
+
+cmp dword ptr [InGameMediator_magnetset_enable], #0
+je InGameMediator_magnetset_exit
+mov rbx, [rsi+30]
+test rbx, rbx
+je InGameMediator_magnetset_exit
+mov rbx, [rbx+68]
+test rbx, rbx
+je InGameMediator_magnetset_exit
+mov [rbx+18], (float)9999
+InGameMediator_magnetset_exit:
+
+cmp dword ptr [InGameMediator_clipset_enable], #0
+je InGameMediator_clipset_exit
+mov rbx, [rsi+98]
+test rbx, rbx
+je InGameMediator_clipset_exit
+mov [rbx+40], (float)9999
+InGameMediator_clipset_exit:
+
+cmp dword ptr [InGameMediator_consumablesset_enable], #0
+je InGameMediator_consumablesset_exit
+mov rdx, 0
+mov rbx, [rsi+30]
+test rbx, rbx
+je InGameMediator_consumablesset_exit
+mov rbx, [rbx+50]
+test rbx, rbx
+je InGameMediator_consumablesset_exit
+mov rbx, [rbx+50]
+test rbx, rbx
+je InGameMediator_consumablesset_exit
+mov rbx, [rbx+10]
+test rbx, rbx
+je InGameMediator_consumablesset_exit
+mov rcx, [rbx+18]
+test rcx, rcx
+je InGameMediator_consumablesset_exit
+mov [InGameMediator_temp5], rcx
+InGameMediator_consumablesset_entry:
+mov rax, [rbx+rdx*8+20]
+test rax, rax
+je InGameMediator_consumablesset_continue
+mov rcx, [rax+28]
+test rcx, rcx
+je InGameMediator_consumablesset_continue
+cmp dword ptr [rcx+60], #22
+je InGameMediator_consumablesset_execute
+cmp dword ptr [rcx+60], #24
+je InGameMediator_consumablesset_execute
+cmp dword ptr [rcx+60], #38
+je InGameMediator_consumablesset_execute
+cmp dword ptr [rcx+60], #40
+je InGameMediator_consumablesset_execute
+jmp InGameMediator_consumablesset_continue
+InGameMediator_consumablesset_execute:
+mov [rax+30], #999
+InGameMediator_consumablesset_continue:
+inc rdx
+mov rcx, [InGameMediator_temp5]
+cmp rcx, rdx
+je InGameMediator_consumablesset_exit
+jmp InGameMediator_consumablesset_entry
+InGameMediator_consumablesset_exit:
+
+cmp dword ptr [InGameMediator_creditsset_enable], #0
+je InGameMediator_creditsset_exit
+mov rdx, 0
+mov rbx, [rsi+30]
+test rbx, rbx
+je InGameMediator_creditsset_exit
+mov rbx, [rbx+50]
+test rbx, rbx
+je InGameMediator_creditsset_exit
+mov rbx, [rbx+50]
+test rbx, rbx
+je InGameMediator_creditsset_exit
+mov rbx, [rbx+10]
+test rbx, rbx
+je InGameMediator_creditsset_exit
+mov rcx, [rbx+18]
+test rcx, rcx
+je InGameMediator_creditsset_exit
+mov [InGameMediator_temp5], rcx
+InGameMediator_creditsset_entry:
+mov rax, [rbx+rdx*8+20]
+test rax, rax
+je InGameMediator_creditsset_continue
+mov rcx, [rax+28]
+test rcx, rcx
+je InGameMediator_creditsset_continue
+cmp dword ptr [rcx+60], #36
+je InGameMediator_creditsset_execute
+jmp InGameMediator_creditsset_continue
+InGameMediator_creditsset_execute:
+mov [rax+30], #10000
+InGameMediator_creditsset_continue:
+inc rdx
+mov rcx, [InGameMediator_temp5]
+cmp rcx, rdx
+je InGameMediator_creditsset_exit
+jmp InGameMediator_creditsset_entry
+InGameMediator_creditsset_exit:
+
+cmp dword ptr [InGameMediator_jumpset_enable], #0
+je InGameMediator_jumpset_exit
+mov rbx, [rsi+30]
+test rbx, rbx
+je InGameMediator_jumpset_exit
+mov rbx, [rbx+20]
+test rbx, rbx
+je InGameMediator_jumpset_exit
+mov [rbx+38], (float)750
+mov [rbx+3c], (float)1500
+mov [rbx+48], (float)1
+mov [rbx+50], (float)1480
+InGameMediator_jumpset_exit:
+
+mov rax, [InGameMediator_temp1]
+mov rbx, [InGameMediator_temp2]
+mov rcx, [InGameMediator_temp3]
+mov rdx, [InGameMediator_temp4]
+
+
+InGameMediator_originalcode:
+readmem(InGameMediator_searchedAOB, 7)
+
+
+InGameMediator_exit:
+jmp InGameMediator_returnhere
+
+
+InGameMediator_searchedAOB:
+InGameMediator_savedAOB:
+jmp InGameMediator_newmem
+nop
+nop
+InGameMediator_returnhere:
+
+
+[DISABLE]
+InGameMediator_savedAOB:
+readmem(InGameMediator_originalcode, 7)
+
+unregistersymbol(InGameMediator_originalcode)
+unregistersymbol(InGameMediator_savedAOB)
+
+dealloc(InGameMediator_newmem)
+dealloc(InGameMediator_temp1)
+dealloc(InGameMediator_temp2)
+dealloc(InGameMediator_temp3)
+dealloc(InGameMediator_temp4)
+dealloc(InGameMediator_temp5)
+
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116281</ID>
+          <Description>"Godmode Set to Godmode?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>InGameMediator_godset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116282</ID>
+          <Description>"HP Set to Max?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>InGameMediator_hpset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116283</ID>
+          <Description>"Stat Points Set to Massive?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>InGameMediator_statpointsset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116284</ID>
+          <Description>"Stats Set to Massive?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>InGameMediator_statsset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116285</ID>
+          <Description>"Mobility Set to Massive?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>InGameMediator_mobilityset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116286</ID>
+          <Description>"Magnet Set to Massive?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>InGameMediator_magnetset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116287</ID>
+          <Description>"Clip Set to Massive?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>InGameMediator_clipset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116288</ID>
+          <Description>"Consumables Set to Massive?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>InGameMediator_consumablesset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116289</ID>
+          <Description>"Credits Set to Massive?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>InGameMediator_creditsset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116290</ID>
+          <Description>"Jump Set to Massive?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>InGameMediator_jumpset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116292</ID>
+          <Description>"InGameMediator Update Base Address?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>InGameMediator_update_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116293</ID>
+          <Description>"InGameMediator Stats"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" Activated="0" RealAddress="00000000"/>
+          <Color>80000008</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>116294</ID>
+              <Description>"Base Address"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>InGameMediator_basepointer</Address>
+              <Offsets>
+                <Offset>0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116295</ID>
+              <Description>"_playerNode"</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>116296</ID>
+                  <Description>"Base Address"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>InGameMediator_basepointer</Address>
+                  <Offsets>
+                    <Offset>0</Offset>
+                    <Offset>30</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116297</ID>
+                  <Description>"controlsk__BackingField"</Description>
+                  <Options moHideChildren="1"/>
+                  <LastState Value="" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>116298</ID>
+                      <Description>"Base Address"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>0</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116299</ID>
+                      <Description>"walkSpeed"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>38</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116300</ID>
+                      <Description>"runSpeed"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>3C</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116301</ID>
+                      <Description>"airSpeed"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>40</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116302</ID>
+                      <Description>"airDamping"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>44</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116303</ID>
+                      <Description>"gravity"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>48</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116304</ID>
+                      <Description>"runForce"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>4C</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116305</ID>
+                      <Description>"jumpForce"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>50</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116306</ID>
+                      <Description>"forceCrouchVelocity"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>54</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116307</ID>
+                      <Description>"forceCrouchDuration"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>58</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116308</ID>
+                      <Description>"landingDustVelocity"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>5C</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116309</ID>
+                      <Description>"stepDustVelocity"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>60</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116310</ID>
+                      <Description>"defAttackDelay"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>64</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116311</ID>
+                      <Description>"isJump"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>68</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116312</ID>
+                      <Description>"isBreakJump"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>69</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116313</ID>
+                      <Description>"isWalk"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>6A</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116314</ID>
+                      <Description>"isPrimaryAttack"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>6B</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116315</ID>
+                      <Description>"isAlternativeAttack"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>6C</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116316</ID>
+                      <Description>"isReload"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>6D</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116317</ID>
+                      <Description>"isPrimaryAttackLock"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>6E</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116318</ID>
+                      <Description>"burstCount"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>70</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116319</ID>
+                      <Description>"forceCrouchEndTime"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>74</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116320</ID>
+                      <Description>"lastGrounded"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>78</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116321</ID>
+                      <Description>"jumpInterrupt"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>79</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116322</ID>
+                      <Description>"moveHorizontal"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>7C</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116323</ID>
+                      <Description>"moveVertical"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>80</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116324</ID>
+                      <Description>"crouching"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>84</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116325</ID>
+                      <Description>"running"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>85</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116326</ID>
+                      <Description>"attackDelay"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>A0</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116327</ID>
+                      <Description>"attackTime"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>A4</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116328</ID>
+                      <Description>"switchDelay"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>A8</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116329</ID>
+                      <Description>"switchTime"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>AC</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116330</ID>
+                      <Description>"landingDelay"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>B0</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116331</ID>
+                      <Description>"throwAngle"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>B4</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116332</ID>
+                      <Description>"_motorSpeed"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>B8</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116333</ID>
+                      <Description>"_speed"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>D4</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116334</ID>
+                      <Description>"Dirk__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>D8</Offset>
+                        <Offset>20</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116335</ID>
+                  <Description>"characteristicsk__BackingField"</Description>
+                  <Options moHideChildren="1"/>
+                  <LastState Value="" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>116336</ID>
+                      <Description>"Base Address"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>0</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116337</ID>
+                      <Description>"uidDB"</Description>
+                      <LastState Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>String</VariableType>
+                      <Length>32</Length>
+                      <Unicode>1</Unicode>
+                      <ZeroTerminate>1</ZeroTerminate>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>48</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116338</ID>
+                      <Description>"healthBarWidth"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>144</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116339</ID>
+                      <Description>"expCoef"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>148</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116340</ID>
+                      <Description>"showHealthBar"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>14C</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116341</ID>
+                      <Description>"defHP"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>158</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116342</ID>
+                      <Description>"immortal"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>15C</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116343</ID>
+                      <Description>"defLevel"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>160</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116344</ID>
+                      <Description>"defStrength"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>164</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116345</ID>
+                      <Description>"defDexterity"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>168</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116346</ID>
+                      <Description>"defVitality"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>16C</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116347</ID>
+                      <Description>"randomize"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>170</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116348</ID>
+                      <Description>"isExlosionImmunity"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>171</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116349</ID>
+                      <Description>"hitImpulse"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>174</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116350</ID>
+                      <Description>"lastChance"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>17C</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116351</ID>
+                      <Description>"getFromDB"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>17D</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116352</ID>
+                      <Description>"allowToRevive"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>17E</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116353</ID>
+                      <Description>"deathFromBuff"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>184</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116354</ID>
+                      <Description>"applyImpulseFromMelee"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>185</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116355</ID>
+                      <Description>"autoKill"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>186</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116356</ID>
+                      <Description>"HasEffectsk__BackingField"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>187</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116357</ID>
+                      <Description>"DieFromFallingk__BackingField"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>188</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116358</ID>
+                      <Description>"DamageFromFallingk__BackingField"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>194</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116359</ID>
+                      <Description>"AlertIdk__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>198</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116360</ID>
+                      <Description>"IsHeadshotFlagk__BackingField"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>1E4</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116361</ID>
+                      <Description>"GodModek__BackingField"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>1E5</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116362</ID>
+                      <Description>"HitLastChancek__BackingField"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>1E6</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116363</ID>
+                      <Description>"ToExperiencek__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>1E8</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116364</ID>
+                      <Description>"ToHealthk__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>1EC</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116365</ID>
+                      <Description>"ToMeleeDamagek__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>1F0</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116366</ID>
+                      <Description>"ToWeaponDamagek__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>1F4</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116367</ID>
+                      <Description>"ToWeaponAccuracyk__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>1F8</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116368</ID>
+                      <Description>"ToFireRatek__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>1FC</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116369</ID>
+                      <Description>"ToExplosiveDamagek__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>200</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116370</ID>
+                      <Description>"ToDamageReductionk__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>204</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116371</ID>
+                      <Description>"ToArmork__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>208</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116372</ID>
+                      <Description>"ToDamagek__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>20C</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116373</ID>
+                      <Description>"ToFumbleChancek__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>210</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116374</ID>
+                      <Description>"ToCritChancek__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>214</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116375</ID>
+                      <Description>"ToBlockChancek__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>218</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116376</ID>
+                      <Description>"ToFumbleRecoveryk__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>21C</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116377</ID>
+                      <Description>"ToCritDamagek__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>220</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116378</ID>
+                      <Description>"ToBlockRecoveryk__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>224</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116379</ID>
+                      <Description>"ToStrengthk__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>228</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116380</ID>
+                      <Description>"ToDexterityk__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>22C</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116381</ID>
+                      <Description>"ToVitalityk__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>230</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116382</ID>
+                      <Description>"ToRandomPointsk__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>234</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116383</ID>
+                      <Description>"ToChanceDropMoneyk__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>238</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116384</ID>
+                      <Description>"ToChanceDropAmmok__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>23C</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116385</ID>
+                      <Description>"ToChanceDropHealingk__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>240</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116386</ID>
+                      <Description>"ToStealsHealthk__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>244</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116387</ID>
+                      <Description>"ToHealthRefillk__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>248</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116388</ID>
+                      <Description>"ToGuaranteedExpk__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>24C</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116389</ID>
+                      <Description>"ToDmgWithLastBulletk__BackingField"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>250</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116390</ID>
+                      <Description>"_level"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>254</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116391</ID>
+                      <Description>"_hp"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>258</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116392</ID>
+                      <Description>"_maxHP"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>25C</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116393</ID>
+                      <Description>"_armor"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>260</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116394</ID>
+                      <Description>"_exp"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>264</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116395</ID>
+                      <Description>"_requireExp"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>268</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116396</ID>
+                      <Description>"_availPoints"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>26C</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116397</ID>
+                      <Description>"_strength"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>270</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116398</ID>
+                      <Description>"_dexterity"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>274</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116399</ID>
+                      <Description>"_vitality"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>278</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116400</ID>
+                      <Description>"_strengthTotal"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>27C</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116401</ID>
+                      <Description>"_dexterityTotal"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>280</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116402</ID>
+                      <Description>"_vitalityTotal"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>284</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116403</ID>
+                      <Description>"_lowerHeroDPS"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>288</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116404</ID>
+                      <Description>"_upperHeroDPS"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>28C</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116405</ID>
+                      <Description>"_lowerMeleeDPS"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>290</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116406</ID>
+                      <Description>"_upperMeleeDPS"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>294</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116407</ID>
+                      <Description>"_lowerWeaponDPS"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>298</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116408</ID>
+                      <Description>"_upperWeaponDPS"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>29C</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116409</ID>
+                      <Description>"_bonusPhysicDamage_p"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>2A0</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116410</ID>
+                      <Description>"_speedFactor_p"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>2A4</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116411</ID>
+                      <Description>"_flatDamage"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>2A8</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116412</ID>
+                      <Description>"_fumbleChance_p"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>2AC</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116413</ID>
+                      <Description>"_fumbleRecovery_p"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>2B0</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116414</ID>
+                      <Description>"_critChance_p"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>2B4</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116415</ID>
+                      <Description>"_critDamage_p"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>2B8</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116416</ID>
+                      <Description>"_blockChance_p"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>2BC</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116417</ID>
+                      <Description>"_blockRecovery_p"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>2C0</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116418</ID>
+                      <Description>"_damageReduction_p"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>2C4</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116419</ID>
+                      <Description>"_rndStrength"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>2C8</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116420</ID>
+                      <Description>"_rndDexterity"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>2CC</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116421</ID>
+                      <Description>"_rndVitality"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>2D0</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116422</ID>
+                      <Description>"_prevCountRandomPoints"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>2D4</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116423</ID>
+                      <Description>"_buffsInit"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>2D8</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116424</ID>
+                      <Description>"_stunned"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>2D9</Offset>
+                        <Offset>48</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116425</ID>
+                  <Description>"magnetk__BackingField"</Description>
+                  <Options moHideChildren="1"/>
+                  <LastState Value="" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>116426</ID>
+                      <Description>"Base Address"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>0</Offset>
+                        <Offset>68</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116427</ID>
+                      <Description>"magnetRadius"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>18</Offset>
+                        <Offset>68</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116428</ID>
+                      <Description>"hitRadius"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>1C</Offset>
+                        <Offset>68</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116429</ID>
+                      <Description>"force"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>20</Offset>
+                        <Offset>68</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116430</ID>
+                      <Description>"isActive"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>24</Offset>
+                        <Offset>68</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116431</ID>
+              <Description>"_currentWeapon"</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>116432</ID>
+                  <Description>"Base Address"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>InGameMediator_basepointer</Address>
+                  <Offsets>
+                    <Offset>0</Offset>
+                    <Offset>98</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116433</ID>
+                  <Description>"UIDk__BackingField"</Description>
+                  <LastState Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>String</VariableType>
+                  <Length>32</Length>
+                  <Unicode>1</Unicode>
+                  <ZeroTerminate>1</ZeroTerminate>
+                  <Address>InGameMediator_basepointer</Address>
+                  <Offsets>
+                    <Offset>14</Offset>
+                    <Offset>10</Offset>
+                    <Offset>98</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116434</ID>
+                  <Description>"name"</Description>
+                  <LastState Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>String</VariableType>
+                  <Length>32</Length>
+                  <Unicode>1</Unicode>
+                  <ZeroTerminate>1</ZeroTerminate>
+                  <Address>InGameMediator_basepointer</Address>
+                  <Offsets>
+                    <Offset>14</Offset>
+                    <Offset>20</Offset>
+                    <Offset>98</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116435</ID>
+                  <Description>"data"</Description>
+                  <Options moHideChildren="1"/>
+                  <LastState Value="" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>116436</ID>
+                      <Description>"Base Address"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>0</Offset>
+                        <Offset>28</Offset>
+                        <Offset>98</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116437</ID>
+                      <Description>"name"</Description>
+                      <LastState Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>String</VariableType>
+                      <Length>32</Length>
+                      <Unicode>1</Unicode>
+                      <ZeroTerminate>1</ZeroTerminate>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                        <Offset>10</Offset>
+                        <Offset>28</Offset>
+                        <Offset>98</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116438</ID>
+                      <Description>"isFoldout"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>58</Offset>
+                        <Offset>28</Offset>
+                        <Offset>98</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116439</ID>
+                      <Description>"sortId"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>5C</Offset>
+                        <Offset>28</Offset>
+                        <Offset>98</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116440</ID>
+                      <Description>"kind"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:Trinket
+1:Melee
+2:MeleeRnd
+3:Pistol
+4:PistolRnd
+5:Shotgun
+6:ShotgunRnd
+7:SniperRifle
+8:SubmachineGun
+9:SubmachineGunRnd
+10:AssaultRifle
+11:AssaultRifleRnd
+12:BattleRifle
+13:BattleRifleRnd
+14:MachineGun
+15:MachineGunRnd
+16:Flamethrower
+17:GrenadeLauncher
+18:RocketLauncher
+19:EnergyGun
+20:EnergyGunRnd
+21:PlasmaGun
+22:Ammo
+23:AmmoRnd
+24:Explosive
+25:ExplosiveRnd
+26:Helmet
+27:HelmetRnd
+28:EnemyHelmet
+29:Suit
+30:SuitRnd
+31:EnemySuit
+32:Boots
+33:BootsRnd
+34:EnemyBoots
+35:QuestItem
+36:Money
+37:MoneyRnd
+38:Medicine
+39:MedicineRnd
+40:Food
+41:FoodRnd
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>60</Offset>
+                        <Offset>28</Offset>
+                        <Offset>98</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116441</ID>
+                      <Description>"category"</Description>
+                      <DropDownList DisplayValueAsItem="1">0:Misc
+1:Weapon
+2:Armor
+3:Helmet
+4:Boots
+5:Explosive
+6:Healing
+7:Uncategorized
+</DropDownList>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>64</Offset>
+                        <Offset>28</Offset>
+                        <Offset>98</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116442</ID>
+                      <Description>"requireLevel"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>6C</Offset>
+                        <Offset>28</Offset>
+                        <Offset>98</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116443</ID>
+                      <Description>"cost"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>70</Offset>
+                        <Offset>28</Offset>
+                        <Offset>98</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>116444</ID>
+                      <Description>"defChance"</Description>
+                      <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                      <Color>80000008</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>InGameMediator_basepointer</Address>
+                      <Offsets>
+                        <Offset>74</Offset>
+                        <Offset>28</Offset>
+                        <Offset>98</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116445</ID>
+                  <Description>"quantity"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>InGameMediator_basepointer</Address>
+                  <Offsets>
+                    <Offset>30</Offset>
+                    <Offset>98</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116446</ID>
+                  <Description>"chance"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>InGameMediator_basepointer</Address>
+                  <Offsets>
+                    <Offset>34</Offset>
+                    <Offset>98</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116447</ID>
+                  <Description>"isNew"</Description>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>InGameMediator_basepointer</Address>
+                  <Offsets>
+                    <Offset>3C</Offset>
+                    <Offset>98</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116448</ID>
+                  <Description>"_magazine"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>InGameMediator_basepointer</Address>
+                  <Offsets>
+                    <Offset>40</Offset>
+                    <Offset>98</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116449</ID>
+              <Description>"_isVisible"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>InGameMediator_basepointer</Address>
+              <Offsets>
+                <Offset>B0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116450</ID>
+              <Description>"_isDelay"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>InGameMediator_basepointer</Address>
+              <Offsets>
+                <Offset>B1</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116451</ID>
+              <Description>"_delay"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>InGameMediator_basepointer</Address>
+              <Offsets>
+                <Offset>B4</Offset>
+              </Offsets>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>116137</ID>
+      <Description>"VehicleControlPref Base Address Scan Initialization (Activate This First)"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="0"/>
+      <Color>800000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+registersymbol(VehicleControlPref_basepointer)
+registersymbol(VehicleControlPref_update_enable)
+registersymbol(VehicleControlPref_godset_enable)
+registersymbol(VehicleControlPref_hpset_enable)
+
+alloc(VehicleControlPref_basepointer, 8)
+alloc(VehicleControlPref_update_enable, 4)
+alloc(VehicleControlPref_godset_enable, 4)
+alloc(VehicleControlPref_hpset_enable, 4)
+
+
+[DISABLE]
+unregistersymbol(VehicleControlPref_basepointer)
+unregistersymbol(VehicleControlPref_update_enable)
+unregistersymbol(VehicleControlPref_godset_enable)
+unregistersymbol(VehicleControlPref_hpset_enable)
+
+dealloc(VehicleControlPref_basepointer)
+dealloc(VehicleControlPref_update_enable)
+dealloc(VehicleControlPref_godset_enable)
+dealloc(VehicleControlPref_hpset_enable)
+
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>116138</ID>
+          <Description>"VehicleControlPref Base Address Scan (To Activate: Play Vehicle Level, To Update: Play Vehicle Level)"</Description>
+          <LastState Activated="0"/>
+          <Color>804000</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+label(VehicleControlPref_savedAOB)
+label(VehicleControlPref_returnhere)
+label(VehicleControlPref_originalcode)
+label(VehicleControlPref_exit)
+
+label(VehicleControlPref_update_exit)
+label(VehicleControlPref_godset_exit)
+label(VehicleControlPref_hpset_exit)
+
+registersymbol(VehicleControlPref_originalcode)
+registersymbol(VehicleControlPref_savedAOB)
+
+//188C7B75 - 48 83 EC 18           - sub rsp,18
+//188C7B79 - 48 8B F1              - mov rsi,rcx
+// Zombotron.Components.Vehicles:VehicleControlPref:UpdateSounds+c
+//188C7B7C - 0FB6 86 7D010000      - movzx eax,byte ptr [rsi+0000017D]
+//188C7B83 - 85 C0                 - test eax,eax
+//188C7B85 - 0F84 EA000000         - je 188C7C75
+//188C7B8B - 0FB6 86 86010000      - movzx eax,byte ptr [rsi+00000186]
+//188C7B92 - 85 C0                 - test eax,eax
+//188C7B94 - 74 2E                 - je 188C7BC4
+//188C7B96 - 48 8B 86 E0000000     - mov rax,[rsi+000000E0]
+//188C7B9D - 48 8B C8              - mov rcx,rax
+aobscan(VehicleControlPref_searchedAOB, 0F B6 86 7D 01 00 00 85 C0 * * * * * * 0F B6 86 86 01 00 00 85 C0 74 2E)
+
+alloc(VehicleControlPref_newmem, 2048, VehicleControlPref_searchedAOB)
+alloc(VehicleControlPref_temp1, 8, VehicleControlPref_searchedAOB)
+alloc(VehicleControlPref_temp2, 8, VehicleControlPref_searchedAOB)
+alloc(VehicleControlPref_temp3, 8, VehicleControlPref_searchedAOB)
+alloc(VehicleControlPref_temp4, 8, VehicleControlPref_searchedAOB)
+alloc(VehicleControlPref_temp5, 8, VehicleControlPref_searchedAOB)
+
+
+VehicleControlPref_newmem:
+mov [VehicleControlPref_temp1], rax
+mov [VehicleControlPref_temp2], rbx
+mov [VehicleControlPref_temp3], rcx
+mov [VehicleControlPref_temp4], rdx
+
+cmp dword ptr [VehicleControlPref_update_enable], #0
+je VehicleControlPref_update_exit
+mov [VehicleControlPref_basepointer], rsi
+VehicleControlPref_update_exit:
+
+cmp dword ptr [VehicleControlPref_godset_enable], #0
+je VehicleControlPref_godset_exit
+mov rbx, [rsi+118]
+test rbx, rbx
+je VehicleControlPref_godset_exit
+mov byte ptr [rbx+15c], #1
+mov byte ptr [rbx+1e5], #1
+VehicleControlPref_godset_exit:
+
+cmp dword ptr [VehicleControlPref_hpset_enable], #0
+je VehicleControlPref_hpset_exit
+mov rbx, [rsi+118]
+test rbx, rbx
+je VehicleControlPref_hpset_exit
+fld [rbx+25c]
+fstp [rbx+258]
+VehicleControlPref_hpset_exit:
+
+mov rax, [VehicleControlPref_temp1]
+mov rbx, [VehicleControlPref_temp2]
+mov rcx, [VehicleControlPref_temp3]
+mov rdx, [VehicleControlPref_temp4]
+
+
+VehicleControlPref_originalcode:
+readmem(VehicleControlPref_searchedAOB, 7)
+
+
+VehicleControlPref_exit:
+jmp VehicleControlPref_returnhere
+
+
+VehicleControlPref_searchedAOB:
+VehicleControlPref_savedAOB:
+jmp VehicleControlPref_newmem
+nop
+nop
+VehicleControlPref_returnhere:
+
+
+[DISABLE]
+VehicleControlPref_savedAOB:
+readmem(VehicleControlPref_originalcode, 7)
+
+unregistersymbol(VehicleControlPref_originalcode)
+unregistersymbol(VehicleControlPref_savedAOB)
+
+dealloc(VehicleControlPref_newmem)
+dealloc(VehicleControlPref_temp1)
+dealloc(VehicleControlPref_temp2)
+dealloc(VehicleControlPref_temp3)
+dealloc(VehicleControlPref_temp4)
+dealloc(VehicleControlPref_temp5)
+
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116139</ID>
+          <Description>"Godmode Set to Godmode?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>VehicleControlPref_godset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116140</ID>
+          <Description>"HP Set to Max?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>VehicleControlPref_hpset_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116150</ID>
+          <Description>"VehicleControlPref Update Base Address?"</Description>
+          <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <LastState Value="??" Activated="0" RealAddress="00000000"/>
+          <Color>FF8000</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>VehicleControlPref_update_enable</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>116151</ID>
+          <Description>"VehicleControlPref Stats"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" Activated="0" RealAddress="00000000"/>
+          <Color>80000008</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>116152</ID>
+              <Description>"Base Address"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116153</ID>
+              <Description>"_stats"</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>116154</ID>
+                  <Description>"Base Address"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>0</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116155</ID>
+                  <Description>"uidDB"</Description>
+                  <LastState Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>String</VariableType>
+                  <Length>32</Length>
+                  <Unicode>1</Unicode>
+                  <ZeroTerminate>1</ZeroTerminate>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>14</Offset>
+                    <Offset>48</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116156</ID>
+                  <Description>"healthBarWidth"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>144</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116157</ID>
+                  <Description>"expCoef"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>148</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116158</ID>
+                  <Description>"showHealthBar"</Description>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>14C</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116159</ID>
+                  <Description>"defHP"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>158</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116160</ID>
+                  <Description>"immortal"</Description>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>15C</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116161</ID>
+                  <Description>"defLevel"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>160</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116162</ID>
+                  <Description>"defStrength"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>164</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116163</ID>
+                  <Description>"defDexterity"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>168</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116164</ID>
+                  <Description>"defVitality"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>16C</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116165</ID>
+                  <Description>"randomize"</Description>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>170</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116166</ID>
+                  <Description>"isExlosionImmunity"</Description>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>171</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116167</ID>
+                  <Description>"hitImpulse"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>174</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116168</ID>
+                  <Description>"lastChance"</Description>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>17C</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116169</ID>
+                  <Description>"getFromDB"</Description>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>17D</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116170</ID>
+                  <Description>"allowToRevive"</Description>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>17E</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116171</ID>
+                  <Description>"deathFromBuff"</Description>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>184</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116172</ID>
+                  <Description>"applyImpulseFromMelee"</Description>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>185</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116173</ID>
+                  <Description>"autoKill"</Description>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>186</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116174</ID>
+                  <Description>"HasEffectsk__BackingField"</Description>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>187</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116175</ID>
+                  <Description>"DieFromFallingk__BackingField"</Description>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>188</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116176</ID>
+                  <Description>"DamageFromFallingk__BackingField"</Description>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>194</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116177</ID>
+                  <Description>"AlertIdk__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>198</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116178</ID>
+                  <Description>"IsHeadshotFlagk__BackingField"</Description>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>1E4</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116179</ID>
+                  <Description>"GodModek__BackingField"</Description>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>1E5</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116180</ID>
+                  <Description>"HitLastChancek__BackingField"</Description>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>1E6</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116181</ID>
+                  <Description>"ToExperiencek__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>1E8</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116182</ID>
+                  <Description>"ToHealthk__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>1EC</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116183</ID>
+                  <Description>"ToMeleeDamagek__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>1F0</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116184</ID>
+                  <Description>"ToWeaponDamagek__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>1F4</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116185</ID>
+                  <Description>"ToWeaponAccuracyk__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>1F8</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116186</ID>
+                  <Description>"ToFireRatek__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>1FC</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116187</ID>
+                  <Description>"ToExplosiveDamagek__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>200</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116188</ID>
+                  <Description>"ToDamageReductionk__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>204</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116189</ID>
+                  <Description>"ToArmork__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>208</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116190</ID>
+                  <Description>"ToDamagek__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>20C</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116191</ID>
+                  <Description>"ToFumbleChancek__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>210</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116192</ID>
+                  <Description>"ToCritChancek__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>214</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116193</ID>
+                  <Description>"ToBlockChancek__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>218</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116194</ID>
+                  <Description>"ToFumbleRecoveryk__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>21C</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116195</ID>
+                  <Description>"ToCritDamagek__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>220</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116196</ID>
+                  <Description>"ToBlockRecoveryk__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>224</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116197</ID>
+                  <Description>"ToStrengthk__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>228</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116198</ID>
+                  <Description>"ToDexterityk__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>22C</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116199</ID>
+                  <Description>"ToVitalityk__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>230</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116200</ID>
+                  <Description>"ToRandomPointsk__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>234</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116201</ID>
+                  <Description>"ToChanceDropMoneyk__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>238</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116202</ID>
+                  <Description>"ToChanceDropAmmok__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>23C</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116203</ID>
+                  <Description>"ToChanceDropHealingk__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>240</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116204</ID>
+                  <Description>"ToStealsHealthk__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>244</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116205</ID>
+                  <Description>"ToHealthRefillk__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>248</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116206</ID>
+                  <Description>"ToGuaranteedExpk__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>24C</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116207</ID>
+                  <Description>"ToDmgWithLastBulletk__BackingField"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>250</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116208</ID>
+                  <Description>"_level"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>254</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116209</ID>
+                  <Description>"_hp"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>258</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116210</ID>
+                  <Description>"_maxHP"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>25C</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116211</ID>
+                  <Description>"_armor"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>260</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116212</ID>
+                  <Description>"_exp"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>264</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116213</ID>
+                  <Description>"_requireExp"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>268</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116214</ID>
+                  <Description>"_availPoints"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>26C</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116215</ID>
+                  <Description>"_strength"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>270</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116216</ID>
+                  <Description>"_dexterity"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>274</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116217</ID>
+                  <Description>"_vitality"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>278</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116218</ID>
+                  <Description>"_strengthTotal"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>27C</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116219</ID>
+                  <Description>"_dexterityTotal"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>280</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116220</ID>
+                  <Description>"_vitalityTotal"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>284</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116221</ID>
+                  <Description>"_lowerHeroDPS"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>288</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116222</ID>
+                  <Description>"_upperHeroDPS"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>28C</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116223</ID>
+                  <Description>"_lowerMeleeDPS"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>290</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116224</ID>
+                  <Description>"_upperMeleeDPS"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>294</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116225</ID>
+                  <Description>"_lowerWeaponDPS"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>298</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116226</ID>
+                  <Description>"_upperWeaponDPS"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>29C</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116227</ID>
+                  <Description>"_bonusPhysicDamage_p"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>2A0</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116228</ID>
+                  <Description>"_speedFactor_p"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>2A4</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116229</ID>
+                  <Description>"_flatDamage"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>2A8</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116230</ID>
+                  <Description>"_fumbleChance_p"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>2AC</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116231</ID>
+                  <Description>"_fumbleRecovery_p"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>2B0</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116232</ID>
+                  <Description>"_critChance_p"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>2B4</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116233</ID>
+                  <Description>"_critDamage_p"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>2B8</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116234</ID>
+                  <Description>"_blockChance_p"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>2BC</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116235</ID>
+                  <Description>"_blockRecovery_p"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>2C0</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116236</ID>
+                  <Description>"_damageReduction_p"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>2C4</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116237</ID>
+                  <Description>"_rndStrength"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>2C8</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116238</ID>
+                  <Description>"_rndDexterity"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>2CC</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116239</ID>
+                  <Description>"_rndVitality"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>2D0</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116240</ID>
+                  <Description>"_prevCountRandomPoints"</Description>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>2D4</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116241</ID>
+                  <Description>"_buffsInit"</Description>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>2D8</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>116242</ID>
+                  <Description>"_stunned"</Description>
+                  <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+                  <LastState Value="??" Activated="0" RealAddress="00000000"/>
+                  <Color>80000008</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>VehicleControlPref_basepointer</Address>
+                  <Offsets>
+                    <Offset>2D9</Offset>
+                    <Offset>118</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116243</ID>
+              <Description>"crosschairRadius"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>140</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116244</ID>
+              <Description>"crosschairSpeed"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>144</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116245</ID>
+              <Description>"damage"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>148</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116246</ID>
+              <Description>"accuracy"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>14C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116247</ID>
+              <Description>"fireRate"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>150</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116248</ID>
+              <Description>"soundShiftUpRPM"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>154</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116249</ID>
+              <Description>"soundIdleRPM"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>158</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116250</ID>
+              <Description>"wheelRadius"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>15C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116251</ID>
+              <Description>"torque"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>160</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116252</ID>
+              <Description>"speed"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>164</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116253</ID>
+              <Description>"brakeTorque"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>168</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116254</ID>
+              <Description>"maxEngineRPM"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>16C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116255</ID>
+              <Description>"shiftUpRPM"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>170</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116256</ID>
+              <Description>"shiftDownRPM"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>174</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116257</ID>
+              <Description>"idleRPM"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>178</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116258</ID>
+              <Description>"automatic"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>17C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116259</ID>
+              <Description>"isPlayerInside"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>17D</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116260</ID>
+              <Description>"acceleration"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>180</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116261</ID>
+              <Description>"isBrake"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>184</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116262</ID>
+              <Description>"isHeadlight"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>185</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116263</ID>
+              <Description>"isHorn"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>186</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116264</ID>
+              <Description>"isAttack"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>187</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116265</ID>
+              <Description>"_currentGear"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>190</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116266</ID>
+              <Description>"_shiftDelay"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>194</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116267</ID>
+              <Description>"_reverseLightDelay"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>198</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116268</ID>
+              <Description>"_brake"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>19C</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116269</ID>
+              <Description>"_attackDelay"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>1A0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116270</ID>
+              <Description>"_attackTime"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>1A4</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116271</ID>
+              <Description>"_wantedRPM"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>1A8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116272</ID>
+              <Description>"_motorRPM"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>1AC</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116273</ID>
+              <Description>"_currentSpeed"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>1B0</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116274</ID>
+              <Description>"_gas"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>1B4</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116275</ID>
+              <Description>"_prevExp"</Description>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Float</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>1B8</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116276</ID>
+              <Description>"_isStartCarForce"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>1BC</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116277</ID>
+              <Description>"_isDead"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>1BD</Offset>
+              </Offsets>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>116278</ID>
+              <Description>"_isInitialized"</Description>
+              <DropDownList DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+              <LastState Value="??" Activated="0" RealAddress="00000000"/>
+              <Color>80000008</Color>
+              <VariableType>Byte</VariableType>
+              <Address>VehicleControlPref_basepointer</Address>
+              <Offsets>
+                <Offset>1BE</Offset>
+              </Offsets>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>
