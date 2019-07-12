@@ -42,8 +42,8 @@ WeaponData
 	"ZoomOUTSound"		"Weapon_AWP.Zoom"
 	
 	// Weapon characteristics:
-	"Penetration"			"9"
-	"Damage"			"200"
+	"Penetration"			"44"
+	"Damage"			"666"
 	"Range"				"999999"
 	"RangeModifier"			"99.99"
 	"Bullets"			"50"
