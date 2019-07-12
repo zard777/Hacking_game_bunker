@@ -4,7 +4,7 @@ _For some cases/scenarios that you made the changes for values but it didn't wor
 
 1) Find out which of addresses/values can be a 'trustworthy' object (some devs can make false positive values) 
 
-- Example: Address **`1285A038`** is stored "Current HP" = 480 
+- Example: Address **`1285A038`** is stored "Max HP" = 480 
 
 2) Right click --> **`Find out what writes to this address`**
 
@@ -17,7 +17,7 @@ _For some cases/scenarios that you made the changes for values but it didn't wor
 EAX = 1285A038      ESP = 0019F664      ECX = 000001A
 ```
 
-> **Note:  ECX = 1A (hex) = 26 (dec) ==> Base HP of character = Current HP - (value of ECX) = 480 - 26 = 454** 
+> **Note:  ECX = 1A (hex) = 26 (dec) ==> Base HP of character = MaxHP - (value of ECX) = 480 - 26 = 454** 
 
 - After eat _Rainbow Seeds_ 2nd times 
 ```
