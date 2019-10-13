@@ -3,10 +3,10 @@ Collection of **`console mode`** commands --> [CS:GO references](https://tools.d
 ```groovy
 Mode 	                  game_type 	game_mode
 Classic Casual               0              0
-Classic Competitive	         0	            1
-Arms Race 	                 1	            0
+Classic Competitive	     0	            1
+Arms Race 	             1	            0
 Demolition                   1	            1
-Deathmatch	                 1	            2
+Deathmatch	             1	            2
 ```
 
 - mp_weapons_allow_zeus 
