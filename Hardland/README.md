@@ -16,4 +16,4 @@ ___
 
 + **"This Application Was Unable to Start Correctly (Error Code: 0xc000007b)"** ??
 
--> ☕️ recommend to Update [.NET Framework](https://dotnet.microsoft.com/download/dotnet-framework) 
+-> ☕️ recommend to Update [.NET Framework](https://dotnet.microsoft.com/download/dotnet-framework) -- it works with .NET v4.8
