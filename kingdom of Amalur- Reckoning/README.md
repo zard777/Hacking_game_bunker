@@ -25,3 +25,7 @@
 ```
 
 7) Save it and re-launch the game 
+---
+### Proof-of-Concept
+
+![image](inv_max_tweak.JPG)
