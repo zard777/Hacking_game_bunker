@@ -4,7 +4,7 @@
 
 1) Find save games location (its format as **YYYYsave[X].sav**) [ highest _[X]_ = the latest save ]
 2) Launch _Hex Editor_ 
-3) Open .sav with Hex Editor and search for "inventory" 
+3) Open .sav with Hex Editor and search for **`inventory_limit`**
 4) Convert your current max inventory (decimal) to (hexa) --- e.g (dec) 80  = (hex) 50 
 5) Compare it with the array of hex codes on the left of the result which was found at step.3  
 
