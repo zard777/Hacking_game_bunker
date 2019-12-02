@@ -26,6 +26,8 @@
 
 7) Save it and re-launch the game 
 ---
-### Proof-of-Concept
+### Proof-of-Concept 
+
+_ex: I've changed value **FFF** (hexa) -> **4095** (decimal)_
 
 ![image](inv_max_tweak.JPG)
