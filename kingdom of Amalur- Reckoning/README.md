@@ -30,4 +30,4 @@
 
 _ex: I've changed value **FFF** (hexa) -> **4095** (decimal)_
 
-![image](inv_max_tweak.JPG)
+![image](inv_max_tweak.PNG)
