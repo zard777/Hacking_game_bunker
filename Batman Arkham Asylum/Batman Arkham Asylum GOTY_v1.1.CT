@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="28">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>16</ID>
+      <Description>"Unlimited Life"</Description>
+      <Color>0000FF</Color>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"ShippingPC-BmGame.exe"+022B54C0</Address>
+      <Offsets>
+        <Offset>2A4</Offset>
+        <Offset>358</Offset>
+        <Offset>C</Offset>
+        <Offset>15C</Offset>
+        <Offset>C</Offset>
+      </Offsets>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>97</Key>
+          </Keys>
+          <Value>100</Value>
+          <Description>Unlimited Life</Description>
+          <ID>0</ID>
+          <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
+          <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
+        </Hotkey>
+        <Hotkey>
+          <Action>Set Value</Action>
+          <Keys>
+            <Key>97</Key>
+          </Keys>
+          <Value>100</Value>
+          <Description>Unlimited Life</Description>
+          <ID>1</ID>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>23</ID>
+      <Description>"One Hit Kill"</Description>
+      <LastState/>
+      <Color>000080</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,100)
+label(returnhere)
+label(originalcode)
+label(exit)
+newmem:
+cmp [ebx+374],62
+jne originalcode
+mov ecx,[esp+14]
+jmp exit
+originalcode:
+mov [ebx],0
+mov ebx,[ebx]
+mov ecx,[esp+14]
+exit:
+jmp returnhere
+"ShippingPC-BmGame.exe"+192A9E:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+[DISABLE]
+dealloc(newmem)
+"ShippingPC-BmGame.exe"+192A9E:
+sub [ebx],eax
+mov ebx,[ebx]
+mov ecx,[esp+14]
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>98</Key>
+          </Keys>
+          <Description>One Hit Kill</Description>
+          <ID>0</ID>
+          <ActivateSound TTS="EN">{MRDescription} Activated</ActivateSound>
+          <DeactivateSound TTS="EN">{MRDescription} Deactivated</DeactivateSound>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>38</ID>
+      <Description>"Multiplier Experience Points x 10"</Description>
+      <LastState/>
+      <Color>FF0000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,100)
+label(returnhere)
+label(originalcode)
+label(exit)
+newmem:
+cmp [ebx+77],0
+jne originalcode
+mov [esp+10],A
+mov eax,[esp+10]
+add [ebx],eax
+jmp exit
+originalcode:
+mov eax,[esp+10]
+add [ebx],eax
+exit:
+jmp returnhere
+"ShippingPC-BmGame.exe"+1929FA:
+jmp newmem
+nop
+returnhere:
+[DISABLE]
+dealloc(newmem)
+"ShippingPC-BmGame.exe"+1929FA:
+mov eax,[esp+10]
+add [ebx],eax
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>99</Key>
+          </Keys>
+          <Description>Multiplier Experience Points x 10</Description>
+          <ID>0</ID>
+          <ActivateSound TTS="EN">Multiplier Experience Enabled</ActivateSound>
+          <DeactivateSound TTS="EN">Multiplier Experience Disabled</DeactivateSound>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>37</ID>
+      <Description>"Multiplier Experience Points x 10000"</Description>
+      <LastState/>
+      <Color>FF0000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,100)
+label(returnhere)
+label(originalcode)
+label(exit)
+newmem:
+cmp [ebx+77],0
+jne originalcode
+mov [esp+10],2710
+mov eax,[esp+10]
+add [ebx],eax
+jmp exit
+originalcode:
+mov eax,[esp+10]
+add [ebx],eax
+exit:
+jmp returnhere
+"ShippingPC-BmGame.exe"+1929FA:
+jmp newmem
+nop
+returnhere:
+[DISABLE]
+dealloc(newmem)
+"ShippingPC-BmGame.exe"+1929FA:
+mov eax,[esp+10]
+add [ebx],eax
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>100</Key>
+          </Keys>
+          <Description>Multiplier Experience Points x 10000</Description>
+          <ID>0</ID>
+          <ActivateSound TTS="EN">Multiplier Experience Active</ActivateSound>
+          <DeactivateSound TTS="EN">Multiplier Experience Disabled</DeactivateSound>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>34</ID>
+      <Description>"Challenge (Timer Reset) Predator"</Description>
+      <LastState/>
+      <Color>8000FF</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(timer,ShippingPC-BmGame.exe,58 44 24 10 8B 44 24 14 F3 0F 11 07 5F)
+alloc(newmem,$100)
+label(return)
+newmem:
+mov [edi],0
+pop edi
+  jmp return
+timer+08:
+  jmp newmem
+return:
+registersymbol(timer)
+[DISABLE]
+timer+08:
+  db F3 0F 11 07 5F
+unregistersymbol(timer)
+dealloc(newmem)
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>101</Key>
+          </Keys>
+          <Description>Challenge (Timer Reset) Predator</Description>
+          <ID>0</ID>
+          <ActivateSound TTS="EN">Time Countdown Reseted</ActivateSound>
+          <DeactivateSound TTS="EN">Time Started Again</DeactivateSound>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>42</ID>
+      <Description>"Upgrade Skills"</Description>
+      <Color>000000</Color>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"ShippingPC-BmGame.exe"+0229618C</Address>
+      <Offsets>
+        <Offset>134</Offset>
+        <Offset>1AC</Offset>
+      </Offsets>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Increase Value</Action>
+          <Keys>
+            <Key>33</Key>
+          </Keys>
+          <Value>1</Value>
+          <Description>Upgrade Skills (Add) x 1</Description>
+          <ID>0</ID>
+          <ActivateSound TTS="EN">One Upgrade Point Added</ActivateSound>
+        </Hotkey>
+        <Hotkey>
+          <Action>Set Value</Action>
+          <Keys>
+            <Key>34</Key>
+          </Keys>
+          <Value>0</Value>
+          <Description>Upgrade Skills (Remove) x 0</Description>
+          <ID>1</ID>
+          <ActivateSound TTS="EN">Upgrade Points Removed</ActivateSound>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
