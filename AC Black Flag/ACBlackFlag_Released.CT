@@ -1,0 +1,1713 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="28">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1380</ID>
+      <Description>"Assassin's Creed 4 ~ Black Flag ~ Jackdaw Edition ~ v1.07 ~ Uplay (incl CN support)"</Description>
+      <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+      <LastState/>
+      <Color>000080</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : AC4BFSP.exe
+  Version:
+  Date   : 2019-02-17
+  Author : Paul44
+
+  Select appropriate vs system: 1 = All but CN ~ 2 = Including Chinese support (APAC) &amp; Steam
+}
+
+[ENABLE]
+
+// using some "random code" to get instant memalloc...
+aobscanmodule(DRMselect,$process,89 84 24 78 01 00 00)
+registersymbol(nDRM)
+alloc(nDRM,1,DRMselect)
+
+
+nDRM:
+db 1
+
+[DISABLE]
+
+unregistersymbol(nDRM)
+dealloc(nDRM)
+
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1381</ID>
+          <Description>"Please select: [Pre CN loc] or [CN localisation]  (*)"</Description>
+          <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">1:Pre CN localisation
+2:Chinese local/Steam
+</DropDownList>
+          <Color>0000FF</Color>
+          <VariableType>Byte</VariableType>
+          <Address>nDRM</Address>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>1418</ID>
+              <Description>"(FastTravel &amp; Cutscenes cause values to 'reload'... !)"</Description>
+              <LastState Value="" RealAddress="00000000"/>
+              <Color>FF0080</Color>
+              <GroupHeader>1</GroupHeader>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1382</ID>
+              <Description>"(it can take a few seconds to collect the values...)"</Description>
+              <LastState Value="" RealAddress="00000000"/>
+              <Color>FF0000</Color>
+              <GroupHeader>1</GroupHeader>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>133</ID>
+          <Description>"Player Status *"</Description>
+          <Options moHideChildren="1" moManualExpandCollapse="1" moDeactivateChildrenAsWell="1"/>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : AC4BFSP.exe
+  Version: 
+  Date   : 2018-05-01
+  Author : Paul44
+
+  Manage player health
+  * God Mode: for shark attacks, lock 'Current Health' as well...
+
+}
+
+[ENABLE]
+
+{$lua}
+    -- 1 = All but CN support ~ 2 = CN support
+    local addrDRM = getAddress("nDRM")
+    local DRMid = readBytes(addrDRM,1)
+    local AOB_HealthCheck="A1 1C 5C 9E 02"
+    -- print('['..DRMid..']')
+    if DRMid == 2 then
+        AOB_HealthCheck="A1 0C B5 8C 02"
+    end
+
+autoAssemble([[
+
+// get Health data structure
+// get Invisible data structure ~ +20 .. +84 ~&gt; BhvAssassin
+aobscanmodule(Health,$process,0F BF 41 5E C3)
+registersymbol(Health)                                   // AC4BFSP.exe+C34D50
+alloc(newmem,$100,Health)
+
+// check CSrvPlayerHealth data struct name... ~ "AC4BFSP.exe"+158FCE0
+// makes sure we get player's health table
+aobscanmodule(HealthCheck,$process,]]..AOB_HealthCheck..[[)
+
+globalalloc(pHealth,4)
+globalalloc(bGodmode,1)
+globalalloc(pBhvAssassin,4)
+globalalloc(bInvisible,1)
+
+bGodmode:
+db 0
+
+bInvisible:
+db 0
+
+// 1st routine...
+label(code)
+label(return)
+
+newmem:
+  push eax
+  mov eax,[ecx]
+  mov eax,[eax+14]
+  cmp eax,HealthCheck
+  jne code
+  // dis/enable godmode...
+  push ebx
+  mov bl,[bGodmode]
+  mov byte ptr [ecx+62],bl
+  mov ebx,[ecx+20]
+  mov ebx,[ebx+84]
+  mov [pBhvAssassin],ebx
+  // dis/enable invisible...
+  push ecx
+  mov cl,[bInvisible]
+  mov byte ptr [ebx+28],cl
+  pop ecx
+  pop ebx
+  mov [pHealth],ecx
+code:
+  pop eax
+  movsx eax,word ptr [ecx+5E]
+  ret 
+  jmp return
+
+Health:
+  jmp newmem
+return:
+
+]])
+
+
+{$asm}
+
+[DISABLE]
+
+Health:
+  db 0F BF 41 5E C3
+
+unregistersymbol(Health)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "AC4BFSP.exe"+C34D50
+
+"AC4BFSP.exe"+C34D46: CC                 -  int 3 
+"AC4BFSP.exe"+C34D47: CC                 -  int 3 
+"AC4BFSP.exe"+C34D48: CC                 -  int 3 
+"AC4BFSP.exe"+C34D49: CC                 -  int 3 
+"AC4BFSP.exe"+C34D4A: CC                 -  int 3 
+"AC4BFSP.exe"+C34D4B: CC                 -  int 3 
+"AC4BFSP.exe"+C34D4C: CC                 -  int 3 
+"AC4BFSP.exe"+C34D4D: CC                 -  int 3 
+"AC4BFSP.exe"+C34D4E: CC                 -  int 3 
+"AC4BFSP.exe"+C34D4F: CC                 -  int 3 
+// ---------- INJECTING HERE ----------
+"AC4BFSP.exe"+C34D50: 0F BF 41 5E        -  movsx eax,word ptr [ecx+5E]
+"AC4BFSP.exe"+C34D54: C3                 -  ret 
+// ---------- DONE INJECTING  ----------
+"AC4BFSP.exe"+C34D55: CC                 -  int 3 
+"AC4BFSP.exe"+C34D56: CC                 -  int 3 
+"AC4BFSP.exe"+C34D57: CC                 -  int 3 
+"AC4BFSP.exe"+C34D58: CC                 -  int 3 
+"AC4BFSP.exe"+C34D59: CC                 -  int 3 
+"AC4BFSP.exe"+C34D5A: CC                 -  int 3 
+"AC4BFSP.exe"+C34D5B: CC                 -  int 3 
+"AC4BFSP.exe"+C34D5C: CC                 -  int 3 
+"AC4BFSP.exe"+C34D5D: CC                 -  int 3 
+"AC4BFSP.exe"+C34D5E: CC                 -  int 3 
+}
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>99</ID>
+              <Description>"Current Health"</Description>
+              <VariableType>2 Bytes</VariableType>
+              <Address>[pHealth]+5C</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>100</ID>
+              <Description>"Max Health"</Description>
+              <Color>808080</Color>
+              <VariableType>2 Bytes</VariableType>
+              <Address>[pHealth]+5E</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>138</ID>
+              <Description>"Calculated Health"</Description>
+              <Color>808080</Color>
+              <VariableType>2 Bytes</VariableType>
+              <Address>[pHealth]+D0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>106</ID>
+              <Description>"God Mode"</Description>
+              <Options moHideChildren="1"/>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : AC4BFSP.exe
+  Version: 
+  Date   : 2018-04-30
+  Author : Paul44
+
+  Dis/enable God Mode
+}
+
+
+[ENABLE]
+
+{$lua}
+    local addrHealth = getAddress("[pHealth]")
+    --print(string.format("%x",addrHealth+0x62))
+    writeBytes(addrHealth+0x62,1)
+
+{$asm}
+bGodmode:
+db 1
+
+[DISABLE]
+{$lua}
+    local addrHealth = getAddress("[pHealth]")
+    writeBytes(addrHealth+0x62,0)
+
+{$asm}
+bGodmode:
+db 0
+
+</AssemblerScript>
+              <Hotkeys>
+                <Hotkey>
+                  <Action>Toggle Activation</Action>
+                  <Keys>
+                    <Key>17</Key>
+                    <Key>71</Key>
+                  </Keys>
+                  <ID>0</ID>
+                  <ActivateSound TTS="EN">Activated</ActivateSound>
+                  <DeactivateSound TTS="EN">Deactivated</DeactivateSound>
+                </Hotkey>
+              </Hotkeys>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>103</ID>
+                  <Description>"Gode Mode (= 1)"</Description>
+                  <Color>808080</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>[pHealth]+62</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>297</ID>
+              <Description>"Invisible"</Description>
+              <Options moHideChildren="1"/>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : AC4BFSP.exe
+  Version:
+  Date   : 2018-04-30
+  Author : Paul44
+
+  Dis/enable Invisibility
+}
+
+[ENABLE]
+
+{$lua}
+    local addrInvisib = getAddress("[pBhvAssassin]")
+    writeBytes(addrInvisib+0x28,1)
+
+{$asm}
+bInvisible:
+db 1
+
+[DISABLE]
+{$lua}
+    local addrInvisib = getAddress("[pBhvAssassin]")
+    writeBytes(addrInvisib+0x28,0)
+
+{$asm}
+bInvisible:
+db 0
+
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>478</ID>
+                  <Description>"Invisible (= 1)"</Description>
+                  <Color>808080</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>[pBhvAssassin]+28</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>479</ID>
+                  <Description>"BhvAssassin ~ Base Address"</Description>
+                  <ShowAsHex>1</ShowAsHex>
+                  <Color>C0C0C0</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pBhvAssassin</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>136</ID>
+              <Description>"Full Breath Underwater (= 1)"</Description>
+              <Options moHideChildren="1"/>
+              <VariableType>Float</VariableType>
+              <Address>[pHealth]+80</Address>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>159</ID>
+                  <Description>"Location Underwater = 0"</Description>
+                  <Color>808080</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>[pHealth]+8B</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>96</ID>
+              <Description>"CSrvPlayerHealth ~ Base Address"</Description>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>C0C0C0</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>pHealth</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>495</ID>
+          <Description>"Inventory Supplies *"</Description>
+          <Options moHideChildren="1" moManualExpandCollapse="1" moDeactivateChildrenAsWell="1"/>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : AC4BFSP.exe
+  Version:
+  Date   : 2018-04-28
+  Author : Paul44
+
+  Manages Inventory Supplies for Edward, Jackdaw ammo and cargo...
+  (including DLCs ~ only edit appropriate values accordingly)
+}
+
+[ENABLE]
+
+{$lua}
+    -- 1 = All but CN support ~ 2 = CN support
+    local addrDRM = getAddress("nDRM")
+    local DRMid = readBytes(addrDRM,1)
+    -- print('['..DRMid..']')
+
+    if DRMid == 1 or DRMid == nil then
+    autoAssemble([[
+        aobscanmodule(InventorySupplies,$process,3E 0F B7 50 0A 8B 48 04 8D 14 91)
+        registersymbol(InventorySupplies)
+        alloc(newmem,$100,InventorySupplies)
+
+        // "AC4BFSP.exe"+1139140 ~ LogicalInventory
+        aobscanmodule(CheckInventoryDLC,$process,A1 3C 35 99 02)
+
+        globalalloc(pSupplies,4)
+        globalalloc(pInventoryDLC,4)
+
+        label(code)
+        label(return)
+
+        newmem:
+          mov ecx,[eax+04]
+          lea edx,[ecx+edx*4]
+        code:
+          mov [pSupplies],ecx
+          push ebx
+          mov ebx,[eax]
+          mov ebx,[ebx+14]
+          cmp ebx,CheckInventoryDLC
+          pop ebx
+          // jump forward (@f) to next label...
+          jne short @f
+          mov [pInventoryDLC],eax
+        @@:
+          jmp return
+
+        InventorySupplies+05:
+          jmp newmem
+          nop
+        return:
+    ]])
+    end
+
+
+    if DRMid == 2 then
+    autoAssemble([[
+        aobscanmodule(InventorySupplies,$process,00 CC CC CC CC CC CC CC CC CC CC 55 8B EC 0F B7 51 0A 8B 41 04 8D 14 90)
+        registersymbol(InventorySupplies)
+        alloc(newmem,$100,InventorySupplies)
+
+        // "AC4BFSP.exe"+1139140 ~ LogicalInventory
+        aobscanmodule(CheckInventoryDLC,$process,00 55 8B EC 0F B7 51 0A 8B 41 04 8D 14 90 56)
+        registersymbol(CheckInventoryDLC)
+        alloc(newmem1,$100,CheckInventoryDLC)
+
+        globalalloc(pSupplies,4)
+        globalalloc(pInventoryDLC,4)
+
+        label(code)
+        label(return)
+
+        newmem:
+          mov eax,[ecx+04]
+          lea edx,[eax+edx*4]
+        code:
+          mov [pSupplies],eax
+          jmp return
+
+        InventorySupplies+12:
+          jmp newmem
+          nop
+        return:
+
+        // Aveline...
+        label(code1)
+        label(return1)
+
+        newmem1:
+          mov eax,[ecx+04]
+          lea edx,[eax+edx*4]
+        code1:
+          mov [pInventoryDLC],ecx
+          jmp return1
+
+        CheckInventoryDLC+08:
+          jmp newmem1
+          nop
+        return1:
+    ]])
+    end
+
+{$asm}
+
+[DISABLE]
+{$lua}
+    -- 1 = All but CN support ~ 2 = CN support
+    local addrDRM = getAddress("nDRM")
+    local DRMid = readBytes(addrDRM,1)
+    -- print('['..DRMid..']')
+    if DRMid == 1 or DRMid == nil then
+    autoAssemble([[
+        InventorySupplies+05:
+          db 8B 48 04 8D 14 91
+
+        unregistersymbol(InventorySupplies)
+        dealloc(newmem)
+    ]])
+    end
+
+    if DRMid == 2 then
+    autoAssemble([[
+        InventorySupplies+12:
+          db 8B 41 04 8D 14 90
+
+        unregistersymbol(InventorySupplies)
+        dealloc(newmem)
+
+        CheckInventoryDLC+08:
+          db 8B 41 04 8D 14 90
+
+        unregistersymbol(CheckInventoryDLC)
+        dealloc(newmem1)
+    ]])
+    end
+
+{$asm}
+
+{
+// ORIGINAL CODE - INJECTION POINT: "AC4BFSP.exe"+1140181
+
+"AC4BFSP.exe"+114016C: C2 04 00        -  ret 0004
+"AC4BFSP.exe"+114016F: CC              -  int 3 
+"AC4BFSP.exe"+1140170: 55              -  push ebp
+"AC4BFSP.exe"+1140171: 8B EC           -  mov ebp,esp
+"AC4BFSP.exe"+1140173: 8B 01           -  mov eax,[ecx]
+"AC4BFSP.exe"+1140175: 8B 10           -  mov edx,[eax]
+"AC4BFSP.exe"+1140177: FF D2           -  call edx
+"AC4BFSP.exe"+1140179: 85 C0           -  test eax,eax
+"AC4BFSP.exe"+114017B: 74 3E           -  je AC4BFSP.exe+11401BB
+"AC4BFSP.exe"+114017D: 0F B7 50 0A     -  movzx edx,word ptr [eax+0A]
+// ---------- INJECTING HERE ----------
+"AC4BFSP.exe"+1140181: 8B 48 04        -  mov ecx,[eax+04]
+"AC4BFSP.exe"+1140184: 8D 14 91        -  lea edx,[ecx+edx*4]
+// ---------- DONE INJECTING  ----------
+"AC4BFSP.exe"+1140187: 56              -  push esi
+"AC4BFSP.exe"+1140188: 3B CA           -  cmp ecx,edx
+"AC4BFSP.exe"+114018A: 74 16           -  je AC4BFSP.exe+11401A2
+"AC4BFSP.exe"+114018C: 8B 75 08        -  mov esi,[ebp+08]
+"AC4BFSP.exe"+114018F: 90              -  nop 
+"AC4BFSP.exe"+1140190: 8B 01           -  mov eax,[ecx]
+"AC4BFSP.exe"+1140192: 85 C0           -  test eax,eax
+"AC4BFSP.exe"+1140194: 74 05           -  je AC4BFSP.exe+114019B
+"AC4BFSP.exe"+1140196: 39 70 04        -  cmp [eax+04],esi
+"AC4BFSP.exe"+1140199: 74 0E           -  je AC4BFSP.exe+11401A9
+}
+
+// With CN supported language...
+{
+// ORIGINAL CODE - INJECTION POINT: "AC4BFSP_CN.exe"+1131557
+
+"AC4BFSP_CN.exe"+1131542: 74 F3              -  je AC4BFSP_CN.exe+1131537
+"AC4BFSP_CN.exe"+1131544: 8B 10              -  mov edx,[eax]
+"AC4BFSP_CN.exe"+1131546: 8B 42 50           -  mov eax,[edx+50]
+"AC4BFSP_CN.exe"+1131549: FF D0              -  call eax
+"AC4BFSP_CN.exe"+113154B: 5E                 -  pop esi
+"AC4BFSP_CN.exe"+113154C: 5D                 -  pop ebp
+"AC4BFSP_CN.exe"+113154D: C2 04 00           -  ret 0004
+"AC4BFSP_CN.exe"+1131550: 55                 -  push ebp
+"AC4BFSP_CN.exe"+1131551: 8B EC              -  mov ebp,esp
+"AC4BFSP_CN.exe"+1131553: 0F B7 51 0A        -  movzx edx,word ptr [ecx+0A]
+// ---------- INJECTING HERE ----------
+"AC4BFSP_CN.exe"+1131557: 8B 41 04           -  mov eax,[ecx+04]
+"AC4BFSP_CN.exe"+113155A: 8D 14 90           -  lea edx,[eax+edx*4]
+// ---------- DONE INJECTING  ----------
+"AC4BFSP_CN.exe"+113155D: 56                 -  push esi
+"AC4BFSP_CN.exe"+113155E: 3B C2              -  cmp eax,edx
+"AC4BFSP_CN.exe"+1131560: 74 15              -  je AC4BFSP_CN.exe+1131577
+"AC4BFSP_CN.exe"+1131562: 8B 75 08           -  mov esi,[ebp+08]
+"AC4BFSP_CN.exe"+1131565: 8B 08              -  mov ecx,[eax]
+"AC4BFSP_CN.exe"+1131567: 85 C9              -  test ecx,ecx
+"AC4BFSP_CN.exe"+1131569: 74 05              -  je AC4BFSP_CN.exe+1131570
+"AC4BFSP_CN.exe"+113156B: 39 71 04           -  cmp [ecx+04],esi
+"AC4BFSP_CN.exe"+113156E: 74 0E              -  je AC4BFSP_CN.exe+113157E
+"AC4BFSP_CN.exe"+1131570: 83 C0 04           -  add eax,04
+}
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>47</ID>
+              <Description>"(only edit values for current protagonist)"</Description>
+              <LastState Value="" RealAddress="00000000"/>
+              <Color>FF0000</Color>
+              <GroupHeader>1</GroupHeader>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>497</ID>
+              <Description>"--- Edward Kenway (+ DLC Freedom Cry ~ Adewale)"</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>498</ID>
+                  <Description>"Money"</Description>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pSupplies</Address>
+                  <Offsets>
+                    <Offset>C</Offset>
+                    <Offset>0</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>499</ID>
+                  <Description>"Smoke Bombs"</Description>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pSupplies</Address>
+                  <Offsets>
+                    <Offset>C</Offset>
+                    <Offset>4</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>500</ID>
+                  <Description>"Bullets"</Description>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pSupplies</Address>
+                  <Offsets>
+                    <Offset>C</Offset>
+                    <Offset>40</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>501</ID>
+                  <Description>"Sleep Darts"</Description>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pSupplies</Address>
+                  <Offsets>
+                    <Offset>C</Offset>
+                    <Offset>78</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>502</ID>
+                  <Description>"Berserk Darts"</Description>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pSupplies</Address>
+                  <Offsets>
+                    <Offset>C</Offset>
+                    <Offset>7C</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>503</ID>
+                  <Description>"Throw Knife"</Description>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pSupplies</Address>
+                  <Offsets>
+                    <Offset>C</Offset>
+                    <Offset>AC</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>504</ID>
+                  <Description>"Rope Darts"</Description>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pSupplies</Address>
+                  <Offsets>
+                    <Offset>C</Offset>
+                    <Offset>54</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>505</ID>
+                  <Description>"---"</Description>
+                  <LastState Value="" RealAddress="00000000"/>
+                  <GroupHeader>1</GroupHeader>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>506</ID>
+                  <Description>"Blunderbuss"</Description>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pSupplies</Address>
+                  <Offsets>
+                    <Offset>C</Offset>
+                    <Offset>DC</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>507</ID>
+                  <Description>"Firecrackers"</Description>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pSupplies</Address>
+                  <Offsets>
+                    <Offset>C</Offset>
+                    <Offset>BC</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1341</ID>
+              <Description>"--- Jackdaw Cargo"</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>508</ID>
+                  <Description>"--- Crew &amp; Ammunition"</Description>
+                  <LastState Value="" RealAddress="00000000"/>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>509</ID>
+                      <Description>"Crew"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>pSupplies</Address>
+                      <Offsets>
+                        <Offset>C</Offset>
+                        <Offset>80</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>510</ID>
+                      <Description>"Fire Barrels"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>pSupplies</Address>
+                      <Offsets>
+                        <Offset>C</Offset>
+                        <Offset>8C</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>511</ID>
+                      <Description>"Heavy Shot"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>pSupplies</Address>
+                      <Offsets>
+                        <Offset>C</Offset>
+                        <Offset>88</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>512</ID>
+                      <Description>"Mortar"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>pSupplies</Address>
+                      <Offsets>
+                        <Offset>C</Offset>
+                        <Offset>84</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>529</ID>
+                      <Description>"Harpoon"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>pSupplies</Address>
+                      <Offsets>
+                        <Offset>C</Offset>
+                        <Offset>A4</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>513</ID>
+                  <Description>"--- Materials"</Description>
+                  <LastState Value="" RealAddress="00000000"/>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>514</ID>
+                      <Description>"Sugar"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>pSupplies</Address>
+                      <Offsets>
+                        <Offset>C</Offset>
+                        <Offset>9C</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>515</ID>
+                      <Description>"Rum"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>pSupplies</Address>
+                      <Offsets>
+                        <Offset>C</Offset>
+                        <Offset>98</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>516</ID>
+                      <Description>"Cloth"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>pSupplies</Address>
+                      <Offsets>
+                        <Offset>C</Offset>
+                        <Offset>90</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>517</ID>
+                      <Description>"Wood"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>pSupplies</Address>
+                      <Offsets>
+                        <Offset>C</Offset>
+                        <Offset>A0</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>518</ID>
+                      <Description>"Metal"</Description>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>pSupplies</Address>
+                      <Offsets>
+                        <Offset>C</Offset>
+                        <Offset>94</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>519</ID>
+              <Description>"--- DLC Freedom Cry"</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>520</ID>
+                  <Description>"Liberated Slaves"</Description>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pSupplies</Address>
+                  <Offsets>
+                    <Offset>C</Offset>
+                    <Offset>B4</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>521</ID>
+                  <Description>"Recruited Maroons"</Description>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pSupplies</Address>
+                  <Offsets>
+                    <Offset>C</Offset>
+                    <Offset>B8</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>530</ID>
+              <Description>"--- DLC Aveline"</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>524</ID>
+                  <Description>"Bullets"</Description>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pInventoryDLC</Address>
+                  <Offsets>
+                    <Offset>0c</Offset>
+                    <Offset>3c</Offset>
+                    <Offset>4</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>525</ID>
+                  <Description>"Sleep Darts"</Description>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pInventoryDLC</Address>
+                  <Offsets>
+                    <Offset>0c</Offset>
+                    <Offset>74</Offset>
+                    <Offset>4</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>526</ID>
+                  <Description>"Berserk Darts"</Description>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pInventoryDLC</Address>
+                  <Offsets>
+                    <Offset>0c</Offset>
+                    <Offset>78</Offset>
+                    <Offset>4</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>527</ID>
+                  <Description>"LogicalInventory ~ Base Address"</Description>
+                  <ShowAsHex>1</ShowAsHex>
+                  <Color>C0C0C0</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pInventoryDLC</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>528</ID>
+              <Description>"Base Address"</Description>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>C0C0C0</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>pSupplies</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>257</ID>
+          <Description>"Teleport &amp; Coordinates..."</Description>
+          <Options moHideChildren="1" moManualExpandCollapse="1" moDeactivateChildrenAsWell="1"/>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : AC4BFSP.exe
+  Version: 
+  Date   : 2018-05-06
+  Author : Paul44
+
+  Collects player's location specific info...
+}
+
+[ENABLE]
+
+aobscanmodule(Entity,$process,8B 80 9C 00 00 00 8B D0 80 E2 07 80 FA 01)
+registersymbol(Entity)
+alloc(newmem,$100,Entity)
+
+globalalloc(pEntity,4)
+
+label(code)
+label(return)
+
+newmem:
+  mov [pEntity],eax
+code:
+  mov eax,[eax+0000009C]
+  jmp return
+
+Entity:
+  jmp newmem
+  nop
+return:
+
+
+[DISABLE]
+
+Entity:
+  db 8B 80 9C 00 00 00
+
+unregistersymbol(Entity)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "AC4BFSP.exe"+108C9F0
+
+"AC4BFSP.exe"+108C9D7: 8B 41 08           -  mov eax,[ecx+08]
+"AC4BFSP.exe"+108C9DA: 8B 09              -  mov ecx,[ecx]
+"AC4BFSP.exe"+108C9DC: C1 F8 1F           -  sar eax,1F
+"AC4BFSP.exe"+108C9DF: 23 C8              -  and ecx,eax
+"AC4BFSP.exe"+108C9E1: 3B F1              -  cmp esi,ecx
+"AC4BFSP.exe"+108C9E3: 74 25              -  je AC4BFSP.exe+108CA0A
+"AC4BFSP.exe"+108C9E5: 8B CE              -  mov ecx,esi
+"AC4BFSP.exe"+108C9E7: E8 14 C1 FF FE     -  call AC4BFSP.exe+88B00
+"AC4BFSP.exe"+108C9EC: 85 C0              -  test eax,eax
+"AC4BFSP.exe"+108C9EE: 74 1A              -  je AC4BFSP.exe+108CA0A
+// ---------- INJECTING HERE ----------
+"AC4BFSP.exe"+108C9F0: 8B 80 9C 00 00 00  -  mov eax,[eax+0000009C]
+// ---------- DONE INJECTING  ----------
+"AC4BFSP.exe"+108C9F6: 8B D0              -  mov edx,eax
+"AC4BFSP.exe"+108C9F8: 80 E2 07           -  and dl,07
+"AC4BFSP.exe"+108C9FB: 80 FA 01           -  cmp dl,01
+"AC4BFSP.exe"+108C9FE: 75 1D              -  jne AC4BFSP.exe+108CA1D
+"AC4BFSP.exe"+108CA00: 25 F8 01 00 00     -  and eax,000001F8
+"AC4BFSP.exe"+108CA05: 83 F8 08           -  cmp eax,08
+"AC4BFSP.exe"+108CA08: 75 13              -  jne AC4BFSP.exe+108CA1D
+"AC4BFSP.exe"+108CA0A: F3 0F 10 47 04     -  movss xmm0,[edi+04]
+"AC4BFSP.exe"+108CA0F: 51                 -  push ecx
+"AC4BFSP.exe"+108CA10: 8D 4F 10           -  lea ecx,[edi+10]
+}
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>258</ID>
+              <Description>"X-axis"</Description>
+              <Color>808080</Color>
+              <VariableType>Float</VariableType>
+              <Address>[pEntity]+40</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>259</ID>
+              <Description>"Y-axis"</Description>
+              <Color>808080</Color>
+              <VariableType>Float</VariableType>
+              <Address>[pEntity]+44</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>260</ID>
+              <Description>"Z-axis"</Description>
+              <Color>808080</Color>
+              <VariableType>Float</VariableType>
+              <Address>[pEntity]+48</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>261</ID>
+              <Description>"PlayerID"</Description>
+              <Color>C0C0C0</Color>
+              <VariableType>Byte</VariableType>
+              <Address>[pEntity]+9C</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>2</ID>
+              <Description>"Map Waypoint"</Description>
+              <Options moHideChildren="1"/>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : AC4BFSP.exe
+  Version: 
+  Date   : 2018-05-06
+  Author : Paul44
+
+  Collects map waypoint xy coordinates
+}
+
+[ENABLE]
+
+aobscanmodule(MapWaypoint,$process,D9 5E 50 D9 47 14)
+registersymbol(MapWaypoint)                    // "AC4BFSP.exe"+11F98B0
+alloc(newmem,$100,MapWaypoint)
+
+globalalloc(pMapWayp,4)
+globalalloc(nDropHeight,4)
+globalalloc(pMapIcon,4)
+
+nDropHeight:
+dd (float)30.0
+
+pMapIcon:
+dd 0
+
+label(code)
+label(return)
+
+newmem:
+  push ebx
+  mov [pMapWayp],esi
+  // when an icon is selected, get its data structure...
+  mov ebx,[esi+88]
+  mov ebx,[ebx]
+  mov [pMapIcon],ebx
+  pop ebx
+code:
+  fstp dword ptr [esi+50]
+  fld dword ptr [edi+14]
+  lea ecx,[esi+58]
+  fstp dword ptr [esi+54]
+  jmp return
+
+MapWaypoint:
+  jmp newmem
+  db 90 90 90 90 90 90 90
+return:
+
+
+[DISABLE]
+
+MapWaypoint:
+  db D9 5E 50 D9 47 14 8D 4E 58 D9 5E 54
+
+unregistersymbol(MapWaypoint)
+dealloc(newmem)
+
+pMapIcon:
+dd 0
+
+{
+// ORIGINAL CODE - INJECTION POINT: "AC4BFSP.exe"+11F98B0
+
+"AC4BFSP.exe"+11F988B: 75 14                 -  jne AC4BFSP.exe+11F98A1
+"AC4BFSP.exe"+11F988D: F7 40 08 FF FF FF 00  -  test [eax+08],FFFFFF
+"AC4BFSP.exe"+11F9894: 75 0B                 -  jne AC4BFSP.exe+11F98A1
+"AC4BFSP.exe"+11F9896: 50                    -  push eax
+"AC4BFSP.exe"+11F9897: B9 F0 B7 DE 04        -  mov ecx,AC4BFSP.exe+49EB7F0
+"AC4BFSP.exe"+11F989C: E8 5F 7A 45 FF        -  call AC4BFSP.exe+651300
+"AC4BFSP.exe"+11F98A1: 8A 57 0C              -  mov dl,[edi+0C]
+"AC4BFSP.exe"+11F98A4: 88 96 8C 00 00 00     -  mov [esi+0000008C],dl
+"AC4BFSP.exe"+11F98AA: D9 47 10              -  fld dword ptr [edi+10]
+"AC4BFSP.exe"+11F98AD: 8B 47 18              -  mov eax,[edi+18]
+// ---------- INJECTING HERE ----------
+"AC4BFSP.exe"+11F98B0: D9 5E 50              -  fstp dword ptr [esi+50]
+"AC4BFSP.exe"+11F98B3: D9 47 14              -  fld dword ptr [edi+14]
+"AC4BFSP.exe"+11F98B6: 8D 4E 58              -  lea ecx,[esi+58]
+"AC4BFSP.exe"+11F98B9: D9 5E 54              -  fstp dword ptr [esi+54]
+// ---------- DONE INJECTING  ----------
+"AC4BFSP.exe"+11F98BC: 8D 50 04              -  lea edx,[eax+04]
+"AC4BFSP.exe"+11F98BF: BF 01 00 00 00        -  mov edi,00000001
+"AC4BFSP.exe"+11F98C4: F0 0F C1 3A           - lock  xadd [edx],edi
+"AC4BFSP.exe"+11F98C8: 87 01                 -  xchg [ecx],eax
+"AC4BFSP.exe"+11F98CA: 8D 48 04              -  lea ecx,[eax+04]
+"AC4BFSP.exe"+11F98CD: 83 CA FF              -  or edx,-01
+"AC4BFSP.exe"+11F98D0: F0 0F C1 11           - lock  xadd [ecx],edx
+"AC4BFSP.exe"+11F98D4: 4A                    -  dec edx
+}
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>231</ID>
+                  <Description>"(Help ~ Enable 'God mode' first before teleporting...)"</Description>
+                  <Options moHideChildren="1"/>
+                  <LastState/>
+                  <Color>FF0000</Color>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{ Game   : AC4BFSP.exe
+  Version: 
+  Date   : 2018-05-05
+  Author : Paul44
+
+  HowTo: Teleporting...
+}
+
+[ENABLE]
+{$lua}
+  local sMessage = [[
+ 1.  Open map and select an icon (such as chest, fragment, etc)
+ 2.  Press [Shift+T] while still in the map view...!
+ 3.  Press [ESC] to teleport to that particular location
+      (see also [Readme] file)
+  ]]
+
+  showMessage(sMessage)
+
+{$asm}
+// disables script automatically by CE...
+test al,al
+
+[DISABLE]
+
+</AssemblerScript>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>232</ID>
+                      <Description>"World ~ Base Address"</Description>
+                      <ShowAsHex>1</ShowAsHex>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>pWorld</Address>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>267</ID>
+                  <Description>"Teleport to Waypoint..."</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>{ Game   : AC4BFSP.exe
+  Version: 
+  Date   : 2018-05-06
+  Author : Paul44
+
+  Teleports player to Map Waypoint Marker...
+  (enable 'God Mode' first to prevent you from dying)
+}
+
+[ENABLE]
+
+{$lua}
+    local IconHeight = 5.0
+    -- Map waypoint does not have a Z-value, so we use a fixed Z-value...
+    local addrMap = getAddress("[pMapWayp]")
+    local addrEntity = getAddress("[pEntity]")
+    local addrHeight = getAddress("nDropHeight")
+    local addrIcon = getAddress("[pMapIcon]")
+    local MapX = readFloat(addrMap+0x50)
+    local MapY = readFloat(addrMap+0x54)
+    local MapZ = readFloat(addrHeight)
+    -- in case an icon is selected ~ not all of them return coordinates...
+    local IconX = readFloat(addrIcon+0x40)
+    local IconY = readFloat(addrIcon+0x44)
+    local IconZ = readFloat(addrIcon+0x48)
+    -- print(string.format("[%s]",MapX))
+    -- When selecting an icon, '0' values are returned for xy...
+    if IconX ~= nil then
+        writeFloat(addrEntity+0x40,IconX)
+        writeFloat(addrEntity+0x44,IconY)
+        writeFloat(addrEntity+0x48,math.max(IconZ+IconHeight,MapZ))
+    elseif not ( MapX == nil or (MapX == 0 and MapX == 0) ) then
+        writeFloat(addrEntity+0x40,MapX)
+        writeFloat(addrEntity+0x44,MapY)
+        writeFloat(addrEntity+0x48,MapZ)
+    end
+
+{$asm}
+// disables script automatically by CE...
+test al,al
+
+[DISABLE]
+</AssemblerScript>
+                  <Hotkeys>
+                    <Hotkey>
+                      <Action>Toggle Activation</Action>
+                      <Keys>
+                        <Key>16</Key>
+                        <Key>84</Key>
+                      </Keys>
+                      <ID>1</ID>
+                    </Hotkey>
+                  </Hotkeys>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>265</ID>
+                      <Description>"Waypoint X"</Description>
+                      <Color>808080</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pMapWayp]+50</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>266</ID>
+                      <Description>"Waypoint Y"</Description>
+                      <Color>808080</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pMapWayp]+54</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>326</ID>
+                      <Description>"Drop Height"</Description>
+                      <VariableType>Float</VariableType>
+                      <Address>nDropHeight</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>1332</ID>
+                      <Description>"Icon X"</Description>
+                      <Color>C0C0C0</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pMapIcon]+40</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>1335</ID>
+                      <Description>"Icon Y"</Description>
+                      <Color>C0C0C0</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pMapIcon]+44</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>1334</ID>
+                      <Description>"Icon Z"</Description>
+                      <Color>C0C0C0</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pMapIcon]+48</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>1336</ID>
+                      <Description>"MapIcon - Base address"</Description>
+                      <ShowAsHex>1</ShowAsHex>
+                      <Color>C0C0C0</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>pMapIcon</Address>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>264</ID>
+                  <Description>"MapIconManager ~ Base Address"</Description>
+                  <ShowAsHex>1</ShowAsHex>
+                  <Color>C0C0C0</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pMapWayp</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>263</ID>
+              <Description>"Entity ~ Base Address"</Description>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>C0C0C0</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>pEntity</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>542</ID>
+          <Description>"Ship Status"</Description>
+          <Options moHideChildren="1" moManualExpandCollapse="1" moDeactivateChildrenAsWell="1"/>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : AC4BFSP.exe
+  Version:
+  Date   : 2018-05-20
+  Author : Paul44
+
+  Manage Jackdaw status information...
+  (note: initial research based on #Sunbeam's 'DebugMenu' CE table ~ 'NavalInvisible')
+}
+
+[ENABLE]
+
+aobscanmodule(NavalShipPlayer,$process,5E 8B E5 5D C3 8D 8E 38 06 00 00)
+registersymbol(NavalShipPlayer)
+alloc(newmem,$100,NavalShipPlayer)
+
+globalalloc(pNavalShipPlayer,4)
+globalalloc(bInvisibleShip,1)
+
+// Ship Invisible (= 0)
+bInvisibleShip:
+db 1
+
+label(code)
+label(return)
+
+newmem:
+  lea ecx,[esi+00000638]
+code:
+  mov [pNavalShipPlayer],esi
+  // dis/enable Invisible Ship...
+  push ebx
+  mov bl,[bInvisibleShip]
+  mov byte ptr [esi+54C],bl
+  pop ebx
+  jmp return
+
+NavalShipPlayer+5:
+  jmp newmem
+  db 90
+return:
+
+[DISABLE]
+
+NavalShipPlayer+5:
+  db 8D 8E 38 06 00 00
+
+unregistersymbol(NavalShipPlayer)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "AC4BFSP.exe"+1531602
+
+"AC4BFSP_FG.exe"+15315DD: E8 4E 8A 77 FF           -  call AC4BFSP_FG.exe+CAA030
+"AC4BFSP_FG.exe"+15315E2: D9 E8                    -  fld1
+"AC4BFSP_FG.exe"+15315E4: DE E1                    -  fsubrp st(1),st(0)
+"AC4BFSP_FG.exe"+15315E6: 8D 8E 38 06 00 00        -  lea ecx,[esi+00000638]
+"AC4BFSP_FG.exe"+15315EC: 51                       -  push ecx
+"AC4BFSP_FG.exe"+15315ED: D8 4D FC                 -  fmul dword ptr [ebp-04]
+"AC4BFSP_FG.exe"+15315F0: D9 5D FC                 -  fstp dword ptr [ebp-04]
+"AC4BFSP_FG.exe"+15315F3: F3 0F 10 45 FC           -  movss xmm0,[ebp-04]
+"AC4BFSP_FG.exe"+15315F8: F3 0F 11 04 24           -  movss [esp],xmm0
+"AC4BFSP_FG.exe"+15315FD: E8 EE 84 AD FE           -  call AC4BFSP_FG.exe+9AF0
+// ---------- INJECTING HERE ----------
+"AC4BFSP_FG.exe"+1531602: 5E                       -  pop esi
+"AC4BFSP_FG.exe"+1531603: 8B E5                    -  mov esp,ebp
+"AC4BFSP_FG.exe"+1531605: 5D                       -  pop ebp
+"AC4BFSP_FG.exe"+1531606: C3                       -  ret
+// ---------- INJECTING HERE ----------
+"AC4BFSP_FG.exe"+1531607: 8D 8E 38 06 00 00        -  lea ecx,[esi+00000638]
+// ---------- DONE INJECTING  ----------
+"AC4BFSP_FG.exe"+153160D: E8 4E 85 AD FE           -  call AC4BFSP_FG.exe+9B60
+"AC4BFSP_FG.exe"+1531612: 84 C0                    -  test al,al
+"AC4BFSP_FG.exe"+1531614: 0F 84 0D 01 00 00        -  je AC4BFSP_FG.exe+1531727
+"AC4BFSP_FG.exe"+153161A: F3 0F 10 8E D0 00 00 00  -  movss xmm1,[esi+000000D0]
+"AC4BFSP_FG.exe"+1531622: 0F 2E 8E B4 00 00 00     -  ucomiss xmm1,[esi+000000B4]
+"AC4BFSP_FG.exe"+1531629: 9F                       -  lahf
+"AC4BFSP_FG.exe"+153162A: F6 C4 44                 -  test ah,44
+"AC4BFSP_FG.exe"+153162D: 0F 8B F4 00 00 00        -  jnp AC4BFSP_FG.exe+1531727
+"AC4BFSP_FG.exe"+1531633: F3 0F 10 86 D4 00 00 00  -  movss xmm0,[esi+000000D4]
+}
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>486</ID>
+              <Description>"Current Health"</Description>
+              <VariableType>Float</VariableType>
+              <Address>[pNavalShipPlayer]+D0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>493</ID>
+              <Description>"Max Health"</Description>
+              <Color>808080</Color>
+              <VariableType>Float</VariableType>
+              <Address>[pNavalShipPlayer]+B4</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>531</ID>
+              <Description>"Ship Invisible"</Description>
+              <Options moHideChildren="1"/>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : AC4BFSP.exe
+  Version:
+  Date   : 2018-04-30
+  Author : Paul44
+
+  Dis/enable Invisible Ship...
+}
+
+[ENABLE]
+
+{$lua}
+    local addrInvisib = getAddress("[pNavalShipPlayer]")
+    writeBytes(addrInvisib+0x54C,0)
+
+{$asm}
+bInvisibleShip:
+db 0
+
+[DISABLE]
+{$lua}
+    local addrInvisib = getAddress("[pNavalShipPlayer]")
+    writeBytes(addrInvisib+0x54C,1)
+
+{$asm}
+bInvisibleShip:
+db 1
+
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>487</ID>
+                  <Description>"Ship Invisible (= 0)"</Description>
+                  <Color>808080</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>[pNavalShipPlayer]+54C</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1342</ID>
+              <Description>"Coordinates..."</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>492</ID>
+                  <Description>"X-axis"</Description>
+                  <Color>808080</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[pNavalShipPlayer]+4F0</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>488</ID>
+                  <Description>"Y-axis"</Description>
+                  <Color>808080</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[pNavalShipPlayer]+4F4</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>489</ID>
+                  <Description>"Z-axis"</Description>
+                  <Color>808080</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[pNavalShipPlayer]+4F8</Address>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>485</ID>
+              <Description>"GcLShip ~ Base address"</Description>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>C0C0C0</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>pNavalShipPlayer</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>776</ID>
+          <Description>"Abstergo Challenges *"</Description>
+          <Options moHideChildren="1" moManualExpandCollapse="1" moDeactivateChildrenAsWell="1"/>
+          <LastState/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : AC4BFSP.exe
+  Version: 
+  Date   : 2019-03-30
+  Author : Paul44
+
+  Based on #Jed513 (cs.rin) CT Table, and updated for latest Uplay &amp; Steam exe
+
+  Note1: If you want to restore its original status (before being set as 'Completed'),
+         you must also "ReActivate" that challenge accordingly
+         (to do just that, 'enable' the appropriate challenge first)
+  Note2: You can principally update any challenge! You just need to identify (using its Data Structure)
+         the appropriate one(s), and copy/paste/edit any existing challenge entry accordingly
+}
+
+[ENABLE]
+
+{$lua}
+    -- 1 = All but CN support ~ 2 = CN &amp; Steam support
+    local addrDRM = getAddress("nDRM")
+    local DRMid = readBytes(addrDRM,1)
+    local AOB_Challenge="C3 8B 01 FF 60 38 CC CC CC CC CC CC CC CC CC CC CC 55 8B EC"
+    -- print('['..DRMid..']')
+    if DRMid == 2 then
+          AOB_Challenge="CC 8B 01 FF 60 38 CC CC CC CC CC CC CC CC CC CC CC 55 8B EC 57"
+    end
+
+autoAssemble([[
+
+// ECX = Data structure AccomplishmentManager ~ Challenges
+// +30.. Data structure Accomplishment
+aobscanmodule(Challenges,$process,]]..AOB_Challenge..[[)
+registersymbol(Challenges)
+alloc(newmem,$100,Challenges)
+
+globalalloc(pChallenge,4)
+
+label(code)
+label(return)
+
+newmem:
+  mov [pChallenge],ecx
+code:
+  mov eax,[ecx]
+  jmp dword ptr [eax+38]
+  jmp return
+
+Challenges+01:
+  jmp newmem
+return:
+
+]])
+
+{$asm}
+
+[DISABLE]
+
+Challenges+01:
+  db 8B 01 FF 60 38
+
+unregistersymbol(Challenges)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "AC4BFSP.exe"+D96380  ~ ElAmigos/FG
+
+"AC4BFSP.exe"+D9636D: 89 14 8E              -  mov [esi+ecx*4],edx
+"AC4BFSP.exe"+D96370: 5E                    -  pop esi
+"AC4BFSP.exe"+D96371: 5D                    -  pop ebp
+"AC4BFSP.exe"+D96372: C3                    -  ret 
+"AC4BFSP.exe"+D96373: 8B 45 14              -  mov eax,[ebp+14]
+"AC4BFSP.exe"+D96376: 8B 10                 -  mov edx,[eax]
+"AC4BFSP.exe"+D96378: 8B 45 08              -  mov eax,[ebp+08]
+"AC4BFSP.exe"+D9637B: 89 14 88              -  mov [eax+ecx*4],edx
+"AC4BFSP.exe"+D9637E: 5D                    -  pop ebp
+"AC4BFSP.exe"+D9637F: C3                    -  ret 
+// ---------- INJECTING HERE ----------
+"AC4BFSP.exe"+D96380: 8B 01                 -  mov eax,[ecx]
+"AC4BFSP.exe"+D96382: FF 60 38              -  jmp dword ptr [eax+38]
+// ---------- DONE INJECTING  ----------
+"AC4BFSP.exe"+D96385: CC                    -  int 3 
+"AC4BFSP.exe"+D96386: CC                    -  int 3 
+"AC4BFSP.exe"+D96387: CC                    -  int 3 
+"AC4BFSP.exe"+D96388: CC                    -  int 3 
+"AC4BFSP.exe"+D96389: CC                    -  int 3 
+"AC4BFSP.exe"+D9638A: CC                    -  int 3 
+"AC4BFSP.exe"+D9638B: CC                    -  int 3 
+"AC4BFSP.exe"+D9638C: CC                    -  int 3 
+"AC4BFSP.exe"+D9638D: CC                    -  int 3 
+"AC4BFSP.exe"+D9638E: CC                    -  int 3
+"AC4BFSP.exe"+D9638F: CC                    -  int 3
+"AC4BFSP.exe"+D96390: 55                    -  push ebp
+"AC4BFSP.exe"+D96391: 8B EC                 -  mov ebp,esp
+"AC4BFSP.exe"+D96393: 8B 41 08              -  mov eax,[ecx+08]
+}
+
+
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>787</ID>
+              <Description>"You must return to the Main menu in order to save any changes !"</Description>
+              <LastState Value="" RealAddress="00000000"/>
+              <Color>800080</Color>
+              <GroupHeader>1</GroupHeader>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>785</ID>
+              <Description>"Free a trading route using Kenway's Fleet (1/1)"</Description>
+              <Options moHideChildren="1"/>
+              <VariableType>4 Bytes</VariableType>
+              <Address>pChallenge</Address>
+              <Offsets>
+                <Offset>18</Offset>
+                <Offset>0</Offset>
+                <Offset>150</Offset>
+                <Offset>30</Offset>
+              </Offsets>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>786</ID>
+                  <Description>""ReActivate" (= 1)"</Description>
+                  <Color>808080</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pChallenge</Address>
+                  <Offsets>
+                    <Offset>0C</Offset>
+                    <Offset>0</Offset>
+                    <Offset>150</Offset>
+                    <Offset>30</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>783</ID>
+              <Description>"Complete 25 trading missions in Kenway's Fleet (25/25)"</Description>
+              <Options moHideChildren="1"/>
+              <VariableType>4 Bytes</VariableType>
+              <Address>pChallenge</Address>
+              <Offsets>
+                <Offset>18</Offset>
+                <Offset>0</Offset>
+                <Offset>154</Offset>
+                <Offset>30</Offset>
+              </Offsets>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>784</ID>
+                  <Description>""ReActivate" (= 1)"</Description>
+                  <Color>808080</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pChallenge</Address>
+                  <Offsets>
+                    <Offset>0C</Offset>
+                    <Offset>0</Offset>
+                    <Offset>154</Offset>
+                    <Offset>30</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>788</ID>
+              <Description>"Share 3 social chest locations (3/3)"</Description>
+              <Options moHideChildren="1"/>
+              <VariableType>4 Bytes</VariableType>
+              <Address>pChallenge</Address>
+              <Offsets>
+                <Offset>18</Offset>
+                <Offset>0</Offset>
+                <Offset>17C</Offset>
+                <Offset>30</Offset>
+              </Offsets>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>789</ID>
+                  <Description>""ReActivate" (= 1)"</Description>
+                  <Color>808080</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pChallenge</Address>
+                  <Offsets>
+                    <Offset>0C</Offset>
+                    <Offset>0</Offset>
+                    <Offset>17C</Offset>
+                    <Offset>30</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>790</ID>
+              <Description>"Share 3 Royal convoy locations (3/3)"</Description>
+              <Options moHideChildren="1"/>
+              <VariableType>4 Bytes</VariableType>
+              <Address>pChallenge</Address>
+              <Offsets>
+                <Offset>18</Offset>
+                <Offset>0</Offset>
+                <Offset>180</Offset>
+                <Offset>30</Offset>
+              </Offsets>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>791</ID>
+                  <Description>""ReActivate" (= 1)"</Description>
+                  <Color>808080</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pChallenge</Address>
+                  <Offsets>
+                    <Offset>0C</Offset>
+                    <Offset>0</Offset>
+                    <Offset>180</Offset>
+                    <Offset>30</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>792</ID>
+              <Description>"Share 3 white whale locations (3/3)"</Description>
+              <Options moHideChildren="1"/>
+              <VariableType>4 Bytes</VariableType>
+              <Address>pChallenge</Address>
+              <Offsets>
+                <Offset>18</Offset>
+                <Offset>0</Offset>
+                <Offset>184</Offset>
+                <Offset>30</Offset>
+              </Offsets>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>793</ID>
+                  <Description>""ReActivate" (= 1)"</Description>
+                  <Color>808080</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>pChallenge</Address>
+                  <Offsets>
+                    <Offset>0C</Offset>
+                    <Offset>0</Offset>
+                    <Offset>184</Offset>
+                    <Offset>30</Offset>
+                  </Offsets>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>782</ID>
+              <Description>"AccomplishmentManager - Base address"</Description>
+              <ShowAsHex>1</ShowAsHex>
+              <Color>C0C0C0</Color>
+              <VariableType>4 Bytes</VariableType>
+              <Address>pChallenge</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <LuaScript>-- You must accept to execute
+-- the script !
+-- If not, the CE table
+-- will return errors...
+
+
+-- will auto-attach the game; even when table is loaded first...
+-- place this at start/common part of lua script
+-- will run ONLY once when CE table is loaded
+-- when changing process, you must reload table or function !
+local myGame = "AC4BFSP.exe"
+local aalist=getAutoAttachList()
+stringlist_add(aalist,myGame)
+
+</LuaScript>
+</CheatTable>
