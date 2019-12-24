@@ -1,0 +1,820 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="28">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>69</ID>
+      <Description>"Active Cheat Table"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <Color>000080</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{$lua}
+LaunchMonoDataCollector()
+{$asm}
+LuaCall(function cycleFullCompact(sender,force) local state = not(compactmenuitem.Caption == 'Compact View Mode'); if force~=nil then state = not force end; compactmenuitem.Caption = state and 'Compact View Mode' or 'Full View Mode'; getMainForm().Splitter1.Visible = state; getMainForm().Panel4.Visible    = state; getMainForm().Panel5.Visible    = state; end; function addCompactMenu() if compactmenualreadyexists then return end; local parent = getMainForm().Menu.Items; compactmenuitem = createMenuItem(parent); parent.add(compactmenuitem); compactmenuitem.Caption = 'Compact View Mode'; compactmenuitem.OnClick = cycleFullCompact; compactmenualreadyexists = 'yes'; end; addCompactMenu(); cycleFullCompact(nil,true))
+[DISABLE]
+
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>70</ID>
+          <Description>"Scripts"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <Color>808000</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>71</ID>
+              <Description>"Supplies Never Decrease (It also increases your crew numbers!!!)"</Description>
+              <LastState/>
+              <Color>006FDD</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Game: Tempest
+// Version: 1.2.5
+
+[ENABLE]
+SaveDataProfile:DecTowarUNIVERSAL:
+  ret                 // Your supplies never decrease
+
+[DISABLE]
+SaveDataProfile:DecTowarUNIVERSAL:
+  push ebp
+
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>72</ID>
+              <Description>"Ship God Mode"</Description>
+              <LastState Activated="1"/>
+              <Color>006FDD</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Game: Tempest
+// Version: 1.3
+
+[ENABLE]
+Ship:DamageShip+33+03:
+  db A1
+//0F B6 87 A1 02 00 00
+//movzx eax,byte ptr [edi+000002A1]
+
+[DISABLE]
+Ship:DamageShip+33+03:
+  db A4
+//0F B6 87 A4 02 00 00
+//movzx eax,byte ptr [edi+000002A4]
+
+// 0x2A4  -  is_Me  -  1
+// 0x2A5  -  is_AI  -  0
+
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>73</ID>
+              <Description>"No Supplies Requirement (Piastres, Gold)"</Description>
+              <LastState/>
+              <Color>006FDD</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>//Game: Tempest
+//Version: 1.3
+
+[ENABLE]
+SaveDataProfile:IsEnoughPiastres:
+  ret
+
+//SaveDataProfile:IsEnoughGold:  -- function removed in v1.3
+//  ret
+
+[DISABLE]
+SaveDataProfile:IsEnoughPiastres:
+  push ebp
+
+//SaveDataProfile:IsEnoughGold:
+//  push ebp
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>74</ID>
+              <Description>"No Reload (canons left&amp;right)"</Description>
+              <LastState/>
+              <Color>006FDD</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>//Game: Tempest
+//Version: 1.3
+
+[ENABLE]
+alloc(newmem,1024)
+label(returnhere)
+label(originalcode)
+
+newmem:
+
+originalcode:
+fld dword ptr [edi+000002F0]
+mov [edi+000002F0],(float)27 //right canon
+mov [edi+000002EC],(float)27 //left canon
+jmp returnhere
+
+Ship:Update+7313:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+Ship:Update+7313:
+fld dword ptr [edi+000002F0]
+//Alt: db D9 87 F0 02 00 00
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>75</ID>
+              <Description>"Mega EXP (It will not work if you active 'EXP Points Never Decrease' script)"</Description>
+              <LastState/>
+              <Color>006FDD</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Game: Tempest
+// Version: 1.2.5
+
+define(address,SaveDataProfile:ChangeXpPoints+6)
+define(bytes,8B 45 0C 85 C0)
+
+[ENABLE]
+assert(address,bytes)
+alloc(newmem,$100,SaveDataProfile:ChangeXpPoints+6)
+
+label(code)
+label(return)
+
+newmem:
+  mov [ebp+0C],32       // It will add 50 XP for each evolve of your pirate
+
+code:
+  mov eax,[ebp+0C]
+  test eax,eax
+  jmp return
+
+address:
+  jmp newmem
+return:
+
+[DISABLE]
+
+address:
+  db bytes
+  // mov eax,[ebp+0C]
+  // test eax,eax
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: SaveDataProfile:ChangeXpPoints+6
+
+3E71066F: 39 00              -  cmp [eax],eax
+3E710671: E8 7A 1D F9 FF     -  call UnityEngine.EventSystems:EventSystem:IsPointerOverGameObject
+3E710676: 83 C4 10           -  add esp,10
+3E710679: C9                 -  leave
+3E71067A: C3                 -  ret
+3E71067B: 00 00              -  add [eax],al
+3E71067D: 00 00              -  add [eax],al
+3E71067F: 00 55 8B           -  add [ebp-75],dl
+3E710682: EC                 -  in al,dx
+3E710683: 83 EC 18           -  sub esp,18
+// ---------- INJECTING HERE ----------
+3E710686: 8B 45 0C           -  mov eax,[ebp+0C]
+3E710689: 85 C0              -  test eax,eax
+// ---------- DONE INJECTING  ----------
+3E71068B: 0F 8E A0 00 00 00  -  jng SaveDataProfile:ChangeXpPoints+b1
+3E710691: 8B 05 00 2C B4 09  -  mov eax,[09B42C00]
+3E710697: 8B 40 38           -  mov eax,[eax+38]
+3E71069A: 8B 4D 0C           -  mov ecx,[ebp+0C]
+3E71069D: 83 EC 08           -  sub esp,08
+3E7106A0: 6A 00              -  push 00
+3E7106A2: 6A 00              -  push 00
+3E7106A4: 6A 00              -  push 00
+3E7106A6: 51                 -  push ecx
+3E7106A7: 50                 -  push eax
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>76</ID>
+              <Description>"Inf Money"</Description>
+              <LastState Activated="1"/>
+              <Color>006FDD</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Game: Tempest
+// Version: 1.2.5
+
+define(address,SaveDataProfile:ChangePiastres+a)
+define(bytes,8B 45 0C 85 C0)
+
+[ENABLE]
+assert(address,bytes)
+alloc(newmem,$100,SaveDataProfile:ChangePiastres+a)
+
+label(code)
+label(return)
+
+newmem:
+  mov [ebp+0C],2710   // It will add 10000 Piastres for each Buy or Sell
+
+code:
+  mov eax,[ebp+0C]
+  test eax,eax
+  jmp return
+
+address:
+  jmp newmem
+return:
+
+[DISABLE]
+address:
+  db bytes
+  // mov eax,[ebp+0C]
+  // test eax,eax
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: SaveDataProfile:ChangePiastres+a
+
+341D8C6B: 5E                    -  pop esi
+341D8C6C: 5F                    -  pop edi
+341D8C6D: 5B                    -  pop ebx
+341D8C6E: C9                    -  leave
+341D8C6F: C3                    -  ret
+341D8C70: 55                    -  push ebp
+341D8C71: 8B EC                 -  mov ebp,esp
+341D8C73: 53                    -  push ebx
+341D8C74: 83 EC 14              -  sub esp,14
+341D8C77: 8B 5D 08              -  mov ebx,[ebp+08]
+// ---------- INJECTING HERE ----------
+341D8C7A: 8B 45 0C              -  mov eax,[ebp+0C]
+341D8C7D: 85 C0                 -  test eax,eax
+// ---------- DONE INJECTING  ----------
+341D8C7F: 0F 8E AC 00 00 00     -  jng SaveDataProfile:ChangePiastres+c1
+341D8C85: 0F B6 45 14           -  movzx eax,byte ptr [ebp+14]
+341D8C89: 85 C0                 -  test eax,eax
+341D8C8B: 74 39                 -  je SaveDataProfile:ChangePiastres+56
+341D8C8D: 8B 43 3C              -  mov eax,[ebx+3C]
+341D8C90: 83 78 0C 03           -  cmp dword ptr [eax+0C],03
+341D8C94: 0F 86 C3 01 00 00     -  jbe SaveDataProfile:ChangePiastres+1ed
+341D8C9A: 8B 40 1C              -  mov eax,[eax+1C]
+341D8C9D: 83 EC 0C              -  sub esp,0C
+341D8CA0: 50                    -  push eax
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>77</ID>
+              <Description>"Inf Health (Player)"</Description>
+              <LastState/>
+              <Color>006FDD</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Game: Tempest
+// Version: 1.1.0
+
+[ENABLE]
+Explore:DamagePlayer:
+  ret                 // Player Inf Health
+
+[DISABLE]
+Explore:DamagePlayer:
+  push ebp
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>78</ID>
+              <Description>"Inf Capitan's Skills (based upon Cake-san's table)"</Description>
+              <LastState/>
+              <Color>006FDD</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Game: Tempest
+// Version: 1.2.5
+
+define(address,Skills:SelectSkill+f4)
+define(bytes,83 C4 10 8B C8)
+
+[ENABLE]
+assert(address,bytes)
+alloc(newmem,$100,Skills:SelectSkill+f4)
+
+label(code)
+label(return)
+
+newmem:
+  mov eax,02
+
+code:
+  add esp,10
+  mov ecx,eax
+  jmp return
+
+address:
+  jmp newmem
+return:
+
+[DISABLE]
+address:
+  db bytes
+  // add esp,10
+  // mov ecx,eax
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: Skills:SelectSkill+f4
+
+3C7DE8CB: 68 D8 AF 50 03     -  push 0350AFD8
+3C7DE8D0: 50                 -  push eax
+3C7DE8D1: E8 52 FF B9 C8     -  call H_Localization:GetTextLang
+3C7DE8D6: 83 C4 10           -  add esp,10
+3C7DE8D9: 89 45 B0           -  mov [ebp-50],eax
+3C7DE8DC: 83 EC 08           -  sub esp,08
+3C7DE8DF: 68 28 A2 DE 32     -  push 32DEA228
+3C7DE8E4: 50                 -  push eax
+3C7DE8E5: 39 00              -  cmp [eax],eax
+3C7DE8E7: E8 2C F4 B8 C8     -  call System:String:IndexOf
+// ---------- INJECTING HERE ----------
+3C7DE8EC: 83 C4 10           -  add esp,10
+3C7DE8EF: 8B C8              -  mov ecx,eax
+// ---------- DONE INJECTING  ----------
+3C7DE8F1: 8B 45 B0           -  mov eax,[ebp-50]
+3C7DE8F4: 83 EC 04           -  sub esp,04
+3C7DE8F7: 89 4D B4           -  mov [ebp-4C],ecx
+3C7DE8FA: 51                 -  push ecx
+3C7DE8FB: 6A 00              -  push 00
+3C7DE8FD: 50                 -  push eax
+3C7DE8FE: 39 00              -  cmp [eax],eax
+3C7DE900: 89 45 B8           -  mov [ebp-48],eax
+3C7DE903: E8 00 AD BD C8     -  call System:String:Substring
+3C7DE908: 83 C4 10           -  add esp,10
+}
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>79</ID>
+              <Description>"Ignore Ship Mass  (based upon Cake-san's table)"</Description>
+              <LastState/>
+              <Color>006FDD</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Game: Tempest
+// Version: 1.2.5
+
+[ENABLE]
+ConfigPanel:RecalcMass+1b6:
+  db 90 90
+
+[DISABLE]
+ConfigPanel:RecalcMass+1b6:
+  db 73 09
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>80</ID>
+              <Description>"Nul Ship Mass (My Version Of Ignore Ship Mass)"</Description>
+              <LastState Activated="1"/>
+              <Color>006FDD</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>//Game: Tempest
+//Version: 1.3
+
+[ENABLE]
+alloc(newmem,1000)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+mov [edi+38],0
+originalcode:
+mov eax,[edi+38]
+mov [ebp-58],eax
+
+exit:
+jmp returnhere
+
+ConfigPanel:RecalcMass+fd:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+ConfigPanel:RecalcMass+fd:
+mov eax,[edi+38]
+mov [ebp-58],eax
+//Alt: db 8B 47 38 89 45 A8
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>81</ID>
+              <Description>"Ignore Item Requirement When Bying"</Description>
+              <LastState/>
+              <Color>006FDD</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>//Game: Tempest
+//Version: 1.3
+
+[ENABLE]
+ConfigPanel:BUY_DEFAULT+95:
+  db 7C
+//7C 06
+//jl ConfigPanel:BUY_DEFAULT+9d
+
+[DISABLE]
+ConfigPanel:BUY_DEFAULT+95:
+  db 7D
+//7D 06
+//jnl ConfigPanel:BUY_DEFAULT+9d
+
+{
+// ORIGINAL CODE - INJECTION POINT: ConfigPanel:BUY_DEFAULT+95
+
+195CDA22: 8B 00              -  mov eax,[eax]
+195CDA24: 83 EC 0C           -  sub esp,0C
+195CDA27: 50                 -  push eax
+195CDA28: 39 00              -  cmp [eax],eax
+195CDA2A: E8 E9 A5 E4 EB     -  call 05418018
+195CDA2F: 83 C4 10           -  add esp,10
+195CDA32: 8B 4D 0C           -  mov ecx,[ebp+0C]
+195CDA35: 0F AF C1           -  imul eax,ecx
+195CDA38: 89 45 D0           -  mov [ebp-30],eax
+195CDA3B: 3B D8              -  cmp ebx,eax
+// ---------- INJECTING HERE ----------
+195CDA3D: 7D 06              -  jnl ConfigPanel:BUY_DEFAULT+9d
+195CDA3F: C6 45 C7 00        -  mov byte ptr [ebp-39],00
+// ---------- DONE INJECTING  ----------
+195CDA43: EB 11              -  jmp ConfigPanel:BUY_DEFAULT+ae
+195CDA45: 46                 -  inc esi
+195CDA46: 8B 05 AC DA 44 0B  -  mov eax,[0B44DAAC]
+195CDA4C: 8B 40 24           -  mov eax,[eax+24]
+195CDA4F: 8B 40 0C           -  mov eax,[eax+0C]
+195CDA52: 3B F0              -  cmp esi,eax
+195CDA54: 7D 82              -  jnl ConfigPanel:BUY_DEFAULT+30
+195CDA56: 0F B6 45 C7        -  movzx eax,byte ptr [ebp-39]
+195CDA5A: 85 C0              -  test eax,eax
+195CDA5C: 75 1B              -  jne ConfigPanel:BUY_DEFAULT+d1
+}
+
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>82</ID>
+              <Description>"EXP Points Never Decrease"</Description>
+              <LastState/>
+              <Color>006FDD</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>//Game: Tempest
+//Version: 1.2.5
+
+[ENABLE]
+SaveDataProfile:ChangeXpPoints:
+  ret    // Your Team EXP Points will never decrease.
+         // Although you need at least 1 XP for this cheat to work successfully.
+
+[DISABLE]
+SaveDataProfile:ChangeXpPoints:
+  push ebp
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>83</ID>
+              <Description>"-InfPistolReload (Explore mode)"</Description>
+              <LastState/>
+              <Color>006FDD</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Game: Tempest
+// Version: 1.3
+
+[ENABLE]
+Explore:CharacterControlls+12d7:
+ db DD D8
+//fstp st(0)
+
+[DISABLE]
+Explore:CharacterControlls+12d7:
+  db DE E9
+//fsubp st(1),st(0)
+
+
+//float value { 1 }
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>96</ID>
+              <Description>"-InfCanonsReload (Explore mode)"</Description>
+              <LastState/>
+              <Color>006FDD</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+aobscan(canonsReload,74 04 33 F6 EB 0D D9) // UnityEngine.UI:SetPropertyUtility:SetStruct+31
+alloc(newmem,$100,canonsReload)
+registersymbol(canonsReload)
+
+newmem:
+canonsReload:
+  db 75
+
+[DISABLE]
+canonsReload:
+  db 74
+
+unregistersymbol(canonsReload)
+dealloc(newmem)
+
+//float value { 1 }
+
+{
+/*** The script is still the same but for unknown reason(s), it disables mono feature
+when I try to toggle it and the script cannot work properly. So I just used aobscan
+to have the same result ***\
+
+//[ENABLE]
+UnityEngine.UI:SetPropertyUtility:SetStruct+31:
+  db 75
+//75 04
+//jne UnityEngine.UI:SetPropertyUtility:SetStruct+37
+
+//[DISABLE]
+UnityEngine.UI:SetPropertyUtility:SetStruct+31:
+  db 74
+//74 04
+//je UnityEngine.UI:SetPropertyUtility:SetStruct+37
+}
+
+
+{
+// ORIGINAL CODE - INJECTION POINT: 278E28E1
+
+278E28CD: 83 EC 04           -  sub esp,04
+278E28D0: D9 1C 24           -  fstp dword ptr [esp]
+278E28D3: 50                 -  push eax
+278E28D4: 8B 00              -  mov eax,[eax]
+278E28D6: 90                 -  nop
+278E28D7: 90                 -  nop
+278E28D8: 90                 -  nop
+278E28D9: FF 50 48           -  call dword ptr [eax+48]
+278E28DC: 83 C4 10           -  add esp,10
+278E28DF: 85 C0              -  test eax,eax
+// ---------- INJECTING HERE ----------
+278E28E1: 74 04              -  je UnityEngine.UI:SetPropertyUtility:SetStruct+37
+278E28E3: 33 F6              -  xor esi,esi
+278E28E5: EB 0D              -  jmp UnityEngine.UI:SetPropertyUtility:SetStruct+44
+// ---------- DONE INJECTING  ----------
+278E28E7: D9 45 0C           -  fld dword ptr [ebp+0C]
+278E28EA: 8B 45 08           -  mov eax,[ebp+08]
+278E28ED: D9 18              -  fstp dword ptr [eax]
+278E28EF: BE 01 00 00 00     -  mov esi,00000001
+278E28F4: 8B C6              -  mov eax,esi
+278E28F6: 8D 65 FC           -  lea esp,[ebp-04]
+278E28F9: 5E                 -  pop esi
+278E28FA: C9                 -  leave
+278E28FB: C3                 -  ret
+278E28FC: 68 98 22 54 14     -  push 14542298
+}
+
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>85</ID>
+              <Description>"-Inf Crew Payment"</Description>
+              <LastState Activated="1"/>
+              <Color>006FDD</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Game: Tempest
+// Version: 1.3
+
+[ENABLE]
+NewGlobalMap:NextDay+67:
+  db 90 90
+ 
+[DISABLE]
+NewGlobalMap:NextDay+67:
+  db 03 CA
+//add ecx,edx
+
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>86</ID>
+              <Description>"+Inf Crew Morale"</Description>
+              <LastState Activated="1"/>
+              <Color>006FDD</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+NewControlling:ChangeMorale:
+  ret
+
+[DISABLE]
+NewControlling:ChangeMorale:
+  push ebp
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>87</ID>
+              <Description>"+Inf Artef (nocoast_nocooldown)"</Description>
+              <LastState Activated="1"/>
+              <Color>006FDD</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Game: Tempest
+// Version: 1.2.6
+
+[ENABLE]
+//_ArtefEnergyCost
+Ship:RunArtefact+3496:
+ db 01 D1
+//add ecx,edx
+
+//_ArtefCulldown
+Ship:RunArtefact+34e9:
+ db D9 EE
+//fldz
+
+[DISABLE]
+Ship:RunArtefact+3496:
+ db 2B CA
+//sub ecx,edx
+
+Ship:RunArtefact+34e9:
+ db DE C9
+//fmulp st(1),st(0)
+
+
+
+
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>98</ID>
+              <Description>"Unlock All Achievements  New!!!"</Description>
+              <LastState Activated="1"/>
+              <Color>C08000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Game: Tempest
+// Version: 1.3
+
+[ENABLE]
+H_Achieves:IsAchUnlocked:
+  ret
+
+[DISABLE]
+H_Achieves:IsAchUnlocked:
+  push ebp
+
+
+
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>88</ID>
+          <Description>"Pointers"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Value="" Activated="1" RealAddress="00000000"/>
+          <Color>808000</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>89</ID>
+              <Description>"Ship Base Addresses"</Description>
+              <LastState Activated="1"/>
+              <Color>6200C4</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>// Game: Tempest
+// Version: 1.3
+
+define(address,NewControlling:SetParusSpeed+17d)
+define(bytes,D9 98 00 03 00 00)
+
+[ENABLE]
+assert(address,bytes)
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+globalalloc(ship_ptr,4)
+
+newmem:
+  mov [ship_ptr],eax
+
+code:
+  fstp dword ptr [eax+00000300]
+  jmp return
+
+address:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+address:
+  db bytes
+  // fstp dword ptr [eax+00000300]
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: NewControlling:SetParusSpeed+17d
+
+195C4E43: 8B 4D DC           -  mov ecx,[ebp-24]
+195C4E46: 89 4C 24 04        -  mov [esp+04],ecx
+195C4E4A: 8B 4D E0           -  mov ecx,[ebp-20]
+195C4E4D: 89 4C 24 08        -  mov [esp+08],ecx
+195C4E51: 50                 -  push eax
+195C4E52: 39 00              -  cmp [eax],eax
+195C4E54: E8 37 00 00 00     -  call 195C4E90
+195C4E59: 83 C4 10           -  add esp,10
+195C4E5C: 8B 05 04 3F 10 08  -  mov eax,[08103F04]
+195C4E62: D9 45 0C           -  fld dword ptr [ebp+0C]
+// ---------- INJECTING HERE ----------
+195C4E65: D9 98 00 03 00 00  -  fstp dword ptr [eax+00000300]
+// ---------- DONE INJECTING  ----------
+195C4E6B: 8B 05 04 3F 10 08  -  mov eax,[08103F04]
+195C4E71: 83 EC 0C           -  sub esp,0C
+195C4E74: 50                 -  push eax
+195C4E75: 39 00              -  cmp [eax],eax
+195C4E77: E8 D4 AC EE EB     -  call 054AFB50
+195C4E7C: 83 C4 10           -  add esp,10
+195C4E7F: C9                 -  leave
+195C4E80: C3                 -  ret
+195C4E81: 68 FC 00 00 00     -  push 000000FC
+195C4E86: 68 78 06 00 00     -  push 00000678
+}
+</AssemblerScript>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>90</ID>
+                  <Description>"Base Address"</Description>
+                  <LastState RealAddress="23802C00"/>
+                  <Color>800040</Color>
+                  <VariableType>String</VariableType>
+                  <Length>0</Length>
+                  <Unicode>0</Unicode>
+                  <CodePage>0</CodePage>
+                  <ZeroTerminate>1</ZeroTerminate>
+                  <Address>ship_ptr</Address>
+                  <Offsets>
+                    <Offset>0</Offset>
+                  </Offsets>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>91</ID>
+                      <Description>"AUTO_reload_left (canons)"</Description>
+                      <LastState Value="68.35068512" RealAddress="23802EEC"/>
+                      <Color>AAAA00</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>+2EC</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>92</ID>
+                      <Description>"AUTO_reload_right (canons)"</Description>
+                      <LastState Value="68.35068512" RealAddress="23802EF0"/>
+                      <Color>AAAA00</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>+2F0</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>93</ID>
+                      <Description>"Ship_CurrentSpeed"</Description>
+                      <LastState Value="0" RealAddress="23802EFC"/>
+                      <Color>AAAA00</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>+2FC</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>94</ID>
+                      <Description>"Ship_TargetSpeed (higher is the value, faster is the ship!!!)"</Description>
+                      <LastState Value="0" RealAddress="23802F00"/>
+                      <Color>AAAA00</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>+300</Address>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>baseAddress</Name>
+      <Address>04500000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>shipSpeed</Name>
+      <Address>04400000</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>ship_ptr</Name>
+      <Address>06170000</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+</CheatTable>
