@@ -9,3 +9,12 @@
 ### 🤔 Handle most of glitch situations (item stuck, hidden chest, unresolved puzzle...) 
 
 > **`tcl`** ---- Collision off
+
+### Obtain all 3 greater gifts from  Hermaeus Mora ?? 
+
+_note: quest involve with "Acquired from the Black Book Epistolary Acumen"_
+
+```ruby
+help "Dragonborn Flame" 
+player.addspell [Spell_ID]
+```
