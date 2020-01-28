@@ -21,9 +21,8 @@ player.addspell [Spell_ID]
 
 ### NPC need to be punished ??!!
 
-setessential <base ID> <1/0>
-
 ```ruby
+setessential <base ID> <1/0>
 1: immortal
 0: mortal 
 ```
