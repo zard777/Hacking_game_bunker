@@ -18,3 +18,12 @@ _note: quest involve with "Acquired from the Black Book Epistolary Acumen"_
 help "Dragonborn Flame" 
 player.addspell [Spell_ID]
 ```
+
+### NPC need to be punished ??!!
+
+setessential <base ID> <1/0>
+
+```ruby
+1: immortal
+0: mortal 
+```
