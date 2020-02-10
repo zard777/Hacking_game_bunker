@@ -6,7 +6,7 @@
 
 > **`player.dispelallspells`** 
 
-### 🤔 Handle most of glitch situations (item stuck, hidden chest, unresolved puzzle...) 
+### 🤔 Handle most of glitch situations (item stuck, hidden chest, unresolved/bugged puzzle...) 
 
 > **`tcl`** ---- Collision off
 
@@ -27,3 +27,9 @@ setessential <base ID> <1/0>
 1: immortal
 0: mortal 
 ```
+
+### Used to set the quest stage (Useful for bugged quests)
+```ruby
+setstage <Quest_ID> <Stage_VALUE>	
+```
++ example: [quest Unholy Vigil](https://en.uesp.net/wiki/Skyrim:Unholy_Vigil)
