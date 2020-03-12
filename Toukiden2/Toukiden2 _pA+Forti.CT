@@ -1,0 +1,1381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="29">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>4</ID>
+      <Description>"Fortify Armor"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Toukiden2_EN.exe
+  Version: 
+  Date   : 2017-04-03
+  Author : BossMAgusz
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(INJECT,Toukiden2_EN.exe,43 88 54 0B 03) // should be unique
+alloc(newmem,$1000,"Toukiden2_EN.exe"+14FE5D)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov [r11+r9+03],#255
+  jmp return
+
+INJECT:
+  jmp newmem
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT:
+  db 43 88 54 0B 03
+
+unregistersymbol(INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "Toukiden2_EN.exe"+14FE5D
+
+"Toukiden2_EN.exe"+14FE3A: 41 0F BE 41 04           -  movsx eax,byte ptr [r9+04]
+"Toukiden2_EN.exe"+14FE3F: 44 03 C0                 -  add r8d,eax
+"Toukiden2_EN.exe"+14FE42: 41 0F BE 41 05           -  movsx eax,byte ptr [r9+05]
+"Toukiden2_EN.exe"+14FE47: 44 03 C0                 -  add r8d,eax
+"Toukiden2_EN.exe"+14FE4A: 41 83 F8 09              -  cmp r8d,09
+"Toukiden2_EN.exe"+14FE4E: 7D 14                    -  jnl Toukiden2_EN.exe+14FE64
+"Toukiden2_EN.exe"+14FE50: 43 0F BE 44 0B 03        -  movsx eax,byte ptr [r11+r9+03]
+"Toukiden2_EN.exe"+14FE56: FF C0                    -  inc eax
+"Toukiden2_EN.exe"+14FE58: 3B C2                    -  cmp eax,edx
+"Toukiden2_EN.exe"+14FE5A: 0F 42 D0                 -  cmovb edx,eax
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+14FE5D: 43 88 54 0B 03           -  mov [r11+r9+03],dl
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+14FE62: EB 12                    -  jmp Toukiden2_EN.exe+14FE76
+"Toukiden2_EN.exe"+14FE64: 43 0F BE 44 0B 06        -  movsx eax,byte ptr [r11+r9+06]
+"Toukiden2_EN.exe"+14FE6A: FF C0                    -  inc eax
+"Toukiden2_EN.exe"+14FE6C: 3B C2                    -  cmp eax,edx
+"Toukiden2_EN.exe"+14FE6E: 0F 42 D0                 -  cmovb edx,eax
+"Toukiden2_EN.exe"+14FE71: 43 88 54 0B 06           -  mov [r11+r9+06],dl
+"Toukiden2_EN.exe"+14FE76: 41 0F BE 41 06           -  movsx eax,byte ptr [r9+06]
+"Toukiden2_EN.exe"+14FE7B: 41 0F BE 49 08           -  movsx ecx,byte ptr [r9+08]
+"Toukiden2_EN.exe"+14FE80: 03 C8                    -  add ecx,eax
+"Toukiden2_EN.exe"+14FE82: 41 0F BE 41 07           -  movsx eax,byte ptr [r9+07]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>6</ID>
+      <Description>"Fortify Weapons"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Toukiden2_EN.exe
+  Version: 
+  Date   : 2017-04-03
+  Author : BossMAgusz
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(INJECT,Toukiden2_EN.exe,42 88 54 09 02) // should be unique
+alloc(newmem,$1000,"Toukiden2_EN.exe"+14F45F)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  mov [rcx+r9+02],#165
+  jmp return
+
+INJECT:
+  jmp newmem
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT:
+  db 42 88 54 09 02
+
+unregistersymbol(INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "Toukiden2_EN.exe"+14F45F
+
+"Toukiden2_EN.exe"+14F43C: 41 0F BE 41 03           -  movsx eax,byte ptr [r9+03]
+"Toukiden2_EN.exe"+14F441: 44 03 D0                 -  add r10d,eax
+"Toukiden2_EN.exe"+14F444: 41 0F BE 41 04           -  movsx eax,byte ptr [r9+04]
+"Toukiden2_EN.exe"+14F449: 44 03 D0                 -  add r10d,eax
+"Toukiden2_EN.exe"+14F44C: 41 83 FA 09              -  cmp r10d,09
+"Toukiden2_EN.exe"+14F450: 7D 14                    -  jnl Toukiden2_EN.exe+14F466
+"Toukiden2_EN.exe"+14F452: 42 0F BE 44 09 02        -  movsx eax,byte ptr [rcx+r9+02]
+"Toukiden2_EN.exe"+14F458: FF C0                    -  inc eax
+"Toukiden2_EN.exe"+14F45A: 3B C2                    -  cmp eax,edx
+"Toukiden2_EN.exe"+14F45C: 0F 42 D0                 -  cmovb edx,eax
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+14F45F: 42 88 54 09 02           -  mov [rcx+r9+02],dl
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+14F464: EB 12                    -  jmp Toukiden2_EN.exe+14F478
+"Toukiden2_EN.exe"+14F466: 42 0F BE 44 09 05        -  movsx eax,byte ptr [rcx+r9+05]
+"Toukiden2_EN.exe"+14F46C: FF C0                    -  inc eax
+"Toukiden2_EN.exe"+14F46E: 3B C2                    -  cmp eax,edx
+"Toukiden2_EN.exe"+14F470: 0F 42 D0                 -  cmovb edx,eax
+"Toukiden2_EN.exe"+14F473: 42 88 54 09 05           -  mov [rcx+r9+05],dl
+"Toukiden2_EN.exe"+14F478: 41 0F BE 41 05           -  movsx eax,byte ptr [r9+05]
+"Toukiden2_EN.exe"+14F47D: 41 0F BE 49 07           -  movsx ecx,byte ptr [r9+07]
+"Toukiden2_EN.exe"+14F482: 03 C8                    -  add ecx,eax
+"Toukiden2_EN.exe"+14F484: 41 0F BE 41 06           -  movsx eax,byte ptr [r9+06]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Infinite Health"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_3FEE,Toukiden2_EN.exe,0F 57 C0 0F 2F C6 73 E5 F3 0F 11 B3 A8)
+_3FEE:
+movaps xmm6,xmm0
+registersymbol(_3FEE)
+ 
+[DISABLE]
+_3FEE:
+XORPS XMM0, XMM0
+unregistersymbol(_3FEE)
+{
+// ORIGINAL CODE - INJECTION POINT: Toukiden2_EN.exe+3FEE
+
+"Toukiden2_EN.exe"+3FCA: 0F 2F F0                 -  comiss xmm6,xmm0
+"Toukiden2_EN.exe"+3FCD: 72 1F                    -  jb Toukiden2_EN.exe+3FEE
+"Toukiden2_EN.exe"+3FCF: 48 8B 03                 -  mov rax,[rbx]
+"Toukiden2_EN.exe"+3FD2: 48 8B CB                 -  mov rcx,rbx
+"Toukiden2_EN.exe"+3FD5: FF 90 A0 00 00 00        -  call qword ptr [rax+000000A0]
+"Toukiden2_EN.exe"+3FDB: F3 0F 11 83 A8 01 00 00  -  movss [rbx+000001A8],xmm0
+"Toukiden2_EN.exe"+3FE3: 0F 28 74 24 20           -  movaps xmm6,[rsp+20]
+"Toukiden2_EN.exe"+3FE8: 48 83 C4 30              -  add rsp,30
+"Toukiden2_EN.exe"+3FEC: 5B                       -  pop rbx
+"Toukiden2_EN.exe"+3FED: C3                       -  ret
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+3FEE: 0F 57 C0                 -  xorps xmm0,xmm0
+"Toukiden2_EN.exe"+3FF1: 0F 2F C6                 -  comiss xmm0,xmm6
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+3FF4: 73 E5                    -  jae Toukiden2_EN.exe+3FDB
+"Toukiden2_EN.exe"+3FF6: F3 0F 11 B3 A8 01 00 00  -  movss [rbx+000001A8],xmm6
+"Toukiden2_EN.exe"+3FFE: 0F 28 74 24 20           -  movaps xmm6,[rsp+20]
+"Toukiden2_EN.exe"+4003: 48 83 C4 30              -  add rsp,30
+"Toukiden2_EN.exe"+4007: 5B                       -  pop rbx
+"Toukiden2_EN.exe"+4008: C3                       -  ret
+"Toukiden2_EN.exe"+4009: CC                       -  int 3
+"Toukiden2_EN.exe"+400A: CC                       -  int 3
+"Toukiden2_EN.exe"+400B: CC                       -  int 3
+"Toukiden2_EN.exe"+400C: CC                       -  int 3
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"Infinite Weapon Gauge"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_1C53D0,Toukiden2_EN.exe,F3 0F 58 89 B8 01 00 00)
+_1C53D0:
+addss xmm1,[rcx+000001B4]
+registersymbol(_1C53D0)
+[DISABLE]
+_1C53D0:
+addss xmm1,[rcx+000001B8]
+unregistersymbol(_1C53D0)
+{
+// ORIGINAL CODE - INJECTION POINT: "Toukiden2_EN.exe"+1C53D0
+
+"Toukiden2_EN.exe"+1C53C6: CC                       -  int 3
+"Toukiden2_EN.exe"+1C53C7: CC                       -  int 3
+"Toukiden2_EN.exe"+1C53C8: CC                       -  int 3
+"Toukiden2_EN.exe"+1C53C9: CC                       -  int 3
+"Toukiden2_EN.exe"+1C53CA: CC                       -  int 3
+"Toukiden2_EN.exe"+1C53CB: CC                       -  int 3
+"Toukiden2_EN.exe"+1C53CC: CC                       -  int 3
+"Toukiden2_EN.exe"+1C53CD: CC                       -  int 3
+"Toukiden2_EN.exe"+1C53CE: CC                       -  int 3
+"Toukiden2_EN.exe"+1C53CF: CC                       -  int 3
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+1C53D0: F3 0F 58 89 B8 01 00 00  -  addss xmm1,[rcx+000001B8]
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+1C53D8: F3 0F 10 91 B4 01 00 00  -  movss xmm2,[rcx+000001B4]
+"Toukiden2_EN.exe"+1C53E0: 0F 57 C0                 -  xorps xmm0,xmm0
+"Toukiden2_EN.exe"+1C53E3: 0F 2F CA                 -  comiss xmm1,xmm2
+"Toukiden2_EN.exe"+1C53E6: 72 05                    -  jb Toukiden2_EN.exe+1C53ED
+"Toukiden2_EN.exe"+1C53E8: 0F 28 CA                 -  movaps xmm1,xmm2
+"Toukiden2_EN.exe"+1C53EB: EB 08                    -  jmp Toukiden2_EN.exe+1C53F5
+"Toukiden2_EN.exe"+1C53ED: 0F 2F C1                 -  comiss xmm0,xmm1
+"Toukiden2_EN.exe"+1C53F0: 72 03                    -  jb Toukiden2_EN.exe+1C53F5
+"Toukiden2_EN.exe"+1C53F2: 0F 28 C8                 -  movaps xmm1,xmm0
+"Toukiden2_EN.exe"+1C53F5: 0F 2F CA                 -  comiss xmm1,xmm2
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"Unlimited Defense Gauge"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_67075,Toukiden2_EN.exe,0F 28 F0 F3 0F 58 F7 48 8B 03 48 8B CB FF 90 B0 00 00 00 F3 0F 10 15)
+_67075:
+movaps xmm6,xmm1
+registersymbol(_67075)
+[DISABLE]
+_67075:
+movaps xmm6,xmm0
+unregistersymbol(_67075)
+{
+// ORIGINAL CODE - INJECTION POINT: Toukiden2_EN.exe+67075
+
+"Toukiden2_EN.exe"+67050: 66 0F 6E F0              -  movd xmm6,eax
+"Toukiden2_EN.exe"+67054: 48 8B 03                 -  mov rax,[rbx]
+"Toukiden2_EN.exe"+67057: 0F 5B F6                 -  cvtdq2ps xmm6,xmm6
+"Toukiden2_EN.exe"+6705A: FF 90 B0 00 00 00        -  call qword ptr [rax+000000B0]
+"Toukiden2_EN.exe"+67060: F3 0F 58 C7              -  addss xmm0,xmm7
+"Toukiden2_EN.exe"+67064: 0F 2F C6                 -  comiss xmm0,xmm6
+"Toukiden2_EN.exe"+67067: 77 13                    -  ja Toukiden2_EN.exe+6707C
+"Toukiden2_EN.exe"+67069: 48 8B 03                 -  mov rax,[rbx]
+"Toukiden2_EN.exe"+6706C: 48 8B CB                 -  mov rcx,rbx
+"Toukiden2_EN.exe"+6706F: FF 90 B0 00 00 00        -  call qword ptr [rax+000000B0]
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+67075: 0F 28 F0                 -  movaps xmm6,xmm0
+"Toukiden2_EN.exe"+67078: F3 0F 58 F7              -  addss xmm6,xmm7
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+6707C: 48 8B 03                 -  mov rax,[rbx]
+"Toukiden2_EN.exe"+6707F: 48 8B CB                 -  mov rcx,rbx
+"Toukiden2_EN.exe"+67082: FF 90 B0 00 00 00        -  call qword ptr [rax+000000B0]
+"Toukiden2_EN.exe"+67088: F3 0F 10 15 0C 2A 8F 00  -  movss xmm2,[Toukiden2_EN.exe+959A9C]
+"Toukiden2_EN.exe"+67090: 0F 28 CE                 -  movaps xmm1,xmm6
+"Toukiden2_EN.exe"+67093: 0F 2F F2                 -  comiss xmm6,xmm2
+"Toukiden2_EN.exe"+67096: F3 0F 5C C8              -  subss xmm1,xmm0
+"Toukiden2_EN.exe"+6709A: 73 41                    -  jae Toukiden2_EN.exe+670DD
+"Toukiden2_EN.exe"+6709C: 44 0F 2F C6              -  comiss xmm8,xmm6
+"Toukiden2_EN.exe"+670A0: 72 38                    -  jb Toukiden2_EN.exe+670DA
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>7</ID>
+      <Description>"Unlimited Focus"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_1C533E,Toukiden2_EN.exe,75 72 48 8B 03 F3)
+_1C533E:
+db eb
+registersymbol(_1C533E)
+[DISABLE]
+_1C533E:
+db 75
+unregistersymbol(_1C533E)
+{
+// ORIGINAL CODE - INJECTION POINT: Toukiden2_EN.exe+1C533E
+
+"Toukiden2_EN.exe"+1C5316: 0F 29 74 24 30           -  movaps [rsp+30],xmm6
+"Toukiden2_EN.exe"+1C531B: 0F 29 7C 24 20           -  movaps [rsp+20],xmm7
+"Toukiden2_EN.exe"+1C5320: 0F 57 FF                 -  xorps xmm7,xmm7
+"Toukiden2_EN.exe"+1C5323: 48 8B D9                 -  mov rbx,rcx
+"Toukiden2_EN.exe"+1C5326: 0F 28 F1                 -  movaps xmm6,xmm1
+"Toukiden2_EN.exe"+1C5329: 0F 2F FE                 -  comiss xmm7,xmm6
+"Toukiden2_EN.exe"+1C532C: 76 12                    -  jna Toukiden2_EN.exe+1C5340
+"Toukiden2_EN.exe"+1C532E: 48 8B 01                 -  mov rax,[rcx]
+"Toukiden2_EN.exe"+1C5331: FF 90 F0 00 00 00        -  call qword ptr [rax+000000F0]
+"Toukiden2_EN.exe"+1C5337: 80 B8 8F 09 00 00 00     -  cmp byte ptr [rax+0000098F],00
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+1C533E: 75 72                    -  jne Toukiden2_EN.exe+1C53B2
+"Toukiden2_EN.exe"+1C5340: 48 8B 03                 -  mov rax,[rbx]
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+1C5343: F3 0F 58 B3 B0 01 00 00  -  addss xmm6,[rbx+000001B0]
+"Toukiden2_EN.exe"+1C534B: 48 8B CB                 -  mov rcx,rbx
+"Toukiden2_EN.exe"+1C534E: FF 90 E8 00 00 00        -  call qword ptr [rax+000000E8]
+"Toukiden2_EN.exe"+1C5354: 80 B8 77 09 00 00 00     -  cmp byte ptr [rax+00000977],00
+"Toukiden2_EN.exe"+1C535B: 74 0A                    -  je Toukiden2_EN.exe+1C5367
+"Toukiden2_EN.exe"+1C535D: F3 0F 10 05 CB 49 79 00  -  movss xmm0,[Toukiden2_EN.exe+959D30]
+"Toukiden2_EN.exe"+1C5365: EB 08                    -  jmp Toukiden2_EN.exe+1C536F
+"Toukiden2_EN.exe"+1C5367: F3 0F 10 83 AC 01 00 00  -  movss xmm0,[rbx+000001AC]
+"Toukiden2_EN.exe"+1C536F: 0F 2F F0                 -  comiss xmm6,xmm0
+"Toukiden2_EN.exe"+1C5372: 72 29                    -  jb Toukiden2_EN.exe+1C539D
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"Unlimited skill usage"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_9FD37,Toukiden2_EN.exe,FF C9 3B C8 7D 07)
+_9FD37:
+db 90 90
+registersymbol(_9FD37)
+[DISABLE]
+_9FD37:
+db FF C9
+unregistersymbol(_9FD37)
+{
+// ORIGINAL CODE - INJECTION POINT: Toukiden2_EN.exe+9FD37
+
+"Toukiden2_EN.exe"+9FD07: 74 42                    -  je Toukiden2_EN.exe+9FD4B
+"Toukiden2_EN.exe"+9FD09: 48 8B 05 90 93 A6 00     -  mov rax,[Toukiden2_EN.exe+B090A0]
+"Toukiden2_EN.exe"+9FD10: 66 FF 80 B2 00 00 00     -  inc word ptr [rax+000000B2]
+"Toukiden2_EN.exe"+9FD17: 66 FF 80 B4 00 00 00     -  inc word ptr [rax+000000B4]
+"Toukiden2_EN.exe"+9FD1E: EB 2B                    -  jmp Toukiden2_EN.exe+9FD4B
+"Toukiden2_EN.exe"+9FD20: 0F B6 84 1F 35 18 00 00  -  movzx eax,byte ptr [rdi+rbx+00001835]
+"Toukiden2_EN.exe"+9FD28: 3C FF                    -  cmp al,-01
+"Toukiden2_EN.exe"+9FD2A: 74 1F                    -  je Toukiden2_EN.exe+9FD4B
+"Toukiden2_EN.exe"+9FD2C: 0F BE C8                 -  movsx ecx,al
+"Toukiden2_EN.exe"+9FD2F: 0F BE 84 1F 34 18 00 00  -  movsx eax,byte ptr [rdi+rbx+00001834]
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+9FD37: FF C9                    -  dec ecx
+"Toukiden2_EN.exe"+9FD39: 3B C8                    -  cmp ecx,eax
+"Toukiden2_EN.exe"+9FD3B: 7D 07                    -  jnl Toukiden2_EN.exe+9FD44
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+9FD3D: 8B C1                    -  mov eax,ecx
+"Toukiden2_EN.exe"+9FD3F: 85 C9                    -  test ecx,ecx
+"Toukiden2_EN.exe"+9FD41: 0F 4E C6                 -  cmovle eax,esi
+"Toukiden2_EN.exe"+9FD44: 88 84 1F 35 18 00 00     -  mov [rdi+rbx+00001835],al
+"Toukiden2_EN.exe"+9FD4B: 48 8B 05 06 93 A6 00     -  mov rax,[Toukiden2_EN.exe+B09058]
+"Toukiden2_EN.exe"+9FD52: 48 8B 0B                 -  mov rcx,[rbx]
+"Toukiden2_EN.exe"+9FD55: 48 3B 88 B8 76 05 00     -  cmp rcx,[rax+000576B8]
+"Toukiden2_EN.exe"+9FD5C: 75 3D                    -  jne Toukiden2_EN.exe+9FD9B
+"Toukiden2_EN.exe"+9FD5E: 48 8B 4C 24 30           -  mov rcx,[rsp+30]
+"Toukiden2_EN.exe"+9FD63: F3 0F 10 05 0D 94 8B 00  -  movss xmm0,[Toukiden2_EN.exe+959178]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8</ID>
+      <Description>"No skill cooldown"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_9E9D0,Toukiden2_EN.exe,C8 0F 2F F9 72 14)
+_9E9D0:
+db c9
+registersymbol(_9E9D0)
+[DISABLE]
+_9E9D0:
+db c8
+unregistersymbol(_9E9D0)
+{
+// ORIGINAL CODE - INJECTION POINT: Toukiden2_EN.exe+9E9D0
+
+"Toukiden2_EN.exe"+9E9B4: 0F 2F E7                    -  comiss xmm4,xmm7
+"Toukiden2_EN.exe"+9E9B7: 76 36                       -  jna Toukiden2_EN.exe+9E9EF
+"Toukiden2_EN.exe"+9E9B9: E8 02 99 59 00              -  call Toukiden2_EN.exe+6382C0
+"Toukiden2_EN.exe"+9E9BE: F3 41 0F 10 0E              -  movss xmm1,[r14]
+"Toukiden2_EN.exe"+9E9C3: 0F 57 C0                    -  xorps xmm0,xmm0
+"Toukiden2_EN.exe"+9E9C6: 8B C0                       -  mov eax,eax
+"Toukiden2_EN.exe"+9E9C8: F3 48 0F 2A C0              -  cvtsi2ss xmm0,rax
+"Toukiden2_EN.exe"+9E9CD: F3                          - db F3  // SHORTENED TO HIT INJECTION FROM:  subss xmm1,xmm0
+"Toukiden2_EN.exe"+9E9CE: 0F                          - db 0F  // SHORTENED TO HIT INJECTION FROM:  subps xmm1,xmm0
+"Toukiden2_EN.exe"+9E9CF: 5C                          -  pop rsp
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+9E9D0: C8 0F 2F F9                 -  enter 2F0F,-07
+"Toukiden2_EN.exe"+9E9D4: 72 14                       -  jb Toukiden2_EN.exe+9E9EA
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+9E9D6: 41 C7 06 00 00 80 BF        -  mov [r14],BF800000
+"Toukiden2_EN.exe"+9E9DD: 45 88 6E 08                 -  mov [r14+08],r13l
+"Toukiden2_EN.exe"+9E9E1: 41 C7 06 00 00 80 BF        -  mov [r14],BF800000
+"Toukiden2_EN.exe"+9E9E8: EB 05                       -  jmp Toukiden2_EN.exe+9E9EF
+"Toukiden2_EN.exe"+9E9EA: F3 41 0F 11 0E              -  movss [r14],xmm1
+"Toukiden2_EN.exe"+9E9EF: FF C3                       -  inc ebx
+"Toukiden2_EN.exe"+9E9F1: 49 83 C6 20                 -  add r14,20
+"Toukiden2_EN.exe"+9E9F5: 83 FB 06                    -  cmp ebx,06
+"Toukiden2_EN.exe"+9E9F8: 0F 8C 62 FF FF FF           -  jl Toukiden2_EN.exe+9E960
+"Toukiden2_EN.exe"+9E9FE: 48 8B CE                    -  mov rcx,rsi
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>9</ID>
+      <Description>"One Hit Kill"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_1CDF10,Toukiden2_EN.exe,F3 0F 10 81 54 04 00 00)
+alloc(newmem,64,_1CDF10)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+cmp [rcx+00000454],3DCCCCCD
+jle originalcode
+mov [rcx+00000454],3DCCCCCD
+
+originalcode:
+movss xmm0,[rcx+454]
+
+exit:
+jmp returnhere
+
+_1CDF10:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+registersymbol(_1CDF10)
+[DISABLE]
+dealloc(newmem)
+_1CDF10:
+movss xmm0,[rcx+00000454]
+unregistersymbol(_1CDF10)
+{
+// ORIGINAL CODE - INJECTION POINT: "Toukiden2_EN.exe"+1CDF10
+
+"Toukiden2_EN.exe"+1CDEFF: CC                       -  int 3
+"Toukiden2_EN.exe"+1CDF00: F3 0F 10 81 50 04 00 00  -  movss xmm0,[rcx+00000450]
+"Toukiden2_EN.exe"+1CDF08: C3                       -  ret
+"Toukiden2_EN.exe"+1CDF09: CC                       -  int 3
+"Toukiden2_EN.exe"+1CDF0A: CC                       -  int 3
+"Toukiden2_EN.exe"+1CDF0B: CC                       -  int 3
+"Toukiden2_EN.exe"+1CDF0C: CC                       -  int 3
+"Toukiden2_EN.exe"+1CDF0D: CC                       -  int 3
+"Toukiden2_EN.exe"+1CDF0E: CC                       -  int 3
+"Toukiden2_EN.exe"+1CDF0F: CC                       -  int 3
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+1CDF10: F3 0F 10 81 54 04 00 00  -  movss xmm0,[rcx+00000454]
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+1CDF18: C3                       -  ret
+"Toukiden2_EN.exe"+1CDF19: CC                       -  int 3
+"Toukiden2_EN.exe"+1CDF1A: CC                       -  int 3
+"Toukiden2_EN.exe"+1CDF1B: CC                       -  int 3
+"Toukiden2_EN.exe"+1CDF1C: CC                       -  int 3
+"Toukiden2_EN.exee"+1CDF1D: CC                       -  int 3
+"Toukiden2_EN.exe"+1CDF1E: CC                       -  int 3
+"Toukiden2_EN.exe"+1CDF1F: CC                       -  int 3
+"Toukiden2_EN.exe"+1CDF20: F3 0F 11 89 54 04 00 00  -  movss [rcx+00000454],xmm1
+"Toukiden2_EN.exe"+1CDF28: C3                       -  ret
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>10</ID>
+      <Description>"Store Sale of goods ???"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_34FB46,Toukiden2_EN.exe,28 46 02 0F B7 43 14)
+_34FB46:
+db 90 90 90
+registersymbol(_34FB46)
+[DISABLE]
+_34FB46:
+db 28 46 20
+unregistersymbol(_34FB46)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "Toukiden2_EN.exe"+34FB46
+
+"Toukiden2_EN.exe"+34FB11: 48 8D 59 08           -  lea rbx,[rcx+08]
+"Toukiden2_EN.exe"+34FB15: 48 03 D8              -  add rbx,rax
+"Toukiden2_EN.exe"+34FB18: 0F 84 A8 00 00 00     -  je Toukiden2_EN.exe+34FBC6
+"Toukiden2_EN.exe"+34FB1E: 80 7B 18 00           -  cmp byte ptr [rbx+18],00
+"Toukiden2_EN.exe"+34FB22: 0F 84 9E 00 00 00     -  je Toukiden2_EN.exe+34FBC6
+"Toukiden2_EN.exe"+34FB28: 0F B7 53 08           -  movzx edx,word ptr [rbx+08]
+"Toukiden2_EN.exe"+34FB2C: 49 8D 8E 80 2B 05 00  -  lea rcx,[r14+00052B80]
+"Toukiden2_EN.exe"+34FB33: 44 8B 87 70 C6 00 00  -  mov r8d,[rdi+0000C670]
+"Toukiden2_EN.exe"+34FB3A: E8 21 E8 DF FF        -  call Toukiden2_EN.exe+14E360
+"Toukiden2_EN.exe"+34FB3F: 0F B6 87 70 C6 00 00  -  movzx eax,byte ptr [rdi+0000C670]
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+34FB46: 28 46 02              -  sub [rsi+02],al
+"Toukiden2_EN.exe"+34FB49: 0F B7 43 14           -  movzx eax,word ptr [rbx+14]
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+34FB4D: 0F AF 87 70 C6 00 00  -  imul eax,[rdi+0000C670]
+"Toukiden2_EN.exe"+34FB54: 8D 14 80              -  lea edx,[rax+rax*4]
+"Toukiden2_EN.exe"+34FB57: 03 D2                 -  add edx,edx
+"Toukiden2_EN.exe"+34FB59: 49 8D 8E 54 C5 04 00  -  lea rcx,[r14+0004C554]
+"Toukiden2_EN.exe"+34FB60: E8 9B 8C DF FF        -  call Toukiden2_EN.exe+148800
+"Toukiden2_EN.exe"+34FB65: 48 8D 4F 50           -  lea rcx,[rdi+50]
+"Toukiden2_EN.exe"+34FB69: E8 C2 65 EE FF        -  call Toukiden2_EN.exe+236130
+"Toukiden2_EN.exe"+34FB6E: 83 BF 20 15 00 00 00  -  cmp dword ptr [rdi+00001520],00
+"Toukiden2_EN.exe"+34FB75: 77 3C                 -  ja Toukiden2_EN.exe+34FBB3
+"Toukiden2_EN.exe"+34FB77: 45 33 C0              -  xor r8d,r8d
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>12</ID>
+      <Description>"Store Consumption do not have to pay ???"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_14881F,Toukiden2_EN.exe,89 41 78 8B 8A 48 36 08 00)
+_14881F:
+db 90 90 90
+registersymbol(_14881F)
+[DISABLE]
+_14881F:
+db 89 41 78
+unregistersymbol(_14881F)
+{
+// ORIGINAL CODE - INJECTION POINT: Toukiden2_EN.exe+14881F
+
+"Toukiden2_EN.exe"+1487FE: CC                             -  int 3
+"Toukiden2_EN.exe"+1487FF: CC                             -  int 3
+"Toukiden2_EN.exe"+148800: 44 8B 41 78                    -  mov r8d,[rcx+78]
+"Toukiden2_EN.exe"+148804: 44 8B CA                       -  mov r9d,edx
+"Toukiden2_EN.exe"+148807: 44 3B C2                       -  cmp r8d,edx
+"Toukiden2_EN.exe"+14880A: 72 2F                          -  jb Toukiden2_EN.exe+14883B
+"Toukiden2_EN.exe"+14880C: 44 2B C2                       -  sub r8d,edx
+"Toukiden2_EN.exe"+14880F: 48 8B 15 22 03 9C 00           -  mov rdx,[Toukiden2_EN.exe+B08B38]
+"Toukiden2_EN.exe"+148816: B8 00 00 00 00                 -  mov eax,00000000
+"Toukiden2_EN.exe"+14881B: 41 0F 45 C0                    -  cmovne eax,r8d
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+14881F: 89 41 78                       -  mov [rcx+78],eax
+"Toukiden2_EN.exe"+148822: 8B 8A 48 36 08 00              -  mov ecx,[rdx+00083648]
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+148828: B8 FF E0 F5 05                 -  mov eax,05F5E0FF
+"Toukiden2_EN.exe"+14882D: 41 03 C9                       -  add ecx,r9d
+"Toukiden2_EN.exe"+148830: 3B C8                          -  cmp ecx,eax
+"Toukiden2_EN.exe"+148832: 0F 47 C8                       -  cmova ecx,eax
+"Toukiden2_EN.exe"+148835: 89 8A 48 36 08 00              -  mov [rdx+00083648],ecx
+"Toukiden2_EN.exe"+14883B: F3 C3                          - repe  ret
+"Toukiden2_EN.exe"+14883D: CC                             -  int 3
+"Toukiden2_EN.exe"+14883E: CC                             -  int 3
+"Toukiden2_EN.exe"+14883F: CC                             -  int 3
+"Toukiden2_EN.exe"+148840: 48 8B C4                       -  mov rax,rsp
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>13</ID>
+      <Description>"No Reload"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_C0EAD,Toukiden2_EN.exe,C7 44 83 10 FF 00 00 00)
+_C0EAD:
+db 90 90 90 90 90 90 90 90 90 90 90
+registersymbol(_C0EAD)
+[DISABLE]
+_C0EAD:
+db C7 44 83 10 FF 00 00 00 FF 4B 48
+unregistersymbol(_C0EAD)
+
+{
+// ORIGINAL CODE - INJECTION POINT: Toukiden2_EN.exe+C0EAD
+
+"Toukiden2_EN.exe"+C0E86: 66 66 0F 1F 84 00 00 00 00 00  -  nop [rax+rax+00000000]
+"Toukiden2_EN.exe"+C0E90: 41 8B D0                       -  mov edx,r8d
+"Toukiden2_EN.exe"+C0E93: 41 8D 48 FF                    -  lea ecx,[r8-01]
+"Toukiden2_EN.exe"+C0E97: 41 FF C0                       -  inc r8d
+"Toukiden2_EN.exe"+C0E9A: 8B 44 93 10                    -  mov eax,[rbx+rdx*4+10]
+"Toukiden2_EN.exe"+C0E9E: 89 44 8B 10                    -  mov [rbx+rcx*4+10],eax
+"Toukiden2_EN.exe"+C0EA2: 44 3B 43 48                    -  cmp r8d,[rbx+48]
+"Toukiden2_EN.exe"+C0EA6: 72 E8                          -  jb Toukiden2_EN.exe+C0E90
+"Toukiden2_EN.exe"+C0EA8: 8B 43 48                       -  mov eax,[rbx+48]
+"Toukiden2_EN.exe"+C0EAB: FF C8                          -  dec eax
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+C0EAD: C7 44 83 10 FF 00 00 00        -  mov [rbx+rax*4+10],000000FF
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+C0EB5: FF 4B 48                       -  dec [rbx+48]
+"Toukiden2_EN.exe"+C0EB8: 48 83 3D 38 E0 A4 00 00        -  cmp qword ptr [Toukiden2_EN.exe+B0EEF8],00
+"Toukiden2_EN.exe"+C0EC0: C6 43 70 01                    -  mov byte ptr [rbx+70],01
+"Toukiden2_EN.exe"+C0EC4: 74 4A                          -  je Toukiden2_EN.exe+C0F10
+"Toukiden2_EN.exe"+C0EC6: 48 8B 4B 08                    -  mov rcx,[rbx+08]
+"Toukiden2_EN.exe"+C0ECA: 48 8B 01                       -  mov rax,[rcx]
+"Toukiden2_EN.exe"+C0ECD: FF 50 20                       -  call qword ptr [rax+20]
+"Toukiden2_EN.exe"+C0ED0: 84 C0                          -  test al,al
+"Toukiden2_EN.exe"+C0ED2: 74 3C                          -  je Toukiden2_EN.exe+C0F10
+"Toukiden2_EN.exe"+C0ED4: 48 8B 0D 1D E0 A4 00           -  mov rcx,[Toukiden2_EN.exe+B0EEF8]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>14</ID>
+      <Description>"Clear Boss Defensive Gauge"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_2FAE94,Toukiden2_EN.exe,48 8B 87 68 04 00 00 * * * * 00)
+alloc(newmem,32,_2FAE94)
+label(returnhere)
+label(exit)
+
+newmem:
+mov rax,[rdi+00000468]
+cmp [rax],3DCCCCCD
+jle exit
+mov [rax],3DCCCCCD
+
+exit:
+jmp returnhere
+
+_2FAE94:
+jmp newmem
+nop
+nop
+returnhere:
+registersymbol(_2FAE94)
+[DISABLE]
+dealloc(newmem)
+_2FAE94:
+mov rax,[rdi+00000468]
+unregistersymbol(_2FAE94)
+{
+// ORIGINAL CODE - INJECTION POINT: "Toukiden2_EN.exe"+2FAE94
+
+"Toukiden2_EN.exe"+2FAE6F: F3 41 0F 5E C1           -  divss xmm0,xmm9
+"Toukiden2_EN.exe"+2FAE74: 41 0F 28 CB              -  movaps xmm1,xmm11
+"Toukiden2_EN.exe"+2FAE78: 0F 28 D0                 -  movaps xmm2,xmm0
+"Toukiden2_EN.exe"+2FAE7B: 41 0F 28 C4              -  movaps xmm0,xmm12
+"Toukiden2_EN.exe"+2FAE7F: E8 CC 4D 33 00           -  call Toukiden2_EN.exe+62FC50
+"Toukiden2_EN.exe"+2FAE84: 8B 8F 58 04 00 00        -  mov ecx,[rdi+00000458]
+"Toukiden2_EN.exe"+2FAE8A: 85 C9                    -  test ecx,ecx
+"Toukiden2_EN.exe"+2FAE8C: 75 06                    -  jne Toukiden2_EN.exe+2FAE94
+"Toukiden2_EN.exe"+2FAE8E: 44 0F 28 C7              -  movaps xmm8,xmm7
+"Toukiden2_EN.exe"+2FAE92: EB 0C                    -  jmp Toukiden2_EN.exe+2FAEA0
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+2FAE94: 48 8B 87 68 04 00 00     -  mov rax,[rdi+00000468]
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+2FAE9B: F3 44 0F 10 00           -  movss xmm8,[rax]
+"Toukiden2_EN.exe"+2FAEA0: 85 C9                    -  test ecx,ecx
+"Toukiden2_EN.exe"+2FAEA2: 75 05                    -  jne Toukiden2_EN.exe+2FAEA9
+"Toukiden2_EN.exe"+2FAEA4: 0F 28 F7                 -  movaps xmm6,xmm7
+"Toukiden2_EN.exe"+2FAEA7: EB 0B                    -  jmp Toukiden2_EN.exe+2FAEB4
+"Toukiden2_EN.exe"+2FAEA9: 48 8B 87 60 04 00 00     -  mov rax,[rdi+00000460]
+"Toukiden2_EN.exe"+2FAEB0: F3 0F 10 30              -  movss xmm6,[rax]
+"Toukiden2_EN.exe"+2FAEB4: 48 8B CF                 -  mov rcx,rdi
+"Toukiden2_EN.exe"+2FAEB7: E8 B4 34 ED FF           -  call Toukiden2_EN.exe+1CE370
+"Toukiden2_EN.exe"+2FAEBC: 48 8B 17                 -  mov rdx,[rdi]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>15</ID>
+      <Description>"General Exchange AB Button ???"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+alloc(newmem,256,"XINPUT1_3.dll"+7643)
+label(returnhere)
+label(originalcode)
+label(bkey)
+label(exit)
+
+newmem:
+mov ecx,eax
+cmp ecx,0
+je originalcode
+and ecx,3000
+cmp ecx,0
+je originalcode
+and ecx,1000
+cmp ecx,0
+je bkey
+mov ecx,eax
+sub ecx,1000
+or ecx,2000
+mov eax,ecx
+jmp originalcode
+bkey:
+mov ecx,eax
+sub ecx,2000
+or ecx,1000
+mov eax,ecx
+originalcode:
+mov rcx,[rsp+08]
+
+exit:
+jmp returnhere
+
+"XINPUT1_3.dll"+7643:
+jmp newmem
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+"XINPUT1_3.dll"+7643:
+mov rcx,[rsp+08]
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>16</ID>
+      <Description>"Unlimited (Sword/Shield) energy value"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_27F36C,Toukiden2_EN.exe,10 40 08 F3 0F 5E C1)
+_27F36C:
+db 11
+registersymbol(_27F36C)
+[DISABLE]
+_27F36C:
+db 10
+unregistersymbol(_27F36C)
+{
+// ORIGINAL CODE - INJECTION POINT: "Toukiden2_EN.exe"+27F36C
+
+"Toukiden2_EN.exe"+27F33C: 48 8B 0D 4D 61 AA 00           -  mov rcx,[Toukiden2_EN.exe+D25490]
+"Toukiden2_EN.exe"+27F343: F3 0F 10 0D 2D 9E 6D 00        -  movss xmm1,[Toukiden2_EN.exe+959178]
+"Toukiden2_EN.exe"+27F34B: 48 8B 51 18                    -  mov rdx,[rcx+18]
+"Toukiden2_EN.exe"+27F34F: 66 0F 6E 82 40 09 00 00        -  movd xmm0,[rdx+00000940]
+"Toukiden2_EN.exe"+27F357: 0F 5B C0                       -  cvtdq2ps xmm0,xmm0
+"Toukiden2_EN.exe"+27F35A: F3 0F 5E 05 2A A9 6D 00        -  divss xmm0,[Toukiden2_EN.exe+959C8C]
+"Toukiden2_EN.exe"+27F362: 0F 2F C8                       -  comiss xmm1,xmm0
+"Toukiden2_EN.exe"+27F365: 77 03                          -  ja Toukiden2_EN.exe+27F36A
+"Toukiden2_EN.exe"+27F367: 0F 28 C8                       -  movaps xmm1,xmm0
+"Toukiden2_EN.exe"+27F36A: F3 0F 10                       - db F3 0F 10  // SHORTENED TO HIT INJECTION FROM:  movss xmm0,[rax+08]
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+27F36D: 40 08 F3                       -  or bl,sil
+"Toukiden2_EN.exe"+27F370: 0F 5E C1                       -  divps xmm0,xmm1
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+27F373: F3 0F 11 83 B8 01 00 00        -  movss [rbx+000001B8],xmm0
+"Toukiden2_EN.exe"+27F37B: 80 BF A4 06 00 00 01           -  cmp byte ptr [rdi+000006A4],01
+"Toukiden2_EN.exe"+27F382: 0F 94 C0                       -  sete al
+"Toukiden2_EN.exe"+27F385: 88 83 BC 01 00 00              -  mov [rbx+000001BC],al
+"Toukiden2_EN.exe"+27F38B: 84 C0                          -  test al,al
+"Toukiden2_EN.exe"+27F38D: 74 20                          -  je Toukiden2_EN.exe+27F3AF
+"Toukiden2_EN.exe"+27F38F: 41 83 78 0C 01                 -  cmp dword ptr [r8+0C],01
+"Toukiden2_EN.exe"+27F394: 72 19                          -  jb Toukiden2_EN.exe+27F3AF
+"Toukiden2_EN.exe"+27F396: B0 01                          -  mov al,01
+"Toukiden2_EN.exe"+27F398: 88 83 BD 01 00 00              -  mov [rbx+000001BD],al
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>17</ID>
+      <Description>"Awaken all soul ability (Proficiency Full)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_B4456,Toukiden2_EN.exe,0f bf 83 a0 00  00 00 66 0f 6e c0 0f 5b c9)
+_B4456+E:
+db eb 11
+registersymbol(_B4456)
+
+[DISABLE]
+_B4456+E:
+db f3 0f
+unregistersymbol(_B4456)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "Toukiden2_EN.exe"+B4456
+
+"Toukiden2_EN.exe"+B4424: FF 90 E8 00 00 00              -  call qword ptr [rax+000000E8]
+"Toukiden2_EN.exe"+B442A: 48 63 4D 60                    -  movsxd  rcx,dword ptr [rbp+60]
+"Toukiden2_EN.exe"+B442E: 4C 63 45 58                    -  movsxd  r8,dword ptr [rbp+58]
+"Toukiden2_EN.exe"+B4432: 4D 6B C0 34                    -  imul r8,r8,34
+"Toukiden2_EN.exe"+B4436: 0F BF 80 B2 02 00 00           -  movsx eax,word ptr [rax+000002B2]
+"Toukiden2_EN.exe"+B443D: 4C 03 05 F4 46 A5 00           -  add r8,[Toukiden2_EN.exe+B08B38]
+"Toukiden2_EN.exe"+B4444: 66 0F 6E C8                    -  movd xmm1,eax
+"Toukiden2_EN.exe"+B4448: 0F BF 83 A0 00 00 00           -  movsx eax,word ptr [rbx+000000A0]
+"Toukiden2_EN.exe"+B444F: 66 0F 6E C0                    -  movd xmm0,eax
+"Toukiden2_EN.exe"+B4453: 0F 5B C9                       -  cvtdq2ps xmm1,xmm1
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+B4456: F3 0F 5E 0D EA 4F 8A 00        -  divss xmm1,[Toukiden2_EN.exe+959448]
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+B445E: 0F 5B C0                       -  cvtdq2ps xmm0,xmm0
+"Toukiden2_EN.exe"+B4461: F3 0F 59 CE                    -  mulss xmm1,xmm6
+"Toukiden2_EN.exe"+B4465: F3 0F 59 C8                    -  mulss xmm1,xmm0
+"Toukiden2_EN.exe"+B4469: F3 41 0F 58 8C 88 08 E8 05 00  -  addss xmm1,[r8+rcx*4+0005E808]
+"Toukiden2_EN.exe"+B4473: F3 41 0F 11 8C 88 08 E8 05 00  -  movss [r8+rcx*4+0005E808],xmm1
+"Toukiden2_EN.exe"+B447D: 48 8B B4 24 28 01 00 00        -  mov rsi,[rsp+00000128]
+"Toukiden2_EN.exe"+B4485: 4C 8B B4 24 18 01 00 00        -  mov r14,[rsp+00000118]
+"Toukiden2_EN.exe"+B448D: 4C 8B A4 24 20 01 00 00        -  mov r12,[rsp+00000120]
+"Toukiden2_EN.exe"+B4495: 0F 28 B4 24 00 01 00 00        -  movaps xmm6,[rsp+00000100]
+"Toukiden2_EN.exe"+B449D: 4C 8B BC 24 10 01 00 00        -  mov r15,[rsp+00000110]
+}
+</AssemblerScript>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Toggle Activation</Action>
+          <Keys>
+            <Key>86</Key>
+          </Keys>
+          <ID>0</ID>
+          <ActivateSound TTS="EN">Activated</ActivateSound>
+          <DeactivateSound TTS="EN">Deactivated</DeactivateSound>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>18</ID>
+      <Description>"Instantly Ghosts ???"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_F5C5,Toukiden2_EN.exe,F0 EB 04 41 0F 28 F0)
+_F5C5:
+db f6
+registersymbol(_F5C5)
+ 
+[DISABLE]
+_F5C5:
+db f0
+unregistersymbol(_F5C5)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "Toukiden2_EN.exe"+F5C5
+
+"Toukiden2_EN.exe"+F5A7: 8B FE                          -  mov edi,esi
+"Toukiden2_EN.exe"+F5A9: 0F 29 74 24 40                 -  movaps [rsp+40],xmm6
+"Toukiden2_EN.exe"+F5AE: 48 8B 88 E0 00 00 00           -  mov rcx,[rax+000000E0]
+"Toukiden2_EN.exe"+F5B5: F3 0F 10 3C B9                 -  movss xmm7,[rcx+rdi*4]
+"Toukiden2_EN.exe"+F5BA: 0F 2F F8                       -  comiss xmm7,xmm0
+"Toukiden2_EN.exe"+F5BD: 76 09                          -  jna Toukiden2_EN.exe+F5C8
+"Toukiden2_EN.exe"+F5BF: 0F 28 F7                       -  movaps xmm6,xmm7
+"Toukiden2_EN.exe"+F5C2: F3                             - db F3  // SHORTENED TO HIT INJECTION FROM:  subss xmm6,xmm0
+"Toukiden2_EN.exe"+F5C3: 0F                             - db 0F  // SHORTENED TO HIT INJECTION FROM:  subps xmm6,xmm0
+"Toukiden2_EN.exe"+F5C4: 5C                             -  pop rsp
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+F5C5: F0 EB 04                       - lock  jmp Toukiden2_EN.exe+F5CC
+"Toukiden2_EN.exe"+F5C8: 41 0F 28 F0                    -  movaps xmm6,xmm8
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+F5CC: 48 8B 0B                       -  mov rcx,[rbx]
+"Toukiden2_EN.exe"+F5CF: 48 8B D5                       -  mov rdx,rbp
+"Toukiden2_EN.exe"+F5D2: E8 89 8E 21 00                 -  call Toukiden2_EN.exe+228460
+"Toukiden2_EN.exe"+F5D7: 84 C0                          -  test al,al
+"Toukiden2_EN.exe"+F5D9: 0F 85 95 00 00 00              -  jne Toukiden2_EN.exe+F674
+"Toukiden2_EN.exe"+F5DF: 48 8B 43 08                    -  mov rax,[rbx+08]
+"Toukiden2_EN.exe"+F5E3: 48 85 C0                       -  test rax,rax
+"Toukiden2_EN.exe"+F5E6: 74 29                          -  je Toukiden2_EN.exe+F611
+"Toukiden2_EN.exe"+F5E8: F7 80 A4 00 00 00 00 04 00 00  -  test [rax+000000A4],0400
+"Toukiden2_EN.exe"+F5F2: 0F 97 C0                       -  seta al
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>19</ID>
+      <Description>"Automatically pull the ghost + blow that is dead + unlimited distance pull the ghost need to cooperate with [Instantly Ghost] Use ???"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_F4F0,Toukiden2_EN.exe,83 28 02 00 00 48 89 6C)
+_F4F0:
+db 87
+registersymbol(_F4F0)
+
+[DISABLE]
+_F4F0:
+db 83
+unregistersymbol(_F4F0)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "Toukiden2_EN.exe"+F4F0
+
+"Toukiden2_EN.exe"+F4CE: CC                       -  int 3
+"Toukiden2_EN.exe"+F4CF: CC                       -  int 3
+"Toukiden2_EN.exe"+F4D0: 40 53                    -  push rbx
+"Toukiden2_EN.exe"+F4D2: 48 83 EC 50              -  sub rsp,50
+"Toukiden2_EN.exe"+F4D6: F3 0F 10 81 84 00 00 00  -  movss xmm0,[rcx+00000084]
+"Toukiden2_EN.exe"+F4DE: 44 0F 29 44 24 20        -  movaps [rsp+20],xmm8
+"Toukiden2_EN.exe"+F4E4: 45 0F 57 C0              -  xorps xmm8,xmm8
+"Toukiden2_EN.exe"+F4E8: 44 0F 2F C0              -  comiss xmm8,xmm0
+"Toukiden2_EN.exe"+F4EC: 48 8B D9                 -  mov rbx,rcx
+"Toukiden2_EN.exe"+F4EF: 0F 83 28 02 00           - db 0F 83 28 02 00  // SHORTENED TO HIT INJECTION FROM:  jae Toukiden2_EN.exe+F71D
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+F4F4: 00 48 89                 -  add [rax-77],cl
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+F4F7: 6C                       -  insb
+"Toukiden2_EN.exe"+F4F8: 24 60                    -  and al,60
+"Toukiden2_EN.exe"+F4FA: 48 8B 69 08              -  mov rbp,[rcx+08]
+"Toukiden2_EN.exe"+F4FE: 48 8B 8D B8 00 00 00     -  mov rcx,[rbp+000000B8]
+"Toukiden2_EN.exe"+F505: 48 85 C9                 -  test rcx,rcx
+"Toukiden2_EN.exe"+F508: 0F 84 0A 02 00 00        -  je Toukiden2_EN.exe+F718
+"Toukiden2_EN.exe"+F50E: 0F B6 51 08              -  movzx edx,byte ptr [rcx+08]
+"Toukiden2_EN.exe"+F512: 48 89 74 24 68           -  mov [rsp+68],rsi
+"Toukiden2_EN.exe"+F517: 33 F6                    -  xor esi,esi
+"Toukiden2_EN.exe"+F519: 84 D2                    -  test dl,dl
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>20</ID>
+      <Description>"Equipment [Forging/Re-Forging/Upgrading] Without Material"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_136ADE,Toukiden2_EN.exe,41 0F B6 74 29 10)
+aobscanmodule(_136FF0,Toukiden2_EN.exe,42 0F B6 6C 0E 10)
+aobscanmodule(_13733E,Toukiden2_EN.exe,41 0F B6 7C 29 0A)
+aobscanmodule(_136DBE,Toukiden2_EN.exe,41 0F B6 74 29 0A)
+aobscanmodule(_14E544,Toukiden2_EN.exe,41 2B C8 78 09)
+_136ADE:
+db be 00 00 00 00 90
+registersymbol(_136ADE)
+_136FF0:
+db be 00 00 00 00 90
+registersymbol(_136FF0)
+_13733E:
+db bf 00 00 00 00 90
+registersymbol(_13733E)
+_136DBE:
+db be 00 00 00 00 90
+registersymbol(_136DBE)
+//扣除材料
+_14E544:
+db 90 90 90
+registersymbol(_14E544)
+[DISABLE]
+_136ADE:
+db 41 0f b6 74 29 10
+_136FF0:
+db 42 0f b6 6c 0e 10
+_13733E:
+db 41 0f b6 7c 29 0a
+_136DBE:
+db 41 0f b6 74 29 0a
+//扣除材料
+_14E544:
+db 41 2b c8
+unregistersymbol(_136ADE)
+unregistersymbol(_136FF0)
+unregistersymbol(_13733E)
+unregistersymbol(_136DBE)
+unregistersymbol(_14E544)
+{
+// ORIGINAL CODE - INJECTION POINT: "Toukiden2_EN.exe"+136ADE as INJECT1
+
+"Toukiden2_EN.exe"+136AAA: 4C 8B 2D 87 20 9D 00                    -  mov r13,[Toukiden2_EN.exe+B08B38]
+"Toukiden2_EN.exe"+136AB1: 4C 89 7C 24 20                          -  mov [rsp+20],r15
+"Toukiden2_EN.exe"+136AB6: 8B FB                                   -  mov edi,ebx
+"Toukiden2_EN.exe"+136AB8: 44 8B FB                                -  mov r15d,ebx
+"Toukiden2_EN.exe"+136ABB: 48 89 74 24 38                          -  mov [rsp+38],rsi
+"Toukiden2_EN.exe"+136AC0: 48 8B EB                                -  mov rbp,rbx
+"Toukiden2_EN.exe"+136AC3: 66 66 66 66 66 0F 1F 84 00 00 00 00 00  -  nop [rax+rax+00000000]
+"Toukiden2_EN.exe"+136AD0: 41 0F B7 06                             -  movzx eax,word ptr [r14]
+"Toukiden2_EN.exe"+136AD4: 66 41 3B C2                             -  cmp ax,r10w
+"Toukiden2_EN.exe"+136AD8: 0F 83 C8 00 00 00                       -  jae Toukiden2_EN.exe+136BA6
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+136ADE: 41 0F B6 74 29 10                       -  movzx esi,byte ptr [r9+rbp+10]
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+136AE4: 44 0F B7 D0                             -  movzx r10d,ax
+"Toukiden2_EN.exe"+136AE8: 41 81 FA DB 05 00 00                    -  cmp r10d,000005DB
+"Toukiden2_EN.exe"+136AEF: 0F 87 2F 01 00 00                       -  ja Toukiden2_EN.exe+136C24
+"Toukiden2_EN.exe"+136AF5: 8D 46 FF                                -  lea eax,[rsi-01]
+"Toukiden2_EN.exe"+136AF8: 3D E6 03 00 00                          -  cmp eax,000003E6
+"Toukiden2_EN.exe"+136AFD: 77 5B                                   -  ja Toukiden2_EN.exe+136B5A
+"Toukiden2_EN.exe"+136AFF: 49 8D 8D 80 2B 05 00                    -  lea rcx,[r13+00052B80]
+"Toukiden2_EN.exe"+136B06: 44 8B C3                                -  mov r8d,ebx
+"Toukiden2_EN.exe"+136B09: E8 22 7D 01 00                          -  call Toukiden2_EN.exe+14E830
+"Toukiden2_EN.exe"+136B0E: 44 8B C8                                -  mov r9d,eax
+}
+
+
+{
+// ORIGINAL CODE - INJECTION POINT: "Toukiden2_EN.exe"+136FF0 as INJECT2
+
+"Toukiden2_EN.exe"+136FC4: 4C 89 6C 24 28              -  mov [rsp+28],r13
+"Toukiden2_EN.exe"+136FC9: 4C 8B 2D 68 1B 9D 00        -  mov r13,[Toukiden2_EN.exe+B08B38]
+"Toukiden2_EN.exe"+136FD0: 4C 89 7C 24 20              -  mov [rsp+20],r15
+"Toukiden2_EN.exe"+136FD5: 8B FB                       -  mov edi,ebx
+"Toukiden2_EN.exe"+136FD7: 44 8B FB                    -  mov r15d,ebx
+"Toukiden2_EN.exe"+136FDA: 48 89 6C 24 70              -  mov [rsp+70],rbp
+"Toukiden2_EN.exe"+136FDF: 48 8B F3                    -  mov rsi,rbx
+"Toukiden2_EN.exe"+136FE2: 41 0F B7 06                 -  movzx eax,word ptr [r14]
+"Toukiden2_EN.exe"+136FE6: 66 41 3B C3                 -  cmp ax,r11w
+"Toukiden2_EN.exe"+136FEA: 0F 87 C5 00 00 00           -  ja Toukiden2_EN.exe+1370B5
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+136FF0: 42 0F B6 6C 0E 10           -  movzx ebp,byte ptr [rsi+r9+10]
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+136FF6: 4C 0F BF C8                 -  movsx r9,ax
+"Toukiden2_EN.exe"+136FFA: 41 81 F9 DB 05 00 00        -  cmp r9d,000005DB
+"Toukiden2_EN.exe"+137001: 0F 87 22 01 00 00           -  ja Toukiden2_EN.exe+137129
+"Toukiden2_EN.exe"+137007: 8D 45 FF                    -  lea eax,[rbp-01]
+"Toukiden2_EN.exe"+13700A: 3D E6 03 00 00              -  cmp eax,000003E6
+"Toukiden2_EN.exe"+13700F: 77 59                       -  ja Toukiden2_EN.exe+13706A
+"Toukiden2_EN.exe"+137011: 49 8D 8D 80 2B 05 00        -  lea rcx,[r13+00052B80]
+"Toukiden2_EN.exe"+137018: 44 8B C3                    -  mov r8d,ebx
+"Toukiden2_EN.exe"+13701B: E8 10 78 01 00              -  call Toukiden2_EN.exe+14E830
+"Toukiden2_EN.exe"+137020: 44 8B D0                    -  mov r10d,eax
+}
+
+{
+// ORIGINAL CODE - INJECTION POINT: "Toukiden2_EN.exe"+13733E as INJECT3
+
+"Toukiden2_EN.exe"+137317: 83 FA 04                    -  cmp edx,04
+"Toukiden2_EN.exe"+13731A: 72 B4                       -  jb Toukiden2_EN.exe+1372D0
+"Toukiden2_EN.exe"+13731C: 4C 89 6C 24 30              -  mov [rsp+30],r13
+"Toukiden2_EN.exe"+137321: 4C 8B 2D 10 18 9D 00        -  mov r13,[Toukiden2_EN.exe+B08B38]
+"Toukiden2_EN.exe"+137328: 44 8B FE                    -  mov r15d,esi
+"Toukiden2_EN.exe"+13732B: 8B DE                       -  mov ebx,esi
+"Toukiden2_EN.exe"+13732D: 48 8B EE                    -  mov rbp,rsi
+"Toukiden2_EN.exe"+137330: 41 0F B7 06                 -  movzx eax,word ptr [r14]
+"Toukiden2_EN.exe"+137334: 66 41 3B C2                 -  cmp ax,r10w
+"Toukiden2_EN.exe"+137338: 0F 83 C3 00 00 00           -  jae Toukiden2_EN.exe+137401
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+13733E: 41 0F B6 7C 29 0A           -  movzx edi,byte ptr [r9+rbp+0A]
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+137344: 44 0F B7 D0                 -  movzx r10d,ax
+"Toukiden2_EN.exe"+137348: 41 81 FA DB 05 00 00        -  cmp r10d,000005DB
+"Toukiden2_EN.exe"+13734F: 0F 87 14 01 00 00           -  ja Toukiden2_EN.exe+137469
+"Toukiden2_EN.exe"+137355: 8D 47 FF                    -  lea eax,[rdi-01]
+"Toukiden2_EN.exe"+137358: 3D E6 03 00 00              -  cmp eax,000003E6
+"Toukiden2_EN.exe"+13735D: 77 56                       -  ja Toukiden2_EN.exe+1373B5
+"Toukiden2_EN.exe"+13735F: 49 8D 8D 80 2B 05 00        -  lea rcx,[r13+00052B80]
+"Toukiden2_EN.exe"+137366: 44 8B C6                    -  mov r8d,esi
+"Toukiden2_EN.exe"+137369: E8 C2 74 01 00              -  call Toukiden2_EN.exe+14E830
+"Toukiden2_EN.exe"+13736E: 85 C0                       -  test eax,eax
+}
+
+{
+// ORIGINAL CODE - INJECTION POINT: "Toukiden2_EN.exe"+136DBE as INJECT4
+
+"Toukiden2_EN.exe"+136D8C: 4C 89 6C 24 30                    -  mov [rsp+30],r13
+"Toukiden2_EN.exe"+136D91: 4C 8B 2D A0 1D 9D 00              -  mov r13,[Toukiden2_EN.exe+B08B38]
+"Toukiden2_EN.exe"+136D98: 4C 89 7C 24 20                    -  mov [rsp+20],r15
+"Toukiden2_EN.exe"+136D9D: 44 8B FF                          -  mov r15d,edi
+"Toukiden2_EN.exe"+136DA0: 8B DF                             -  mov ebx,edi
+"Toukiden2_EN.exe"+136DA2: 48 8B EF                          -  mov rbp,rdi
+"Toukiden2_EN.exe"+136DA5: 66 66 66 0F 1F 84 00 00 00 00 00  -  nop [rax+rax+00000000]
+"Toukiden2_EN.exe"+136DB0: 41 0F B7 06                       -  movzx eax,word ptr [r14]
+"Toukiden2_EN.exe"+136DB4: 66 41 3B C2                       -  cmp ax,r10w
+"Toukiden2_EN.exe"+136DB8: 0F 83 C3 00 00 00                 -  jae Toukiden2_EN.exe+136E81
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+136DBE: 41 0F B6 74 29 0A                 -  movzx esi,byte ptr [r9+rbp+0A]
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+136DC4: 44 0F B7 D0                       -  movzx r10d,ax
+"Toukiden2_EN.exe"+136DC8: 41 81 FA DB 05 00 00              -  cmp r10d,000005DB
+"Toukiden2_EN.exe"+136DCF: 0F 87 14 01 00 00                 -  ja Toukiden2_EN.exe+136EE9
+"Toukiden2_EN.exe"+136DD5: 8D 46 FF                          -  lea eax,[rsi-01]
+"Toukiden2_EN.exe"+136DD8: 3D E6 03 00 00                    -  cmp eax,000003E6
+"Toukiden2_EN.exe"+136DDD: 77 56                             -  ja Toukiden2_EN.exe+136E35
+"Toukiden2_EN.exe"+136DDF: 49 8D 8D 80 2B 05 00              -  lea rcx,[r13+00052B80]
+"Toukiden2_EN.exe"+136DE6: 44 8B C7                          -  mov r8d,edi
+"Toukiden2_EN.exe"+136DE9: E8 42 7A 01 00                    -  call Toukiden2_EN.exe+14E830
+"Toukiden2_EN.exe"+136DEE: 85 C0                             -  test eax,eax
+}
+
+{
+// ORIGINAL CODE - INJECTION POINT: "Toukiden2_EN.exe"+14E544 as INJECT5
+
+"Toukiden2_EN.exe"+14E52C: CC                             -  int 3
+"Toukiden2_EN.exe"+14E52D: CC                             -  int 3
+"Toukiden2_EN.exe"+14E52E: CC                             -  int 3
+"Toukiden2_EN.exe"+14E52F: CC                             -  int 3
+"Toukiden2_EN.exe"+14E530: 40 53                          -  push rbx
+"Toukiden2_EN.exe"+14E532: 48 8B D9                       -  mov rbx,rcx
+"Toukiden2_EN.exe"+14E535: 48 63 C2                       -  movsxd  rax,edx
+"Toukiden2_EN.exe"+14E538: 45 33 D2                       -  xor r10d,r10d
+"Toukiden2_EN.exe"+14E53B: 4C 8D 0C 81                    -  lea r9,[rcx+rax*4]
+"Toukiden2_EN.exe"+14E53F: 0F B7 4C 81 02                 -  movzx ecx,word ptr [rcx+rax*4+02]
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+14E544: 41 2B C8                       -  sub ecx,r8d
+"Toukiden2_EN.exe"+14E547: 78 09                          -  js Toukiden2_EN.exe+14E552
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+14E549: B8 E7 03 00 00                 -  mov eax,000003E7
+"Toukiden2_EN.exe"+14E54E: 3B C8                          -  cmp ecx,eax
+"Toukiden2_EN.exe"+14E550: 7F 08                          -  jg Toukiden2_EN.exe+14E55A
+"Toukiden2_EN.exe"+14E552: 8B C1                          -  mov eax,ecx
+"Toukiden2_EN.exe"+14E554: 85 C9                          -  test ecx,ecx
+"Toukiden2_EN.exe"+14E556: 41 0F 48 C2                    -  cmovs eax,r10d
+"Toukiden2_EN.exe"+14E55A: 66 41 89 41 02                 -  mov [r9+02],ax
+"Toukiden2_EN.exe"+14E55F: 66 85 C0                       -  test ax,ax
+"Toukiden2_EN.exe"+14E562: 0F 85 91 00 00 00              -  jne Toukiden2_EN.exe+14E5F9
+"Toukiden2_EN.exe"+14E568: 83 C8 FF                       -  or eax,-01
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>21</ID>
+      <Description>"Equipment [Forging/Re-Forging/Upgrading] does not consume gold"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_315792,Toukiden2_EN.exe,2B C1 41 BA 00 00 00 00)
+aobscanmodule(_31E117,Toukiden2_EN.exe,2B C1 BA 00 00 00 00)
+_315792:
+db 90 90
+registersymbol(_315792)
+_31E117:
+db 90 90
+registersymbol(_31E117)
+[DISABLE]
+_315792:
+db 2b c1
+_31E117:
+db 2b c1
+unregistersymbol(_315792)
+unregistersymbol(_31E117)
+{
+// ORIGINAL CODE - INJECTION POINT: "Toukiden2_EN.exe"+315792 as INJECT1
+
+"Toukiden2_EN.exe"+315768: 41 F6 85 42 DC 01 00 04     -  test byte ptr [r13+0001DC42],04
+"Toukiden2_EN.exe"+315770: 74 0A                       -  je Toukiden2_EN.exe+31577C
+"Toukiden2_EN.exe"+315772: 41 80 A5 42 DC 01 00 F3     -  and byte ptr [r13+0001DC42],-0D
+"Toukiden2_EN.exe"+31577A: EB 41                       -  jmp Toukiden2_EN.exe+3157BD
+"Toukiden2_EN.exe"+31577C: 41 0F B7 44 24 06           -  movzx eax,word ptr [r12+06]
+"Toukiden2_EN.exe"+315782: 8D 0C 80                    -  lea ecx,[rax+rax*4]
+"Toukiden2_EN.exe"+315785: 41 8B 85 CC C5 04 00        -  mov eax,[r13+0004C5CC]
+"Toukiden2_EN.exe"+31578C: 03 C9                       -  add ecx,ecx
+"Toukiden2_EN.exe"+31578E: 3B C1                       -  cmp eax,ecx
+"Toukiden2_EN.exe"+315790: 72 2B                       -  jb Toukiden2_EN.exe+3157BD
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+315792: 2B C1                       -  sub eax,ecx
+"Toukiden2_EN.exe"+315794: 41 BA 00 00 00 00           -  mov r10d,00000000
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+31579A: 44 0F 45 D0                 -  cmovne r10d,eax
+"Toukiden2_EN.exe"+31579E: B8 FF E0 F5 05              -  mov eax,05F5E0FF
+"Toukiden2_EN.exe"+3157A3: 45 89 95 CC C5 04 00        -  mov [r13+0004C5CC],r10d
+"Toukiden2_EN.exe"+3157AA: 41 03 8D 48 36 08 00        -  add ecx,[r13+00083648]
+"Toukiden2_EN.exe"+3157B1: 3B C8                       -  cmp ecx,eax
+"Toukiden2_EN.exe"+3157B3: 0F 47 C8                    -  cmova ecx,eax
+"Toukiden2_EN.exe"+3157B6: 41 89 8D 48 36 08 00        -  mov [r13+00083648],ecx
+"Toukiden2_EN.exe"+3157BD: 48 8D 44 24 25              -  lea rax,[rsp+25]
+"Toukiden2_EN.exe"+3157C2: B9 03 00 00 00              -  mov ecx,00000003
+"Toukiden2_EN.exe"+3157C7: 66 0F 1F 84 00 00 00 00 00  -  nop [rax+rax+00000000]
+}
+
+{
+// ORIGINAL CODE - INJECTION POINT: "Toukiden2_EN.exe"+31E117  as INJECT2
+
+"Toukiden2_EN.exe"+31E0EB: 41 F6 84 24 42 DC 01 00 04        -  test byte ptr [r12+0001DC42],04
+"Toukiden2_EN.exe"+31E0F4: 74 0B                             -  je Toukiden2_EN.exe+31E101
+"Toukiden2_EN.exe"+31E0F6: 41 80 A4 24 42 DC 01 00 F3        -  and byte ptr [r12+0001DC42],-0D
+"Toukiden2_EN.exe"+31E0FF: EB 42                             -  jmp Toukiden2_EN.exe+31E143
+"Toukiden2_EN.exe"+31E101: 41 0F B7 45 06                    -  movzx eax,word ptr [r13+06]
+"Toukiden2_EN.exe"+31E106: 8D 0C 80                          -  lea ecx,[rax+rax*4]
+"Toukiden2_EN.exe"+31E109: 41 8B 84 24 CC C5 04 00           -  mov eax,[r12+0004C5CC]
+"Toukiden2_EN.exe"+31E111: 03 C9                             -  add ecx,ecx
+"Toukiden2_EN.exe"+31E113: 3B C1                             -  cmp eax,ecx
+"Toukiden2_EN.exe"+31E115: 72 2C                             -  jb Toukiden2_EN.exe+31E143
+// ---------- INJECTING HERE ----------
+"Toukiden2_EN.exe"+31E117: 2B C1                             -  sub eax,ecx
+"Toukiden2_EN.exe"+31E119: BA 00 00 00 00                    -  mov edx,00000000
+// ---------- DONE INJECTING  ----------
+"Toukiden2_EN.exe"+31E11E: 0F 45 D0                          -  cmovne edx,eax
+"Toukiden2_EN.exe"+31E121: B8 FF E0 F5 05                    -  mov eax,05F5E0FF
+"Toukiden2_EN.exe"+31E126: 41 89 94 24 CC C5 04 00           -  mov [r12+0004C5CC],edx
+"Toukiden2_EN.exe"+31E12E: 41 03 8C 24 48 36 08 00           -  add ecx,[r12+00083648]
+"Toukiden2_EN.exe"+31E136: 3B C8                             -  cmp ecx,eax
+"Toukiden2_EN.exe"+31E138: 0F 47 C8                          -  cmova ecx,eax
+"Toukiden2_EN.exe"+31E13B: 41 89 8C 24 48 36 08 00           -  mov [r12+00083648],ecx
+"Toukiden2_EN.exe"+31E143: B8 03 00 00 00                    -  mov eax,00000003
+"Toukiden2_EN.exe"+31E148: 48 8D 4C 24 25                    -  lea rcx,[rsp+25]
+"Toukiden2_EN.exe"+31E14D: 8B D0                             -  mov edx,eax
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>23</ID>
+      <Description>"Unlimited Skill Effect Time"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_9E775,Toukiden2_EN.exe,F3 0F 5C C8 0F 2F F9 72 34)
+alloc(newmem,64,_9E775)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+mov rax, 3c
+cvtsi2ss xmm15, rax
+comiss xmm1,xmm15
+ja originalcode
+subss xmm1,xmm0
+originalcode:
+comiss xmm7,xmm1
+registersymbol(_9E775)
+exit:
+jmp returnhere
+
+_9E775:
+jmp newmem
+nop
+nop
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+_9E775:
+subss xmm1,xmm0
+comiss xmm7,xmm1
+unregistersymbol(_9E775)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Super Attack Speed (Player and Teammates)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_BBDC7,Toukiden2_EN.exe,0F BF 41 44 0F 29 74 24 30)
+alloc(newmem,128,_BBDC7)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+je originalcode
+cmp [rcx+64c],0
+je originalcode
+mov eax,1f4
+movaps [rsp+30],xmm6
+jmp exit
+originalcode:
+movsx eax,word ptr [rcx+44]
+movaps [rsp+30],xmm6
+
+exit:
+cmp byte ptr [rdx], 0
+jmp returnhere
+
+_BBDC7:
+jmp newmem
+nop
+nop
+nop
+nop
+returnhere:
+registersymbol(_BBDC7)
+ 
+[DISABLE]
+dealloc(newmem)
+_BBDC7:
+movsx eax,word ptr [rcx+44]
+movaps [rsp+30],xmm6
+unregistersymbol(_BBDC7)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>27</ID>
+      <Description>"Super Moving Speed (Player and Teammates)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(_BBF94,Toukiden2_EN.exe,0F 28 7C 24 20 0F 28 C6 0F 28 74 24 30 48 83 C4 40 5F C3)
+alloc(newmem,64,_BBF94+D)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+cmp [rcx+64c],0
+je originalcode
+mov rax, 0
+cvtsi2ss xmm15, rax
+comiss xmm6,xmm15
+jne originalcode
+mov rax, 3
+cvtsi2ss xmm0, rax
+
+originalcode:
+add rsp,40
+pop rdi
+
+exit:
+jmp returnhere
+
+_BBF94+D:
+jmp newmem
+returnhere:
+registersymbol(_BBF94)
+ 
+[DISABLE]
+dealloc(newmem)
+_BBF94+D:
+add rsp,40
+pop rdi
+unregistersymbol(_BBF94)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>Set_FortificationLevel_AOB</Name>
+      <Address>7FF67ED5F45F</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>Get_AllBulletID_AOB</Name>
+      <Address>7FF782954904</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>Get_BulletCounter_AOB</Name>
+      <Address>7FF7829547CA</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>Set_MainCharHP_AOB</Name>
+      <Address>7FF7826DEA69</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>Get_SpecialSkills_AOB</Name>
+      <Address>7FF78294E3C0</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>Set_DispatchTime_AOB</Name>
+      <Address>7FF782A0482A</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>Set_SpecialSkillCooldown_AOB</Name>
+      <Address>13FA21F37</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>Set_SpecialSkillTime_AOB</Name>
+      <Address>13FA1E7B2</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>Set_WeaponCharging_AOB</Name>
+      <Address>13FA00154</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>Read_WeaponGauge_AOB</Name>
+      <Address>13FA09136</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>Get_UnityGauge_AOB</Name>
+      <Address>13F9F3A77</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>Get_MainCharMana_AOB</Name>
+      <Address>13FA3A1DC</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_27F36C</Name>
+      <Address>13F61F99C</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>Set_Miasma_AOB</Name>
+      <Address>13F527FC1</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>Get_MainCharBaseAddress_AOB</Name>
+      <Address>13F7D801D</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_B4456</Name>
+      <Address>13F8D4448</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>3FEE</Name>
+      <Address>7FF6A5163FEE</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_9E775</Name>
+      <Address>7FF74A08E775</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_BBE94</Name>
+      <Address>7FF74A0ABE87</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_BBDC7</Name>
+      <Address>7FF74A0ABDC7</Address>
+    </SymbolEntry>
+    <SymbolEntry>
+      <Name>_BBF94</Name>
+      <Address>7FF74A0ABF87</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+</CheatTable>
