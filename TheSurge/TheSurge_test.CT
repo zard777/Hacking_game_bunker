@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="28">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>20</ID>
+      <Description>"Player Pointer"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(player,TheSurge.exe,F3 0F 10 81 B8 00 00 00 C3)
+alloc(newmem,$1000,player)
+
+label(code)
+label(return)
+label(player_ptr)
+
+newmem:
+  push rax
+  mov rax,player_ptr
+  mov [rax],rcx
+  pop rax
+code:
+  movss xmm0,[rcx+000000B8]
+  jmp return
+
+player_ptr:
+  dq 0
+
+player:
+  jmp newmem
+  nop
+  nop
+  nop
+return:
+registersymbol(player)
+registersymbol(player_ptr)
+
+[DISABLE]
+player:
+  db F3 0F 10 81 B8 00 00 00
+unregistersymbol(player)
+unregistersymbol(player_ptr)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "TheSurge.exe"+87070
+
+"TheSurge.exe"+87060: 48 8D 81 84 00 00 00     -  lea rax,[rcx+00000084]
+"TheSurge.exe"+87067: C3                       -  ret 
+"TheSurge.exe"+87068: CC                       -  int 3 
+"TheSurge.exe"+87069: CC                       -  int 3 
+"TheSurge.exe"+8706A: CC                       -  int 3 
+"TheSurge.exe"+8706B: CC                       -  int 3 
+"TheSurge.exe"+8706C: CC                       -  int 3 
+"TheSurge.exe"+8706D: CC                       -  int 3 
+"TheSurge.exe"+8706E: CC                       -  int 3 
+"TheSurge.exe"+8706F: CC                       -  int 3 
+// ---------- INJECTING HERE ----------
+"TheSurge.exe"+87070: F3 0F 10 81 B8 00 00 00  -  movss xmm0,[rcx+000000B8]
+// ---------- DONE INJECTING  ----------
+"TheSurge.exe"+87078: C3                       -  ret 
+"TheSurge.exe"+87079: CC                       -  int 3 
+"TheSurge.exe"+8707A: CC                       -  int 3 
+"TheSurge.exe"+8707B: CC                       -  int 3 
+"TheSurge.exe"+8707C: CC                       -  int 3 
+"TheSurge.exe"+8707D: CC                       -  int 3 
+"TheSurge.exe"+8707E: CC                       -  int 3 
+"TheSurge.exe"+8707F: CC                       -  int 3 
+"TheSurge.exe"+87080: C7 02 81 65 71 99        -  mov [rdx],99716581
+"TheSurge.exe"+87086: 48 8B C2                 -  mov rax,rdx
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>19</ID>
+          <Description>"Base Address"</Description>
+          <LastState RealAddress="1D31C5FD360"/>
+          <VariableType>String</VariableType>
+          <Length>0</Length>
+          <Unicode>0</Unicode>
+          <CodePage>0</CodePage>
+          <ZeroTerminate>1</ZeroTerminate>
+          <Address>player_ptr</Address>
+          <Offsets>
+            <Offset>0</Offset>
+          </Offsets>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>21</ID>
+              <Description>"Health"</Description>
+              <LastState Value="0.8999999762" RealAddress="1D31C5FD410"/>
+              <VariableType>Float</VariableType>
+              <Address>+B0</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>23</ID>
+              <Description>"Stamina"</Description>
+              <LastState Value="1" RealAddress="1D31C5FD418"/>
+              <VariableType>Float</VariableType>
+              <Address>+B8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>29</ID>
+              <Description>"Energy"</Description>
+              <LastState Value="1" RealAddress="1D31C5FD414"/>
+              <VariableType>Float</VariableType>
+              <Address>+B4</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>22</ID>
+              <Description>"Tech Scrap"</Description>
+              <LastState Value="92241760" RealAddress="1D31C5FD458"/>
+              <VariableType>Float</VariableType>
+              <Address>+F8</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>131</ID>
+              <Description>"Tech Scrap Multiplier"</Description>
+              <LastState Value="1" RealAddress="1D31C5FD460"/>
+              <VariableType>Float</VariableType>
+              <Address>+100</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>127</ID>
+              <Description>"Core Power"</Description>
+              <LastState Value="21" RealAddress="1D31C5FD46C"/>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+10C</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>24</ID>
+              <Description>"Minimum Health"</Description>
+              <LastState Value="0.8999999762" RealAddress="1D31C5FD4A0"/>
+              <VariableType>Float</VariableType>
+              <Address>+140</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>30</ID>
+              <Description>"Flags"</Description>
+              <LastState Value="060E31F7" RealAddress="1D31C5FD480"/>
+              <ShowAsHex>1</ShowAsHex>
+              <VariableType>4 Bytes</VariableType>
+              <Address>+120</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>33</ID>
+              <Description>"One-handed Proficiency"</Description>
+              <LastState Value="1.22653687" RealAddress="1D31C5FD4C0"/>
+              <VariableType>Float</VariableType>
+              <Address>+160+0*4</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>35</ID>
+              <Description>"Staff Proficiency"</Description>
+              <LastState Value="1" RealAddress="1D31C5FD4C4"/>
+              <VariableType>Float</VariableType>
+              <Address>+160+1*4</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>36</ID>
+              <Description>"Heavy-duty Proficiency"</Description>
+              <LastState Value="1" RealAddress="1D31C5FD4C8"/>
+              <VariableType>Float</VariableType>
+              <Address>+160+2*4</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>34</ID>
+              <Description>"Single-Rigged Proficiency"</Description>
+              <LastState Value="1" RealAddress="1D31C5FD4CC"/>
+              <VariableType>Float</VariableType>
+              <Address>+160+3*4</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>123</ID>
+              <Description>"Twin-rigged Proficiency"</Description>
+              <LastState Value="1" RealAddress="1D31C5FD4D0"/>
+              <VariableType>Float</VariableType>
+              <Address>+160+4*4</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>28</ID>
+      <Description>"Unlimited Stamina"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(stamina,TheSurge.exe,F3 0F 11 8B B8 00 00 00 A9)
+stamina+3:
+  db 83
+registersymbol(stamina)
+
+[DISABLE]
+stamina+3:
+  db 8B
+unregistersymbol(stamina)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "TheSurge.exe"+2A0B6B
+
+"TheSurge.exe"+2A0B46: F3 0F 10 83 38 01 00 00  -  movss xmm0,[rbx+00000138]
+"TheSurge.exe"+2A0B4E: 0F 2F F9                 -  comiss xmm7,xmm1
+"TheSurge.exe"+2A0B51: 72 0D                    -  jb TheSurge.exe+2A0B60
+"TheSurge.exe"+2A0B53: 0F 2F F8                 -  comiss xmm7,xmm0
+"TheSurge.exe"+2A0B56: 76 05                    -  jna TheSurge.exe+2A0B5D
+"TheSurge.exe"+2A0B58: 0F 28 C8                 -  movaps xmm1,xmm0
+"TheSurge.exe"+2A0B5B: EB 03                    -  jmp TheSurge.exe+2A0B60
+"TheSurge.exe"+2A0B5D: 0F 28 CF                 -  movaps xmm1,xmm7
+"TheSurge.exe"+2A0B60: 8B 83 20 01 00 00        -  mov eax,[rbx+00000120]
+"TheSurge.exe"+2A0B66: 0F 28 7C 24 70           -  movaps xmm7,[rsp+70]
+// ---------- INJECTING HERE ----------
+"TheSurge.exe"+2A0B6B: F3 0F 11 8B B8 00 00 00  -  movss [rbx+000000B8],xmm1
+// ---------- DONE INJECTING  ----------
+"TheSurge.exe"+2A0B73: A9 00 00 01 00           -  test eax,00010000
+"TheSurge.exe"+2A0B78: 76 2F                    -  jna TheSurge.exe+2A0BA9
+"TheSurge.exe"+2A0B7A: 44 0F 2F C1              -  comiss xmm8,xmm1
+"TheSurge.exe"+2A0B7E: 76 29                    -  jna TheSurge.exe+2A0BA9
+"TheSurge.exe"+2A0B80: F3 0F 10 15 80 C5 74 00  -  movss xmm2,[TheSurge.exe+9ED108]
+"TheSurge.exe"+2A0B88: 0F 2F C2                 -  comiss xmm0,xmm2
+"TheSurge.exe"+2A0B8B: 77 14                    -  ja TheSurge.exe+2A0BA1
+"TheSurge.exe"+2A0B8D: A9 00 00 04 00           -  test eax,00040000
+"TheSurge.exe"+2A0B92: 76 0A                    -  jna TheSurge.exe+2A0B9E
+"TheSurge.exe"+2A0B94: 0F BA F0 10              -  btr eax,10
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>31</ID>
+      <Description>"Unlimited Energy"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(energy,TheSurge.exe,F3 0F 11 8B B4 00 00 00 A9)
+energy+3:
+  db 83
+registersymbol(energy)
+
+[DISABLE]
+energy+3:
+  db 8B
+unregistersymbol(energy)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "TheSurge.exe"+2A02DB
+
+"TheSurge.exe"+2A02B6: F3 0F 10 83 3C 01 00 00  -  movss xmm0,[rbx+0000013C]
+"TheSurge.exe"+2A02BE: 0F 2F F9                 -  comiss xmm7,xmm1
+"TheSurge.exe"+2A02C1: 72 0D                    -  jb TheSurge.exe+2A02D0
+"TheSurge.exe"+2A02C3: 0F 2F F8                 -  comiss xmm7,xmm0
+"TheSurge.exe"+2A02C6: 76 05                    -  jna TheSurge.exe+2A02CD
+"TheSurge.exe"+2A02C8: 0F 28 C8                 -  movaps xmm1,xmm0
+"TheSurge.exe"+2A02CB: EB 03                    -  jmp TheSurge.exe+2A02D0
+"TheSurge.exe"+2A02CD: 0F 28 CF                 -  movaps xmm1,xmm7
+"TheSurge.exe"+2A02D0: 8B 83 20 01 00 00        -  mov eax,[rbx+00000120]
+"TheSurge.exe"+2A02D6: 0F 28 7C 24 70           -  movaps xmm7,[rsp+70]
+// ---------- INJECTING HERE ----------
+"TheSurge.exe"+2A02DB: F3 0F 11 8B B4 00 00 00  -  movss [rbx+000000B4],xmm1
+// ---------- DONE INJECTING  ----------
+"TheSurge.exe"+2A02E3: A9 00 00 80 00           -  test eax,00800000
+"TheSurge.exe"+2A02E8: 76 2F                    -  jna TheSurge.exe+2A0319
+"TheSurge.exe"+2A02EA: 44 0F 2F C1              -  comiss xmm8,xmm1
+"TheSurge.exe"+2A02EE: 76 29                    -  jna TheSurge.exe+2A0319
+"TheSurge.exe"+2A02F0: F3 0F 10 15 10 CE 74 00  -  movss xmm2,[TheSurge.exe+9ED108]
+"TheSurge.exe"+2A02F8: 0F 2F C2                 -  comiss xmm0,xmm2
+"TheSurge.exe"+2A02FB: 77 14                    -  ja TheSurge.exe+2A0311
+"TheSurge.exe"+2A02FD: A9 00 00 00 01           -  test eax,01000000
+"TheSurge.exe"+2A0302: 76 0A                    -  jna TheSurge.exe+2A030E
+"TheSurge.exe"+2A0304: 0F BA F0 17              -  btr eax,17
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>133</ID>
+      <Description>"Unlimited Injectables"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(injectables,TheSurge.exe,FF C8 89 44 24 40 48)
+injectables:
+  db 90 90
+registersymbol(injectables)
+
+[DISABLE]
+injectables:
+  db FF C8
+unregistersymbol(injectables)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "TheSurge.exe"+6C0F27
+
+"TheSurge.exe"+6C0EFC: E8 BF 0C FB FF           -  call TheSurge.exe+671BC0
+"TheSurge.exe"+6C0F01: 0F B6 C0                 -  movzx eax,al
+"TheSurge.exe"+6C0F04: 85 C0                    -  test eax,eax
+"TheSurge.exe"+6C0F06: 0F 84 8A 00 00 00        -  je TheSurge.exe+6C0F96
+"TheSurge.exe"+6C0F0C: 48 8B 44 24 60           -  mov rax,[rsp+60]
+"TheSurge.exe"+6C0F11: 48 05 B8 44 00 00        -  add rax,000044B8
+"TheSurge.exe"+6C0F17: 48 8B C8                 -  mov rcx,rax
+"TheSurge.exe"+6C0F1A: E8 A1 14 FE FF           -  call TheSurge.exe+6A23C0
+"TheSurge.exe"+6C0F1F: 48 8B C8                 -  mov rcx,rax
+"TheSurge.exe"+6C0F22: E8 29 88 0B 00           -  call TheSurge.exe+779750
+// ---------- INJECTING HERE ----------
+"TheSurge.exe"+6C0F27: FF C8                    -  dec eax
+"TheSurge.exe"+6C0F29: 89 44 24 40              -  mov [rsp+40],eax
+// ---------- DONE INJECTING  ----------
+"TheSurge.exe"+6C0F2D: 48 8B 4C 24 60           -  mov rcx,[rsp+60]
+"TheSurge.exe"+6C0F32: 48 81 C1 B8 44 00 00     -  add rcx,000044B8
+"TheSurge.exe"+6C0F39: E8 82 14 FE FF           -  call TheSurge.exe+6A23C0
+"TheSurge.exe"+6C0F3E: 8B 4C 24 40              -  mov ecx,[rsp+40]
+"TheSurge.exe"+6C0F42: 8B D1                    -  mov edx,ecx
+"TheSurge.exe"+6C0F44: 48 8B C8                 -  mov rcx,rax
+"TheSurge.exe"+6C0F47: E8 34 37 0C 00           -  call TheSurge.exe+784680
+"TheSurge.exe"+6C0F4C: 48 8D 05 19 92 AC 13     -  lea rax,[TheSurge.exe+1418A16C]
+"TheSurge.exe"+6C0F53: 48 89 44 24 30           -  mov [rsp+30],rax
+"TheSurge.exe"+6C0F58: 48 8D 05 0D 92 AC 13     -  lea rax,[TheSurge.exe+1418A16C]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>38</ID>
+      <Description>"Unlimited Consumables"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(consumables,TheSurge.exe,7E 06 2B C2 89 41)
+consumables:
+  db 90 90 90 90
+registersymbol(consumables)
+
+[DISABLE]
+consumables:
+  db 7E 06 2B C2
+unregistersymbol(consumables)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "TheSurge.exe"+3BB5E5
+
+"TheSurge.exe"+3BB5D8: C3                                -  ret 
+"TheSurge.exe"+3BB5D9: CC                                -  int 3 
+"TheSurge.exe"+3BB5DA: CC                                -  int 3 
+"TheSurge.exe"+3BB5DB: CC                                -  int 3 
+"TheSurge.exe"+3BB5DC: CC                                -  int 3 
+"TheSurge.exe"+3BB5DD: CC                                -  int 3 
+"TheSurge.exe"+3BB5DE: CC                                -  int 3 
+"TheSurge.exe"+3BB5DF: CC                                -  int 3 
+"TheSurge.exe"+3BB5E0: 8B 41 4C                          -  mov eax,[rcx+4C]
+"TheSurge.exe"+3BB5E3: 3B C2                             -  cmp eax,edx
+// ---------- INJECTING HERE ----------
+"TheSurge.exe"+3BB5E5: 7E 06                             -  jle TheSurge.exe+3BB5ED
+"TheSurge.exe"+3BB5E7: 2B C2                             -  sub eax,edx
+"TheSurge.exe"+3BB5E9: 89 41 4C                          -  mov [rcx+4C],eax
+// ---------- DONE INJECTING  ----------
+"TheSurge.exe"+3BB5EC: C3                                -  ret 
+"TheSurge.exe"+3BB5ED: C7 41 4C 00 00 00 00              -  mov [rcx+4C],00000000
+"TheSurge.exe"+3BB5F4: C3                                -  ret 
+"TheSurge.exe"+3BB5F5: CC                                -  int 3 
+"TheSurge.exe"+3BB5F6: CC                                -  int 3 
+"TheSurge.exe"+3BB5F7: CC                                -  int 3 
+"TheSurge.exe"+3BB5F8: CC                                -  int 3 
+"TheSurge.exe"+3BB5F9: CC                                -  int 3 
+"TheSurge.exe"+3BB5FA: CC                                -  int 3 
+"TheSurge.exe"+3BB5FB: CC                                -  int 3 
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>119</ID>
+      <Description>"Set Component Quantities"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(components,TheSurge.exe,8B 40 ?? 89 44 24 54 83)
+alloc(newmem,$1000,components)
+
+label(code)
+label(return)
+label(components_value)
+label(components_copy)
+
+newmem:
+  push rbx
+  mov rbx,components_value
+  mov ebx,[rbx]
+code:
+  db 89 58
+  readmem(components+2,1)
+  //mov [rax+58],ebx
+  mov eax,ebx
+  pop rbx
+  mov [rsp+54],eax
+  jmp return
+
+components_value:
+  dd #99
+
+components_copy:
+  readmem(components,7)
+
+components:
+  jmp newmem
+  nop
+  nop
+return:
+registersymbol(components)
+registersymbol(components_value)
+registersymbol(components_copy)
+
+[DISABLE]
+components:
+  readmem(components_copy,7)
+unregistersymbol(components)
+unregistersymbol(components_value)
+unregistersymbol(components_copy)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "TheSurge.exe"+80914F
+
+"TheSurge.exe"+809121: E8 9A 1D BB FF           -  call TheSurge.exe+3BAEC0
+"TheSurge.exe"+809126: 48 89 84 24 88 00 00 00  -  mov [rsp+00000088],rax
+"TheSurge.exe"+80912E: 48 8B 84 24 88 00 00 00  -  mov rax,[rsp+00000088]
+"TheSurge.exe"+809136: 8B 40 48                 -  mov eax,[rax+48]
+"TheSurge.exe"+809139: 89 44 24 4C              -  mov [rsp+4C],eax
+"TheSurge.exe"+80913D: 8B 44 24 4C              -  mov eax,[rsp+4C]
+"TheSurge.exe"+809141: 25 00 00 00 08           -  and eax,08000000
+"TheSurge.exe"+809146: 85 C0                    -  test eax,eax
+"TheSurge.exe"+809148: 76 1D                    -  jna TheSurge.exe+809167
+"TheSurge.exe"+80914A: 48 8B 44 24 38           -  mov rax,[rsp+38]
+// ---------- INJECTING HERE ----------
+"TheSurge.exe"+80914F: 8B 40 4C                 -  mov eax,[rax+4C]
+"TheSurge.exe"+809152: 89 44 24 54              -  mov [rsp+54],eax
+// ---------- DONE INJECTING  ----------
+"TheSurge.exe"+809156: 83 7C 24 54 00           -  cmp dword ptr [rsp+54],00
+"TheSurge.exe"+80915B: 7E 0A                    -  jle TheSurge.exe+809167
+"TheSurge.exe"+80915D: C7 44 24 30 01 00 00 00  -  mov [rsp+30],00000001
+"TheSurge.exe"+809165: EB 08                    -  jmp TheSurge.exe+80916F
+"TheSurge.exe"+809167: C7 44 24 30 00 00 00 00  -  mov [rsp+30],00000000
+"TheSurge.exe"+80916F: 0F B6 44 24 30           -  movzx eax,byte ptr [rsp+30]
+"TheSurge.exe"+809174: EB 02                    -  jmp TheSurge.exe+809178
+"TheSurge.exe"+809176: 32 C0                    -  xor al,al
+"TheSurge.exe"+809178: 48 81 C4 C8 00 00 00     -  add rsp,000000C8
+"TheSurge.exe"+80917F: C3                       -  ret 
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>39</ID>
+          <Description>"Set Value"</Description>
+          <LastState Value="98" RealAddress="7FF74A450025"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>components_value</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>129</ID>
+      <Description>"Items AOB"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(items,TheSurge.exe,44 39 6E ?? 75 14)
+registersymbol(items)
+
+[DISABLE]
+unregistersymbol(items)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "TheSurge.exe"+3B550F
+
+"TheSurge.exe"+3B54E4: 48 8B 7B 18           -  mov rdi,[rbx+18]
+"TheSurge.exe"+3B54E8: 48 89 74 24 20        -  mov [rsp+20],rsi
+"TheSurge.exe"+3B54ED: 48 89 7C 24 28        -  mov [rsp+28],rdi
+"TheSurge.exe"+3B54F2: 48 85 F6              -  test rsi,rsi
+"TheSurge.exe"+3B54F5: 74 18                 -  je TheSurge.exe+3B550F
+"TheSurge.exe"+3B54F7: F0 48 FF 47 08        - lock  inc [rdi+08]
+"TheSurge.exe"+3B54FC: 48 8B 44 24 28        -  mov rax,[rsp+28]
+"TheSurge.exe"+3B5501: F0 48 FF 00           - lock  inc [rax]
+"TheSurge.exe"+3B5505: 48 8B 7C 24 28        -  mov rdi,[rsp+28]
+"TheSurge.exe"+3B550A: 48 8B 74 24 20        -  mov rsi,[rsp+20]
+// ---------- INJECTING HERE ----------
+"TheSurge.exe"+3B550F: 44 39 6E 4C           -  cmp [rsi+4C],r13d
+"TheSurge.exe"+3B5513: 75 14                 -  jne TheSurge.exe+3B5529
+// ---------- DONE INJECTING  ----------
+"TheSurge.exe"+3B5515: 48 8B CE              -  mov rcx,rsi
+"TheSurge.exe"+3B5518: E8 A3 59 00 00        -  call TheSurge.exe+3BAEC0
+"TheSurge.exe"+3B551D: 48 8B C8              -  mov rcx,rax
+"TheSurge.exe"+3B5520: E8 7B 7D 00 00        -  call TheSurge.exe+3BD2A0
+"TheSurge.exe"+3B5525: 84 C0                 -  test al,al
+"TheSurge.exe"+3B5527: 74 57                 -  je TheSurge.exe+3B5580
+"TheSurge.exe"+3B5529: 48 8B CE              -  mov rcx,rsi
+"TheSurge.exe"+3B552C: E8 8F 59 00 00        -  call TheSurge.exe+3BAEC0
+"TheSurge.exe"+3B5531: 8B 48 48              -  mov ecx,[rax+48]
+"TheSurge.exe"+3B5534: 41 85 CC              -  test r12d,ecx
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
