@@ -1,0 +1,954 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="29">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>101</ID>
+      <Description>"Yaga v1.0.80"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <Color>808000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{$lua}
+LaunchMonoDataCollector()
+{$asm}
+LuaCall(function cycleFullCompact(sender,force) local state = not(compactmenuitem.Caption == 'Compact View Mode'); if force~=nil then state = not force end; compactmenuitem.Caption = state and 'Compact View Mode' or 'Full View Mode'; getMainForm().Splitter1.Visible = state; getMainForm().Panel4.Visible    = state; getMainForm().Panel5.Visible    = state; end; function addCompactMenu() if compactmenualreadyexists then return end; local parent = getMainForm().Menu.Items; compactmenuitem = createMenuItem(parent); parent.add(compactmenuitem); compactmenuitem.Caption = 'Compact View Mode'; compactmenuitem.OnClick = cycleFullCompact; compactmenualreadyexists = 'yes'; end; addCompactMenu(); cycleFullCompact(nil,true))
+[DISABLE]
+LuaCall(cycleFullCompact(nil,false))
+
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>96</ID>
+          <Description>"PSX script"</Description>
+          <Options moHideChildren="1"/>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>define(address_1,PlayerStaminaController:OnUpdate)
+define(bytes_1,db 55 48 8B EC 56)
+define(bytes_2,db 48 63 49 48 3B C1)
+define(bytes_3,db 49 63 46 18 89 42 20)
+[ENABLE]
+{$lua}
+LaunchMonoDataCollector()
+{$asm}
+alloc(PSX_1,2048,address_1)
+label(return_1)
+label(code_1)
+label(exit_1)
+label(_Player)
+registersymbol(_Player)
+
+aobscanregion(PSX_Coin,yaga.code.engine.ui.menus:CoinsAndPartsDisplayManager:Update+100,yaga.code.engine.ui.menus:CoinsAndPartsDisplayManager:Update+300,48 63 49 48 3B C1 0F 84 5B)
+alloc(PSX_2,$1000,PSX_Coin)
+label(code_2)
+label(return_2)
+label(_Coin)
+registersymbol(_Coin)
+registersymbol(PSX_Coin)
+
+aobscanregion(PSX_Item,yaga.code.game.user_data:Inventory:GetInventoryItems+39,yaga.code.game.user_data:Inventory:GetInventoryItems+239,49 63 46 18 89 42 20)
+alloc(PSX_3,$1000,PSX_Item)
+label(code_3)
+label(return_3)
+label(_Item)
+registersymbol(_Item)
+registersymbol(PSX_Item)
+
+PSX_1:
+mov [_Player],rcx//main pointer
+mov [_Player+8],r15
+mov r15,[rcx+28]
+test r15,r15
+je exit_1
+mov [_Player+10],r15//stat pointer
+//===========
+@@:
+  cmp byte ptr [_Player+100],0//god
+  je @f
+  mov byte ptr [r15+69],#1
+@@:
+  cmp byte ptr [_Player+101],0//invinsible
+  je @f
+  mov byte ptr [r15+6a],#1
+@@:
+  cmp byte ptr [_Player+102],0//underground
+  je @f
+  mov byte ptr [r15+6b],#1
+@@:
+  cmp byte ptr [_Player+103],0//hp
+  je @f
+  fld [r15+80]
+  fstp [r15+70]
+@@:
+  cmp byte ptr [_Player+104],0//sta
+  je @f
+  fld [r15+84]
+  fstp [r15+6c]
+@@:
+  cmp byte ptr [_Player+105],0//luck
+  je @f
+  mov [r15+88],(float)999999999
+@@:
+  cmp byte ptr [_Player+106],0//dmg
+  je @f
+  mov [r15+90],(float)999999999
+@@:
+  cmp byte ptr [_Player+107],0//res
+  je @f
+  mov [r15+98],(float)999999999
+@@:
+  cmp byte ptr [_Player+108],0//weight
+  je @f
+  mov [r15+9c],(float)0
+@@:
+  cmp byte ptr [_Player+109],0//crit
+  je @f
+  mov [r15+a4],(float)999999999
+@@:
+  cmp byte ptr [_Player+10a],0//buy
+  je @f
+  mov [r15+a8],(float)0
+@@:
+  cmp byte ptr [_Player+10b],0//sell
+  je @f
+  mov [r15+ac],(float)100
+@@:
+  cmp byte ptr [_Player+10c],0//dirty
+  je @f
+  mov byte ptr [r15+b0],#0
+exit_1:
+  mov r15,[_Player+8]
+code_1:
+  bytes_1
+  jmp return_1
+_Player:
+  dq 0 0 0 0 0 0 0 0
+
+PSX_2:
+  mov [_Coin],rcx
+@@:
+  cmp byte ptr [_Coin+8],0
+  je @f
+  mov [rcx+48],#999999999
+@@:
+  cmp byte ptr [_Coin+9],0
+  je @f
+  mov [rcx+4c],#999999999
+code_2:
+  bytes_2
+  jmp return_2
+_Coin:
+  dq 0 0
+
+PSX_3:
+  mov [_Item],r14
+@@:
+  cmp byte ptr [_Item+8],0
+  je @f
+  mov [r14+18],#100
+code_3:
+  bytes_3
+  jmp return_3
+_Item:
+  dq 0 0
+
+address_1:
+  jmp PSX_1
+return_1:
+
+PSX_Coin:
+  jmp PSX_2
+  nop
+return_2:
+
+PSX_Item:
+  jmp PSX_3
+  nop 2
+return_3:
+
+[DISABLE]
+unregistersymbol(_Player)
+dealloc(PSX_1)
+address_1:
+  bytes_1
+
+unregistersymbol(_Coin)
+unregistersymbol(PSX_Coin)
+dealloc(PSX_2)
+PSX_Coin:
+  bytes_2
+
+unregistersymbol(_Item)
+unregistersymbol(PSX_Item)
+dealloc(PSX_3)
+PSX_Item:
+  bytes_3
+
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>65</ID>
+              <Description>"God Mode"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+_Player+100:
+db 1
+[DISABLE]
+_Player+100:
+db 0
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>66</ID>
+              <Description>"Invisible Mode"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+_Player+101:
+db 1
+[DISABLE]
+_Player+101:
+db 0
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>67</ID>
+              <Description>"Underground Mode"</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+_Player+102:
+db 1
+[DISABLE]
+_Player+102:
+db 0
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>68</ID>
+              <Description>"Infinite HP"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+_Player+103:
+db 1
+[DISABLE]
+_Player+103:
+db 0
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>70</ID>
+              <Description>"Infinite Stamina"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+_Player+104:
+db 1
+[DISABLE]
+_Player+104:
+db 0
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>99</ID>
+              <Description>"Max Kopeks"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+_Coin+8:
+db 1
+[DISABLE]
+_Coin+8:
+db 0
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>100</ID>
+              <Description>"Max Body Part"</Description>
+              <LastState Activated="1"/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+_Coin+9:
+db 1
+[DISABLE]
+_Coin+9:
+db 0
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>98</ID>
+              <Description>"100/inf Items "</Description>
+              <LastState/>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>[ENABLE]
+_Item+8:
+db 1
+[DISABLE]
+_Item+8:
+db 0
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>103</ID>
+              <Description>"=========================================="</Description>
+              <LastState Value="" RealAddress="00000000"/>
+              <Color>808000</Color>
+              <GroupHeader>1</GroupHeader>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>36</ID>
+              <Description>"pointer"</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" RealAddress="00000000"/>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>37</ID>
+                  <Description>"player"</Description>
+                  <Options moHideChildren="1"/>
+                  <LastState Value="" RealAddress="00000000"/>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>8</ID>
+                      <Description>"base"</Description>
+                      <LastState Value="000002DE3C422480" RealAddress="2DDC977016F"/>
+                      <ShowAsHex>1</ShowAsHex>
+                      <VariableType>8 Bytes</VariableType>
+                      <Address>_Player+10</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>38</ID>
+                      <Description>"Body"</Description>
+                      <LastState Value="3" RealAddress="2DE3C4224D8"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>58</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>39</ID>
+                      <Description>"Mind"</Description>
+                      <LastState Value="3" RealAddress="2DE3C4224DC"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>5C</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>40</ID>
+                      <Description>"Fate"</Description>
+                      <LastState Value="3" RealAddress="2DE3C4224E0"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>60</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>41</ID>
+                      <Description>"PushbackOnAttacked"</Description>
+                      <LastState Value="0" RealAddress="2DE3C4224E4"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>64</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>42</ID>
+                      <Description>"IsHurtboxDisabled"</Description>
+                      <LastState Value="0" RealAddress="2DE3C4224E8"/>
+                      <VariableType>Byte</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>68</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>43</ID>
+                      <Description>"GodMode"</Description>
+                      <LastState Value="0" RealAddress="2DE3C4224E9"/>
+                      <VariableType>Byte</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>69</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>44</ID>
+                      <Description>"IsInvisible"</Description>
+                      <LastState Value="0" RealAddress="2DE3C4224EA"/>
+                      <VariableType>Byte</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>6A</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>45</ID>
+                      <Description>"IsUnderground"</Description>
+                      <LastState Value="0" RealAddress="2DE3C4224EB"/>
+                      <VariableType>Byte</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>6B</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>46</ID>
+                      <Description>"CurrentStamina"</Description>
+                      <LastState Value="70" RealAddress="2DE3C4224EC"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>6C</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>47</ID>
+                      <Description>"CurrentWillpower"</Description>
+                      <LastState Value="120" RealAddress="2DE3C4224F0"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>70</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>48</ID>
+                      <Description>"DebugBody"</Description>
+                      <LastState Value="3" RealAddress="2DE3C4224F4"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>74</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>49</ID>
+                      <Description>"DebugMind"</Description>
+                      <LastState Value="3" RealAddress="2DE3C4224F8"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>50</ID>
+                      <Description>"DebugFate"</Description>
+                      <LastState Value="3" RealAddress="2DE3C4224FC"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>7C</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>51</ID>
+                      <Description>"DebugMaxHP"</Description>
+                      <LastState Value="120" RealAddress="2DE3C422500"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>80</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>52</ID>
+                      <Description>"DebugMaxStamina"</Description>
+                      <LastState Value="70" RealAddress="2DE3C422504"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>84</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>53</ID>
+                      <Description>"DebugMaxLuck"</Description>
+                      <LastState Value="70" RealAddress="2DE3C422508"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>88</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>54</ID>
+                      <Description>"DebugStaminaRecoveringRate"</Description>
+                      <LastState Value="12" RealAddress="2DE3C42250C"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>8C</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>55</ID>
+                      <Description>"DebugBaseDamage"</Description>
+                      <LastState Value="23" RealAddress="2DE3C422510"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>90</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>56</ID>
+                      <Description>"DebugSpeed"</Description>
+                      <LastState Value="3.5" RealAddress="2DE3C422514"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>94</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>57</ID>
+                      <Description>"DebugResistance"</Description>
+                      <LastState Value="0" RealAddress="2DE3C422518"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>98</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>58</ID>
+                      <Description>"DebugWeight"</Description>
+                      <LastState Value="11" RealAddress="2DE3C42251C"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>9C</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>59</ID>
+                      <Description>"DebugAttackSpeed"</Description>
+                      <LastState Value="1.149999976" RealAddress="2DE3C422520"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>A0</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>60</ID>
+                      <Description>"DebugCriticalChance"</Description>
+                      <LastState Value="3.785714149" RealAddress="2DE3C422524"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>A4</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>61</ID>
+                      <Description>"DebugBuyPriceMultiplier"</Description>
+                      <LastState Value="1.5" RealAddress="2DE3C422528"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>A8</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>62</ID>
+                      <Description>"DebugSellPriceMultiplier"</Description>
+                      <LastState Value="1" RealAddress="2DE3C42252C"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>AC</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>63</ID>
+                      <Description>"isDirty"</Description>
+                      <LastState Value="0" RealAddress="2DE3C422530"/>
+                      <VariableType>Byte</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>B0</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>64</ID>
+                      <Description>"dirtyTimeout"</Description>
+                      <LastState Value="0.170191288" RealAddress="2DE3C422534"/>
+                      <VariableType>Float</VariableType>
+                      <Address>_Player+10</Address>
+                      <Offsets>
+                        <Offset>B4</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>97</ID>
+                  <Description>"Resource"</Description>
+                  <Options moHideChildren="1"/>
+                  <LastState Value="" Activated="1" RealAddress="00000000"/>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>82</ID>
+                      <Description>"base"</Description>
+                      <LastState Value="000002DDB1097320" RealAddress="2DDC9780043"/>
+                      <ShowAsHex>1</ShowAsHex>
+                      <VariableType>8 Bytes</VariableType>
+                      <Address>_Coin</Address>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>84</ID>
+                      <Description>"Kopeks"</Description>
+                      <LastState Value="999999999" RealAddress="2DDB1097368"/>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>_Coin</Address>
+                      <Offsets>
+                        <Offset>48</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>85</ID>
+                      <Description>"BodyParts"</Description>
+                      <LastState Value="999999999" RealAddress="2DDB109736C"/>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>_Coin</Address>
+                      <Offsets>
+                        <Offset>4c</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>102</ID>
+              <Description>"=========================================="</Description>
+              <Options moHideChildren="1"/>
+              <LastState Value="" RealAddress="00000000"/>
+              <Color>808000</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>71</ID>
+                  <Description>"Max Luck"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+_Player+105:
+db 1
+[DISABLE]
+_Player+105:
+db 0
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>72</ID>
+                  <Description>"Max Damage"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+_Player+106:
+db 1
+[DISABLE]
+_Player+106:
+db 0
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>73</ID>
+                  <Description>"Max Resistance"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+_Player+107:
+db 1
+[DISABLE]
+_Player+107:
+db 0
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>74</ID>
+                  <Description>"Zero Weight"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+_Player+108:
+db 1
+[DISABLE]
+_Player+108:
+db 0
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>75</ID>
+                  <Description>"Always Critical"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+_Player+109:
+db 1
+[DISABLE]
+_Player+109:
+db 0
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>76</ID>
+                  <Description>"Buy cost nothing"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+_Player+10a:
+db 1
+[DISABLE]
+_Player+10a:
+db 0
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>77</ID>
+                  <Description>"Sell Item cost X100"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+_Player+10b:
+db 1
+[DISABLE]
+_Player+10b:
+db 0
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>78</ID>
+                  <Description>"Zero Dirty"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+_Player+10c:
+db 1
+[DISABLE]
+_Player+10c:
+db 0
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>0</ID>
+                  <Description>"Auto Assemble script"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+//r15
+alloc(newmem,2048,PlayerStaminaController:OnUpdate) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+push rbp
+mov rbp,rsp
+push rsi
+
+exit:
+jmp returnhere
+
+PlayerStaminaController:OnUpdate:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+PlayerStaminaController:OnUpdate:
+push rbp
+mov rbp,rsp
+push rsi
+//Alt: db 55 48 8B EC 56
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>1</ID>
+                  <Description>"Auto Assemble script"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048,yaga.code.game.components:MovementData:Update) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+push rbp
+mov rbp,rsp
+push rsi
+
+exit:
+jmp returnhere
+
+yaga.code.game.components:MovementData:Update:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+yaga.code.game.components:MovementData:Update:
+push rbp
+mov rbp,rsp
+push rsi
+//Alt: db 55 48 8B EC 56
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>2</ID>
+                  <Description>"Auto Assemble script"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048,yaga.code.game.gameplay:GameState:OnUpdate) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+push rbp
+mov rbp,rsp
+push rsi
+
+exit:
+jmp returnhere
+
+yaga.code.game.gameplay:GameState:OnUpdate:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+yaga.code.game.gameplay:GameState:OnUpdate:
+push rbp
+mov rbp,rsp
+push rsi
+//Alt: db 55 48 8B EC 56
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>3</ID>
+                  <Description>"Auto Assemble script"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048,yaga.code.game.gameplay:GameActions:Update) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+push rbp
+mov rbp,rsp
+push rsi
+
+exit:
+jmp returnhere
+
+yaga.code.game.gameplay:GameActions:Update:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+yaga.code.game.gameplay:GameActions:Update:
+push rbp
+mov rbp,rsp
+push rsi
+//Alt: db 55 48 8B EC 56
+</AssemblerScript>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>6</ID>
+                  <Description>"Auto Assemble script"</Description>
+                  <LastState/>
+                  <VariableType>Auto Assembler Script</VariableType>
+                  <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048,yaga.code.engine.ui.menus:CoinsAndPartsDisplayManager:Update) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+push rbp
+mov rbp,rsp
+push rsi
+
+exit:
+jmp returnhere
+
+yaga.code.engine.ui.menus:CoinsAndPartsDisplayManager:Update:
+jmp newmem
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+yaga.code.engine.ui.menus:CoinsAndPartsDisplayManager:Update:
+push rbp
+mov rbp,rsp
+push rsi
+//Alt: db 55 48 8B EC 56
+</AssemblerScript>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
