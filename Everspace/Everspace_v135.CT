@@ -1,0 +1,865 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="29">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>144</ID>
+      <Description>"Inf Health"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RSG-Win64-Shipping.exe
+  Version: 
+  Date   : 2019-10-13
+  Author : zard_sec
+}
+
+[ENABLE]
+//RSG-Win64-Shipping.UHealthComponent::TakeDamage+1D6
+aobscanmodule(infhealth,RSG-Win64-Shipping.exe,F3 0F 11 8F 24 01 00 00 73) // should be unique
+alloc(newmem,$1000,infhealth)
+
+label(code)
+label(return)
+
+registersymbol(infhealth)
+
+newmem:
+  cmp [rdi+08],00040048
+  jne code
+  jmp return
+
+code:
+  movss [rdi+00000124],xmm1
+  jmp return
+
+infhealth:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+
+infhealth:
+  db F3 0F 11 8F 24 01 00 00
+
+unregistersymbol(infhealth)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>141</ID>
+      <Description>"Inf Shield"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RSG-Win64-Shipping.exe
+  Version: 
+  Date   : 2019-10-13
+  Author : zard_sec
+}
+
+[ENABLE]
+//RSG-Win64-Shipping.UShieldComponent::TakeDamage+ED
+aobscanmodule(infshield,RSG-Win64-Shipping.exe,F3 0F 11 8F F0 00 00 00 73) // should be unique
+alloc(newmem,$1000,infshield)
+
+label(code)
+label(return)
+
+registersymbol(infshield)
+
+newmem:
+  cmp [rdi+08],00040048
+  jne code
+  jmp return
+
+code:
+  movss [rdi+000000F0],xmm1
+  jmp return
+
+infshield:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+
+infshield:
+  db F3 0F 11 8F F0 00 00 00
+
+unregistersymbol(infshield)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>131</ID>
+      <Description>"Inf Energy/No Energy Consumption"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RSG-Win64-Shipping.exe
+  Version:
+  Date   : 2019-10-13
+  Author : zard_sec
+}
+
+[ENABLE]
+//RSG-Win64-Shipping.UEnergyCoreComponent::GetRatio+41
+aobscanmodule(infenergy,RSG-Win64-Shipping.exe,F3 0F 10 87 7C 01 00 00 40) // should be unique
+alloc(newmem,$1000,infenergy)
+
+label(code)
+label(return)
+
+registersymbol(infenergy)
+
+newmem:
+
+code:
+  movss xmm0,[rdi+0000017C]
+  mov [rdi+0000017C],(float)500
+  mov [rdi+00000180],0
+  jmp return
+
+infenergy:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+
+infenergy:
+  db F3 0F 10 87 7C 01 00 00
+
+unregistersymbol(infenergy)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>78</ID>
+      <Description>"Inf Fuel"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RSG-Win64-Shipping.exe
+  Version:
+  Date   : 2019-10-13
+  Author : zard_sec
+}
+
+[ENABLE]
+//RSG-Win64-Shipping.AGameModeIngame::OnPlayerJumpCompleted+6BF
+aobscanmodule(inffuel,RSG-Win64-Shipping.exe,89 83 88 00 00 00 49 8B CF)
+registersymbol(inffuel)
+
+inffuel:
+  db 90 90 90 90 90 90
+
+[DISABLE]
+
+inffuel:
+  db 89 83 88 00 00 00
+
+unregistersymbol(inffuel)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>132</ID>
+      <Description>"Inf Missiles"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RSG-Win64-Shipping.exe
+  Version:
+  Date   : 2019-10-13
+  Author : zard_sec
+}
+
+[ENABLE]
+//RSG-Win64-Shipping.UWeaponComponent::ConsumeAmmo+D0
+aobscanmodule(infmissiles,RSG-Win64-Shipping.exe,FF 4C 01 08 48 8B 9F E0 00 00 00)
+registersymbol(infmissiles)
+
+infmissiles:
+  db 90 90 90 90
+
+[DISABLE]
+
+infmissiles:
+  db FF 4C 01 08
+
+unregistersymbol(infmissiles)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>133</ID>
+      <Description>"Inf Consumables"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RSG-Win64-Shipping.exe
+  Version:
+  Date   : 2019-10-13
+  Author : zard_sec
+}
+
+[ENABLE]
+//RSG-Win64-Shipping.UConsumableComponent::UseActiveConsumable+17B
+aobscanmodule(infcon,RSG-Win64-Shipping.exe,FF 4C C8 08 48 8B 86 F0 00 00 00)
+registersymbol(infcon)
+
+infcon:
+  db 90 90 90 90
+
+[DISABLE]
+
+infcon:
+  db FF 4C C8 08
+
+unregistersymbol(infcon)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>134</ID>
+      <Description>"Inf Resources"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RSG-Win64-Shipping.exe
+  Version:
+  Date   : 2019-10-13
+  Author : zard_sec
+}
+
+[ENABLE]
+//RSG-Win64-Shipping.UGameplayLib::GetResourceAmount+F9
+aobscanmodule(infres,RSG-Win64-Shipping.exe,41 8B 44 0E FC)
+alloc(newmem,$1000,infres)
+
+label(code)
+label(return)
+
+registersymbol(infres)
+
+newmem:
+  mov [r14+rcx-04],370
+
+code:
+  mov eax,[r14+rcx-04]
+  jmp return
+
+infres:
+  jmp newmem
+return:
+
+[DISABLE]
+
+infres:
+  db 41 8B 44 0E FC
+
+unregistersymbol(infres)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>135</ID>
+      <Description>"No Cooldown"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RSG-Win64-Shipping.exe
+  Version:
+  Date   : 2019-10-13
+  Author : zard_sec
+}
+
+[ENABLE]
+//RSG-Win64-Shipping.ADeviceBase::Tick+36
+aobscanmodule(nocd,RSG-Win64-Shipping.exe,F3 0F 11 83 D8 03 00 00 77)
+alloc(newmem,$1000,nocd)
+
+label(code)
+label(return)
+
+registersymbol(nocd)
+
+newmem:
+
+code:
+  xorps xmm0,xmm0
+  movss [rbx+000003D8],xmm0
+  jmp return
+
+nocd:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+
+nocd:
+  db F3 0F 11 83 D8 03 00 00
+
+unregistersymbol(nocd)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>136</ID>
+      <Description>"Instant Weapon Charge"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RSG-Win64-Shipping.exe
+  Version:
+  Date   : 2019-10-13
+  Author : zard_sec
+}
+
+[ENABLE]
+
+aobscanmodule(instwc,RSG-Win64-Shipping.exe,F3 0F 11 BA B0 05 00 00)
+alloc(newmem,$1000,instwc)
+
+label(code)
+label(return)
+
+registersymbol(instwc)
+
+newmem:
+
+code:
+  mov [rdx+000005B0],(float)0.999999
+  jmp return
+
+instwc:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+
+instwc:
+  db F3 0F 11 BA B0 05 00 00
+
+unregistersymbol(instwc)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>137</ID>
+      <Description>"Instant Fire"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RSG-Win64-Shipping.exe
+  Version:
+  Date   : 2019-10-13
+  Author : zard_sec
+}
+
+[ENABLE]
+////RSG-Win64-Shipping.FWeaponInstancesController::Tick+1FA
+aobscanmodule(instfire,RSG-Win64-Shipping.exe,F3 0F 11 43 44 F3 0F 10 43)
+alloc(newmem,$1000,instfire)
+
+label(code)
+label(return)
+
+registersymbol(instfire)
+
+newmem:
+
+code:
+  xorps xmm0,xmm0
+  movss [rbx+44],xmm0
+  jmp return
+
+instfire:
+  jmp newmem
+return:
+
+[DISABLE]
+
+instfire:
+  db F3 0F 11 43 44
+
+unregistersymbol(instfire)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>138</ID>
+      <Description>"Rapid Fire"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RSG-Win64-Shipping.exe
+  Version:
+  Date   : 2019-10-13
+  Author : zard_sec
+}
+
+[ENABLE]
+////RSG-Win64-Shipping.UWeaponComponent::GetCurrentSecondaryWeaponRemainingCoolDownRatio+2C
+aobscanmodule(rapidfire,RSG-Win64-Shipping.exe,F3 0F 10 81 68 04 00 00 0F)
+alloc(newmem,$1000,rapidfire)
+
+label(code)
+label(return)
+
+registersymbol(rapidfire)
+
+newmem:
+
+code:
+  movss xmm0,[rcx+00000468]
+  mov [rcx+00000468],0
+  mov [rcx+000003D8],0
+  jmp return
+
+rapidfire:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+
+rapidfire:
+  db F3 0F 10 81 68 04 00 00
+
+unregistersymbol(rapidfire)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>14</ID>
+      <Description>"Credits Gained Multiplier"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RSG-Win64-Shipping.exe
+  Version:
+  Date   : 2019-10-13
+  Author : zard_sec
+}
+
+[ENABLE]
+////RSG-Win64-Shipping.UGameInstanceBase::ChangeCredits+41
+aobscanmodule(cgm,RSG-Win64-Shipping.exe,01 B8 A0 00 00 00)
+alloc(newmem,$1000,cgm)
+
+label(code)
+label(return)
+label(mulval)
+
+registersymbol(cgm)
+registersymbol(mulval)
+
+newmem:
+  cmp edi,0
+  jl code
+  imul edi,[mulval]
+
+code:
+  add [rax+000000A0],edi
+  jmp return
+
+mulval:
+  dq 2
+
+cgm:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+
+cgm:
+  db 01 B8 A0 00 00 00
+
+unregistersymbol(cgm)
+unregistersymbol(mulval)
+dealloc(newmem)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>15</ID>
+          <Description>"Multiplier"</Description>
+          <LastState Value="2" RealAddress="7FF6D4C9001B"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>mulval</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>120</ID>
+      <Description>"No Handicaps"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RSG-Win64-Shipping.exe
+  Version:
+  Date   : 2019-10-13
+  Author : zard_sec
+}
+
+[ENABLE]
+//RSG-Win64-Shipping.UGameplayLib::GetRandomHandicapOffers
+aobscanmodule(handicaps,RSG-Win64-Shipping.exe,CC CC CC CC CC CC CC CC CC 48 8B C4 48 89 50 10 48 89 48 08 55 48 8D 68)
+alloc(newmem,$1000,handicaps)
+
+label(code)
+label(return)
+
+registersymbol(handicaps)
+
+newmem:
+
+code:
+  ret
+  jmp return
+
+handicaps+09:
+  jmp newmem
+  nop 2
+return:
+
+[DISABLE]
+
+handicaps+09:
+  db 48 8B C4 48 89 50 10
+
+unregistersymbol(handicaps)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>117</ID>
+      <Description>"Inf Time For Tuning Upgrades"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RSG-Win64-Shipping.exe
+  Version:
+  Date   : 2019-10-13
+  Author : zard_sec
+}
+
+[ENABLE]
+////RSG-Win64-Shipping.UBuffComponent::TickComponent+B1
+aobscanmodule(tutimer,RSG-Win64-Shipping.exe,F3 0F 11 44 07 08)
+alloc(newmem,$1000,tutimer)
+
+label(code)
+label(return)
+
+registersymbol(tutimer)
+
+newmem:
+
+code:
+  mov [rdi+rax+08],(float)600
+  jmp return
+
+tutimer:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+
+tutimer:
+  db F3 0F 11 44 07 08
+
+unregistersymbol(tutimer)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>48</ID>
+      <Description>"Ignore Crafting Requirements"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RSG-Win64-Shipping.exe
+  Version:
+  Date   : 2019-10-13
+  Author : zard_sec
+}
+
+[ENABLE]
+//RSG-Win64-Shipping.UBlueprintCollection::CanCraftBlueprint+8A
+aobscanmodule(icr,RSG-Win64-Shipping.exe,0F B6 C3 48 81 C4 88 00 00 00 41 5E)
+alloc(newmem,$1000,icr)
+
+label(code)
+label(return)
+
+registersymbol(icr)
+
+newmem:
+
+code:
+  mov bl,01
+  movzx eax,bl
+  add rsp,00000088
+  jmp return
+
+icr:
+  jmp newmem
+  nop 5
+return:
+
+[DISABLE]
+
+icr:
+  db 0F B6 C3 48 81 C4 88 00 00 00
+
+unregistersymbol(icr)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>95</ID>
+      <Description>"Unlock All Blueprints"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RSG-Win64-Shipping.exe
+  Version:
+  Date   : 2019-10-13
+  Author : zard_sec
+}
+
+[ENABLE]
+//RSG-Win64-Shipping.UBlueprintCollection::GetUnlockedBlueprints+84
+aobscanmodule(blueprints,RSG-Win64-Shipping.exe,80 7C 29 30 00)
+alloc(newmem,$1000,blueprints)
+
+label(code)
+label(return)
+
+registersymbol(blueprints)
+
+newmem:
+  mov byte ptr [rcx+rbp+30],1
+
+code:
+  cmp byte ptr [rcx+rbp+30],00
+  jmp return
+
+blueprints:
+  jmp newmem
+return:
+
+[DISABLE]
+
+blueprints:
+  db 80 7C 29 30 00
+
+unregistersymbol(blueprints)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>139</ID>
+      <Description>"Sensor Range Pointer"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RSG-Win64-Shipping.exe
+  Version:
+  Date   : 2019-10-13
+  Author : zard_sec
+}
+
+[ENABLE]
+//RSG-Win64-Shipping.USensorComponent::GetSensorRangeForType+47
+aobscanmodule(sensor,RSG-Win64-Shipping.exe,F3 0F 10 B3 8C 02 00 00)
+alloc(newmem,$1000,sensor)
+
+label(code)
+label(return)
+label(srp)
+
+registersymbol(sensor)
+registersymbol(srp)
+
+newmem:
+  mov [srp],rbx
+
+code:
+  movss xmm6,[rbx+0000028C]
+  jmp return
+
+srp:
+  dq 0
+
+sensor:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+
+sensor:
+  db F3 0F 10 B3 8C 02 00 00
+
+unregistersymbol(sensor)
+unregistersymbol(srp)
+dealloc(newmem)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>75</ID>
+          <Description>"Sensor Range"</Description>
+          <LastState Value="89" Activated="1" RealAddress="18712D3C08C"/>
+          <VariableType>Float</VariableType>
+          <Address>srp</Address>
+          <Offsets>
+            <Offset>28C</Offset>
+          </Offsets>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>192</Key>
+              </Keys>
+              <Value>89</Value>
+              <ID>0</ID>
+            </Hotkey>
+            <Hotkey>
+              <Action>Activate</Action>
+              <Keys>
+                <Key>192</Key>
+              </Keys>
+              <ID>1</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>76</ID>
+      <Description>"Tractor Beam Range Pointer"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : RSG-Win64-Shipping.exe
+  Version:
+  Date   : 2019-10-13
+  Author : zard_sec &amp; Bakifets
+}
+
+[ENABLE]
+//PhysX3Common_x64.physx::Gu::computeBounds+50
+aobscanmodule(tractorrange,PhysX3Common_x64.dll,F3 44 0F 58 52 04)
+alloc(newmem,$1000,tractorrange)
+
+label(code)
+label(return)
+label(tp)
+
+registersymbol(tractorrange)
+registersymbol(tp)
+
+newmem:
+  cmp [rdx+04],(float)10000
+  jl code
+  cmp [rdx-08],#267
+  jne code
+  mov [tp],rdx
+
+code:
+  addss xmm10,[rdx+04]
+  jmp return
+
+tp:
+  dq 0
+
+tractorrange:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+
+tractorrange:
+  db F3 44 0F 58 52 04
+
+unregistersymbol(tractorrange)
+unregistersymbol(tp)
+dealloc(newmem)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>66</ID>
+          <Description>"Tractor Beam Range"</Description>
+          <LastState Value="2000000" RealAddress="18720AF3E7C"/>
+          <VariableType>Float</VariableType>
+          <Address>tp</Address>
+          <Offsets>
+            <Offset>4</Offset>
+          </Offsets>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>192</Key>
+              </Keys>
+              <Value>2000000</Value>
+              <ID>0</ID>
+            </Hotkey>
+            <Hotkey>
+              <Action>Set Value</Action>
+              <Keys>
+                <Key>112</Key>
+              </Keys>
+              <Value>10000</Value>
+              <ID>1</ID>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>118</ID>
+      <Description>"[gideon25's Mods Script]"</Description>
+      <Options moHideChildren="1"/>
+      <LastState Value="" Activated="1" RealAddress="00000000"/>
+      <Color>FF0000</Color>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>106</ID>
+          <Description>"Lots Of Mods"</Description>
+          <LastState Activated="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{ Game   : RSG-Win64-Shipping.exe
+  Version: 1.2.3
+  Date   : 2017-10-26
+  Author : gideon25
+}
+
+[ENABLE]
+//RSG-Win64-Shipping.AModBase::Install+2E8
+aobscanmodule(mods,RSG-Win64-Shipping.exe,7C 0A 41 C6 04 24 04)
+alloc(newmem,$1000,mods)
+
+label(code)
+label(return)
+
+registersymbol(mods)
+
+newmem:
+
+code:
+  jmp mods+0C
+  mov byte ptr [r12],04
+  jmp return
+
+mods:
+  jmp newmem
+  nop 2
+return:
+
+[DISABLE]
+
+mods:
+  db 7C 0A 41 C6 04 24 04
+
+unregistersymbol(mods)
+dealloc(newmem)
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
