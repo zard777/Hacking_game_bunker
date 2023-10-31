@@ -1,0 +1,2114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="42">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>104290</ID>
+      <Description>"[ Activate ] - {Click here to add process automatically} - [ v1:616 2023-05-05 ]"</Description>
+      <Options moHideChildren="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+{$lua}
+OpenProcess("MetalMutation.exe")
+if (LaunchMonoDataCollector())==0
+then error ('Failure To Launch')
+end
+
+if getCEVersion() &lt; 7.4 then showMessage("If you are getting this message means your Cheat Engine software is outdated. Please update to the latest Cheat Engine version! Latest official public release version can be found at https://cheatengine.org/\nYour Cheat Engine Version : "..getCEVersion().."\nLatest Public Cheat Engine Version : 7.4") --[[MainForm.close()]]
+return end
+
+{$asm}
+
+luacall(function cycleFullCompact(sender,force); local state = not(compactmenuitem.Caption == 'Compact View Mode'); if force~=nil then state = not force end; compactmenuitem.Caption = state and 'Compact View Mode' or 'Full view Mode'; getMainForm().Splitter1.Visible = state; getMainForm().Panel4.Visible = state; getMainForm().Panel5.Visible = state; end; function addCompactMenu(); if compactmenualreadyexists then return end; local parent = getMainForm().Menu.Items; compactmenuitem = createMenuItem(parent); parent.add(compactmenuitem); compactmenuitem.Caption = 'Compact View Mode'; compactmenuitem.OnClick = cycleFullCompact; compactmenualreadyexists = 'yes'; end; addCompactMenu(); cycleFullCompact(nil,true))
+
+[DISABLE]
+
+luacall(cycleFullCompact(nil,false))
+
+
+
+
+
+
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>104291</ID>
+          <Description>"+++ SCRIPT +++ "</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF0000</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>105473</ID>
+              <Description>"Unlimited Currencies"</Description>
+              <Color>804000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : MetalMutation.exe
+  Version:
+  Date   : 2023-05-06
+  Author : BabyGroot
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(pBase_Currencies,GameAssembly.dll,41 89 4E 20 83 BE 48 01 00 00 00) // should be unique
+alloc(newmem,$1000,pBase_Currencies)
+
+label(code)
+label(return)
+
+newmem:
+  mov ecx,#999111
+
+code:
+  mov [r14+20],ecx
+  cmp dword ptr [rsi+00000148],00
+  jmp return
+
+pBase_Currencies:
+  jmp newmem
+  nop 6
+return:
+registersymbol(pBase_Currencies)
+
+[DISABLE]
+
+pBase_Currencies:
+  db 41 89 4E 20 83 BE 48 01 00 00 00
+
+unregistersymbol(pBase_Currencies)
+dealloc(newmem)
+
+
+</AssemblerScript>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>105343</ID>
+              <Description>"Entity Character"</Description>
+              <Color>FF0000</Color>
+              <VariableType>Auto Assembler Script</VariableType>
+              <AssemblerScript>{ Game   : MetalMutation.exe
+  Version: 
+  Date   : 2023-05-06
+  Author : BabyGroot
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(pData_EntityCharacter,GameAssembly.dll,48 8B 80 68 01 00 00 48 85 C0 0F 84 8D) // should be unique
+alloc(newmem,$1000,pData_EntityCharacter)
+
+alloc(pBase_EntityCharacter,8)
+registersymbol(pBase_EntityCharacter)
+
+label(code)
+label(return)
+
+pBase_EntityCharacter:
+dd
+
+newmem:
+
+code:
+  mov [pBase_EntityCharacter],rax
+  mov rax,[rax+00000168]
+  jmp return
+
+pData_EntityCharacter:
+  jmp newmem
+  nop 2
+return:
+registersymbol(pData_EntityCharacter pBase_EntityCharacter)
+
+[DISABLE]
+
+pData_EntityCharacter:
+  db 48 8B 80 68 01 00 00
+
+unregistersymbol(*)
+dealloc(*)
+
+
+</AssemblerScript>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>104292</ID>
+          <Description>"+++ POINTER +++"</Description>
+          <Options moHideChildren="1"/>
+          <Color>FF8000</Color>
+          <GroupHeader>1</GroupHeader>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>105344</ID>
+              <Description>"Entity Character - [ Active, Hit Enemy ]"</Description>
+              <Options moHideChildren="1" moManualExpandCollapse="1"/>
+              <Color>FF8000</Color>
+              <GroupHeader>1</GroupHeader>
+              <CheatEntries>
+                <CheatEntry>
+                  <ID>105345</ID>
+                  <Description>"pBase - [ Color Silver Don't Chance ]"</Description>
+                  <ShowAsHex>1</ShowAsHex>
+                  <ShowAsSigned>0</ShowAsSigned>
+                  <Color>C0C0C0</Color>
+                  <VariableType>4 Bytes</VariableType>
+                  <Address>[pBase_EntityCharacter]</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105348</ID>
+                  <Description>"Play Scale"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[pBase_EntityCharacter]+D8</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105349</ID>
+                  <Description>"Hited Time"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[pBase_EntityCharacter]+140</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105346</ID>
+                  <Description>"Radius"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[pBase_EntityCharacter]+158</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105347</ID>
+                  <Description>"Hit Radius"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>Float</VariableType>
+                  <Address>[pBase_EntityCharacter]+15C</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105350</ID>
+                  <Description>"Gravity?"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                  <Color>808000</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>[pBase_EntityCharacter]+160</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105357</ID>
+                  <Description>"No falling?"</Description>
+                  <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                  <Color>808000</Color>
+                  <VariableType>Byte</VariableType>
+                  <Address>[pBase_EntityCharacter]+161</Address>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105471</ID>
+                  <Description>"= Profile ="</Description>
+                  <Color>804000</Color>
+                  <GroupHeader>1</GroupHeader>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105468</ID>
+                  <Description>"Name"</Description>
+                  <Color>4080FF</Color>
+                  <VariableType>String</VariableType>
+                  <Length>128</Length>
+                  <Unicode>1</Unicode>
+                  <CodePage>0</CodePage>
+                  <ZeroTerminate>1</ZeroTerminate>
+                  <Address>[pBase_EntityCharacter]+90</Address>
+                  <Offsets>
+                    <Offset>14</Offset>
+                    <Offset>18</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105469</ID>
+                  <Description>"Uuid"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>8 Bytes</VariableType>
+                  <Address>[pBase_EntityCharacter]+90</Address>
+                  <Offsets>
+                    <Offset>20</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105470</ID>
+                  <Description>"Steam ID"</Description>
+                  <Color>0000FF</Color>
+                  <VariableType>8 Bytes</VariableType>
+                  <Address>[pBase_EntityCharacter]+90</Address>
+                  <Offsets>
+                    <Offset>B0</Offset>
+                  </Offsets>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105351</ID>
+                  <Description>"- Battle -"</Description>
+                  <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                  <Color>800040</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>105352</ID>
+                      <Description>"Bati"</Description>
+                      <Color>0000FF</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[pBase_EntityCharacter]+168</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105353</ID>
+                      <Description>"Wudi"</Description>
+                      <Color>0000FF</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[pBase_EntityCharacter]+168</Address>
+                      <Offsets>
+                        <Offset>14</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105354</ID>
+                      <Description>"Combo Count"</Description>
+                      <Color>0000FF</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[pBase_EntityCharacter]+168</Address>
+                      <Offsets>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105355</ID>
+                      <Description>"Combo Time"</Description>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+168</Address>
+                      <Offsets>
+                        <Offset>1C</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105356</ID>
+                      <Description>"Broke?"</Description>
+                      <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No/Off/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+                      <Color>808000</Color>
+                      <VariableType>Byte</VariableType>
+                      <Address>[pBase_EntityCharacter]+168</Address>
+                      <Offsets>
+                        <Offset>28</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105358</ID>
+                  <Description>"- Attr -"</Description>
+                  <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                  <Color>800040</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>105359</ID>
+                      <Description>"Max Hp"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105360</ID>
+                      <Description>"Current Hp"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>10</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105361</ID>
+                      <Description>"Max Mp"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>28</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105362</ID>
+                      <Description>"Current Mp"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>20</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105363</ID>
+                      <Description>"Speed"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>30</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105364</ID>
+                      <Description>"Recovery Mp"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>38</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105365</ID>
+                      <Description>"Auto Recovery Mp"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>40</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105366</ID>
+                      <Description>"Consume Mp"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>48</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105367</ID>
+                      <Description>"attk"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>50</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105368</ID>
+                      <Description>"Attk Add"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>58</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105369</ID>
+                      <Description>"Mgk"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>60</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105370</ID>
+                      <Description>"Mgk Add"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>68</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105371</ID>
+                      <Description>"Def"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>70</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105372</ID>
+                      <Description>"Def Ignore"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>78</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105373</ID>
+                      <Description>"Eva"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>80</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105374</ID>
+                      <Description>"Crit"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>88</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105375</ID>
+                      <Description>"Dcrit"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>90</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105376</ID>
+                      <Description>"Csr"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>98</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105377</ID>
+                      <Description>"Broke Atk"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>A0</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105378</ID>
+                      <Description>"Max Broke"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>A8</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105379</ID>
+                      <Description>"Broke"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>B0</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105380</ID>
+                      <Description>"Recovery Broke"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>B8</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105381</ID>
+                      <Description>"Cd"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>C0</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105382</ID>
+                      <Description>"Hitstr"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>C8</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105383</ID>
+                      <Description>"Hitback"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>D0</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105384</ID>
+                      <Description>"Ice Atk"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>D8</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105385</ID>
+                      <Description>"Fire Atk"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>E0</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105386</ID>
+                      <Description>"Electric Atk"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>E8</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105387</ID>
+                      <Description>"Wind Atk"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>F0</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105388</ID>
+                      <Description>"Ice Def"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>F8</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105389</ID>
+                      <Description>"Fire Def"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>100</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105390</ID>
+                      <Description>"Electric Def"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>108</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105391</ID>
+                      <Description>"Wind Def"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>110</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105392</ID>
+                      <Description>"Ice Red"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>118</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105393</ID>
+                      <Description>"Fire Red"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>120</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105394</ID>
+                      <Description>"Electric Red"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>128</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105395</ID>
+                      <Description>"Wind Red"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>130</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105396</ID>
+                      <Description>"Broke Red"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>138</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105397</ID>
+                      <Description>"Terminate"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>140</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105398</ID>
+                      <Description>"Mf"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>148</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105400</ID>
+                      <Description>"Max Rp"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>158</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105399</ID>
+                      <Description>"Rp"</Description>
+                      <ShowAsSigned>0</ShowAsSigned>
+                      <Color>0000FF</Color>
+                      <VariableType>Float</VariableType>
+                      <Address>[pBase_EntityCharacter]+178</Address>
+                      <Offsets>
+                        <Offset>10</Offset>
+                        <Offset>150</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+                <CheatEntry>
+                  <ID>105401</ID>
+                  <Description>"- Skills -"</Description>
+                  <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                  <Color>800040</Color>
+                  <GroupHeader>1</GroupHeader>
+                  <CheatEntries>
+                    <CheatEntry>
+                      <ID>105402</ID>
+                      <Description>"Skills Size"</Description>
+                      <Color>C0C0C0</Color>
+                      <VariableType>4 Bytes</VariableType>
+                      <Address>[pBase_EntityCharacter]+188</Address>
+                      <Offsets>
+                        <Offset>18</Offset>
+                      </Offsets>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105404</ID>
+                      <Description>"-- Skill [1] --"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105405</ID>
+                          <Description>"Cid"</Description>
+                          <Color>0000FF</Color>
+                          <VariableType>8 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>10</Offset>
+                            <Offset>20</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105406</ID>
+                          <Description>"Point"</Description>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>18</Offset>
+                            <Offset>20</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105407</ID>
+                          <Description>"Max Point"</Description>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>1C</Offset>
+                            <Offset>20</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105408</ID>
+                          <Description>"Elapsed"</Description>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>20</Offset>
+                            <Offset>20</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105409</ID>
+                          <Description>"Cd"</Description>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>20</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105410</ID>
+                          <Description>"Lv"</Description>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>28</Offset>
+                            <Offset>20</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105411</ID>
+                      <Description>"-- Skill [2] --"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105412</ID>
+                          <Description>"Cid"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>8 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>10</Offset>
+                            <Offset>28</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105413</ID>
+                          <Description>"Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>18</Offset>
+                            <Offset>28</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105414</ID>
+                          <Description>"Max Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>1C</Offset>
+                            <Offset>28</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105415</ID>
+                          <Description>"Elapsed"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>20</Offset>
+                            <Offset>28</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105416</ID>
+                          <Description>"Cd"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>28</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105417</ID>
+                          <Description>"Lv"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>28</Offset>
+                            <Offset>28</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105418</ID>
+                      <Description>"-- Skill [3] --"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105419</ID>
+                          <Description>"Cid"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>8 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>10</Offset>
+                            <Offset>30</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105420</ID>
+                          <Description>"Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>18</Offset>
+                            <Offset>30</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105421</ID>
+                          <Description>"Max Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>1C</Offset>
+                            <Offset>30</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105422</ID>
+                          <Description>"Elapsed"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>20</Offset>
+                            <Offset>30</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105423</ID>
+                          <Description>"Cd"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>30</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105424</ID>
+                          <Description>"Lv"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>28</Offset>
+                            <Offset>30</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105425</ID>
+                      <Description>"-- Skill [4] --"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105426</ID>
+                          <Description>"Cid"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>8 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>10</Offset>
+                            <Offset>38</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105427</ID>
+                          <Description>"Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>18</Offset>
+                            <Offset>38</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105428</ID>
+                          <Description>"Max Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>1C</Offset>
+                            <Offset>38</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105429</ID>
+                          <Description>"Elapsed"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>20</Offset>
+                            <Offset>38</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105430</ID>
+                          <Description>"Cd"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>38</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105431</ID>
+                          <Description>"Lv"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>28</Offset>
+                            <Offset>38</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105432</ID>
+                      <Description>"-- Skill [5] --"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105433</ID>
+                          <Description>"Cid"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>8 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>10</Offset>
+                            <Offset>40</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105434</ID>
+                          <Description>"Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>18</Offset>
+                            <Offset>40</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105435</ID>
+                          <Description>"Max Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>1C</Offset>
+                            <Offset>40</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105436</ID>
+                          <Description>"Elapsed"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>20</Offset>
+                            <Offset>40</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105437</ID>
+                          <Description>"Cd"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>40</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105438</ID>
+                          <Description>"Lv"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>28</Offset>
+                            <Offset>40</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105439</ID>
+                      <Description>"-- Skill [6] --"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105440</ID>
+                          <Description>"Cid"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>8 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>10</Offset>
+                            <Offset>48</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105441</ID>
+                          <Description>"Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>18</Offset>
+                            <Offset>48</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105442</ID>
+                          <Description>"Max Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>1C</Offset>
+                            <Offset>48</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105443</ID>
+                          <Description>"Elapsed"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>20</Offset>
+                            <Offset>48</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105444</ID>
+                          <Description>"Cd"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>48</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105445</ID>
+                          <Description>"Lv"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>28</Offset>
+                            <Offset>48</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105446</ID>
+                      <Description>"-- Skill [7] --"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105447</ID>
+                          <Description>"Cid"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>8 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>10</Offset>
+                            <Offset>50</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105448</ID>
+                          <Description>"Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>18</Offset>
+                            <Offset>50</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105449</ID>
+                          <Description>"Max Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>1C</Offset>
+                            <Offset>50</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105450</ID>
+                          <Description>"Elapsed"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>20</Offset>
+                            <Offset>50</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105451</ID>
+                          <Description>"Cd"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>50</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105452</ID>
+                          <Description>"Lv"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>28</Offset>
+                            <Offset>50</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105453</ID>
+                      <Description>"-- Skill [8] --"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105454</ID>
+                          <Description>"Cid"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>8 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>10</Offset>
+                            <Offset>58</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105455</ID>
+                          <Description>"Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>18</Offset>
+                            <Offset>58</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105456</ID>
+                          <Description>"Max Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>1C</Offset>
+                            <Offset>58</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105457</ID>
+                          <Description>"Elapsed"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>20</Offset>
+                            <Offset>58</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105458</ID>
+                          <Description>"Cd"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>58</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105459</ID>
+                          <Description>"Lv"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>28</Offset>
+                            <Offset>58</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105460</ID>
+                      <Description>"-- Skill [9] --"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105461</ID>
+                          <Description>"Cid"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>8 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>10</Offset>
+                            <Offset>60</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105462</ID>
+                          <Description>"Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>18</Offset>
+                            <Offset>60</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105463</ID>
+                          <Description>"Max Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>1C</Offset>
+                            <Offset>60</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105464</ID>
+                          <Description>"Elapsed"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>20</Offset>
+                            <Offset>60</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105465</ID>
+                          <Description>"Cd"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>60</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105466</ID>
+                          <Description>"Lv"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>28</Offset>
+                            <Offset>60</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105474</ID>
+                      <Description>"-- Skill [10] --"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105475</ID>
+                          <Description>"Cid"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>8 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>10</Offset>
+                            <Offset>68</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105476</ID>
+                          <Description>"Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>18</Offset>
+                            <Offset>68</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105477</ID>
+                          <Description>"Max Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>1C</Offset>
+                            <Offset>68</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105478</ID>
+                          <Description>"Elapsed"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>20</Offset>
+                            <Offset>68</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105479</ID>
+                          <Description>"Cd"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>68</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105480</ID>
+                          <Description>"Lv"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>28</Offset>
+                            <Offset>68</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105481</ID>
+                      <Description>"-- Skill [11] --"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105482</ID>
+                          <Description>"Cid"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>8 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>10</Offset>
+                            <Offset>70</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105483</ID>
+                          <Description>"Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>18</Offset>
+                            <Offset>70</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105484</ID>
+                          <Description>"Max Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>1C</Offset>
+                            <Offset>70</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105485</ID>
+                          <Description>"Elapsed"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>20</Offset>
+                            <Offset>70</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105486</ID>
+                          <Description>"Cd"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>70</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105487</ID>
+                          <Description>"Lv"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>28</Offset>
+                            <Offset>70</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105488</ID>
+                      <Description>"-- Skill [12] --"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105489</ID>
+                          <Description>"Cid"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>8 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>10</Offset>
+                            <Offset>78</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105490</ID>
+                          <Description>"Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>18</Offset>
+                            <Offset>78</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105491</ID>
+                          <Description>"Max Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>1C</Offset>
+                            <Offset>78</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105492</ID>
+                          <Description>"Elapsed"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>20</Offset>
+                            <Offset>78</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105493</ID>
+                          <Description>"Cd"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>78</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105494</ID>
+                          <Description>"Lv"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>28</Offset>
+                            <Offset>78</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                    <CheatEntry>
+                      <ID>105495</ID>
+                      <Description>"-- Skill [13] --"</Description>
+                      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+                      <Color>FF0080</Color>
+                      <GroupHeader>1</GroupHeader>
+                      <CheatEntries>
+                        <CheatEntry>
+                          <ID>105496</ID>
+                          <Description>"Cid"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>8 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>10</Offset>
+                            <Offset>80</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105497</ID>
+                          <Description>"Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>18</Offset>
+                            <Offset>80</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105498</ID>
+                          <Description>"Max Point"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>1C</Offset>
+                            <Offset>80</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105499</ID>
+                          <Description>"Elapsed"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>20</Offset>
+                            <Offset>80</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105500</ID>
+                          <Description>"Cd"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>Float</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>24</Offset>
+                            <Offset>80</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                        <CheatEntry>
+                          <ID>105501</ID>
+                          <Description>"Lv"</Description>
+                          <ShowAsSigned>0</ShowAsSigned>
+                          <Color>0000FF</Color>
+                          <VariableType>4 Bytes</VariableType>
+                          <Address>[pBase_EntityCharacter]+188</Address>
+                          <Offsets>
+                            <Offset>28</Offset>
+                            <Offset>80</Offset>
+                            <Offset>10</Offset>
+                          </Offsets>
+                        </CheatEntry>
+                      </CheatEntries>
+                    </CheatEntry>
+                  </CheatEntries>
+                </CheatEntry>
+              </CheatEntries>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>105274</ID>
+      <Description>"============================"</Description>
+      <GroupHeader>1</GroupHeader>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>104596</ID>
+      <Description>"[&lt;--CHECKBOX] NOTES"</Description>
+      <Options moHideChildren="1" moManualExpandCollapse="1"/>
+      <Color>0080FF</Color>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>104601</ID>
+          <Description>"[&lt;--CHECKBOX] If You Like This Table, Don't Forget To Give A Thumbs Up On This Link"</Description>
+          <Options moHideChildren="1"/>
+          <Color>0080FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{$LUA}
+if syntaxcheck then return end
+[ENABLE]
+ShellExecute('https://fearlessrevolution.com/viewtopic.php?p=296854#p296854')
+{$asm}
+nop
+[DISABLE]
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>104602</ID>
+              <Description>"https://www.cheatengine.org/"</Description>
+              <Color>008000</Color>
+              <GroupHeader>1</GroupHeader>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>104603</ID>
+          <Description>"====================="</Description>
+          <GroupHeader>1</GroupHeader>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>105268</ID>
+          <Description>"[&lt;--CHECKBOX] Check build Id / Date Patches Game"</Description>
+          <Options moHideChildren="1"/>
+          <Color>0080FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{$LUA}
+if syntaxcheck then return end
+[ENABLE]
+ShellExecute('https://steamdb.info/app/1840790/patchnotes/')
+{$asm}
+nop
+[DISABLE]
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>105269</ID>
+              <Description>"https://www.cheatengine.org/"</Description>
+              <Color>008000</Color>
+              <GroupHeader>1</GroupHeader>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>105270</ID>
+          <Description>"====================="</Description>
+          <GroupHeader>1</GroupHeader>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>105271</ID>
+          <Description>"[&lt;--CHECKBOX] Link Game"</Description>
+          <Options moHideChildren="1"/>
+          <Color>0080FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{$LUA}
+if syntaxcheck then return end
+[ENABLE]
+ShellExecute('https://store.steampowered.com/app/1840790/Metal_Mutation/')
+{$asm}
+nop
+[DISABLE]
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>105272</ID>
+              <Description>"https://www.cheatengine.org/"</Description>
+              <Color>008000</Color>
+              <GroupHeader>1</GroupHeader>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>105273</ID>
+          <Description>"====================="</Description>
+          <GroupHeader>1</GroupHeader>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>104151</ID>
+          <Description>"[&lt;--CHECKBOX] Download Cheat Engine"</Description>
+          <Options moHideChildren="1"/>
+          <Color>0080FF</Color>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{$LUA}
+if syntaxcheck then return end
+[ENABLE]
+ShellExecute('https://www.cheatengine.org/')
+ShellExecute('https://github.com/cheat-engine/cheat-engine')
+{$asm}
+nop
+[DISABLE]
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>104154</ID>
+              <Description>"https://www.cheatengine.org/"</Description>
+              <Color>008000</Color>
+              <GroupHeader>1</GroupHeader>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>105275</ID>
+          <Description>"====================="</Description>
+          <GroupHeader>1</GroupHeader>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>105294</ID>
+          <Description>"Build ID : 11164232 / 5 May 2023 / 2023.5.5 update4"</Description>
+          <GroupHeader>1</GroupHeader>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <LuaScript>getMainForm().caption = "Created By BabyGroot  ~ Enjoy you'r game :)"
+</LuaScript>
+</CheatTable>
