@@ -34,7 +34,7 @@ EAX = 1285A038      ESP = 0019F664      ECX = 000001E
 6) Found **`1285A378`** ==> Modify it and eat **_Rainbow Seeds_** again. 
 
 
-🏆 `ECX` as accumulative points that strengthen your MaxHP -- it was uniquely generated when consumed _`Rainbow Seeds`_
+🏆 `ECX` pointer represents as accumulative points that expand your MaxHP -- it was uniquely generated when consumed _`Rainbow Seeds`_
 
 > Distinct value of `ECX` depends on what kind of consumables you've eaten 
 
